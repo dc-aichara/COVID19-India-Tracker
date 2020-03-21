@@ -3,9 +3,7 @@ from app import server
 import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
-import dash_bootstrap_components as dbc
 import pandas as pd
-import dash_table
 import dash_daq as daq
 from datetime import datetime
 from data.data import COVID19India
