@@ -1,4 +1,4 @@
-[COVID19-India-Tracker](https://covid19-india-tracker.herokuapp.com/)
+# <center> <span style='color:#00008b;font-size:35px'> [**COVID19-India-Tracker**](https://covid19-india-tracker.herokuapp.com/)</span> </center>
 
 ***
 
