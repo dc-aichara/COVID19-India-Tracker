@@ -99,7 +99,8 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                                    "padding": "70px 0",
                         }),
                         html.Div(children=[dcc.Markdown(  # markdown
-                           " Data Resources: [MInistry of Health and Family Welfare, GoI](https://www.mohfw.gov.in/) and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
+                           " Data Resources: [MInistry of Health and Family Welfare, GoI](https://www.mohfw.gov.in/)"
+                           " and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
                            'textAlign': 'center',
                            "background": "yellow"}),
                        html.Div(children=[dcc.Markdown(  # markdown
@@ -135,7 +136,7 @@ def render_graph(data, start_date, end_date):
         id='graph-1',
         figure={
             'data': [
-                {'x': data['date'], 'y': data["confimred"], 'type': 'line', 'name': 'Confirmed Cases',
+                {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
                  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
                 {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
                  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open'}},
