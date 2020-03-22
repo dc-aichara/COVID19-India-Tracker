@@ -7,12 +7,25 @@ import pandas as pd
 import dash_daq as daq
 from datetime import datetime
 from data.data import COVID19India
+from data.inshorts_news import InshortsNews
+inshorts = InshortsNews()
 
 covidin = COVID19India()
 try:
     df = covidin.moh_data(save=True)
 except:
     df = pd.read_csv('data/22.03.2020_moh_india.csv')
+
+try:
+    news_data = inshorts.get_news()
+except:
+    news_data = pd.DataFrame(data=["", ""], columns =['headings', 'news'])
+
+news = """
+"""
+for v in news_data.values[:10]:
+    news += f"## {v[0]} \n ```{v[1]}```\n"
+
 colors = {
     'background': 'white',
     'background2': 'black',
@@ -20,7 +33,7 @@ colors = {
 }
 
 y_axis = {
-    'title': 'Price',
+    'title': 'Cases',
     'showspikes': True,
     'spikedash': 'dot',
     'spikemode': 'across',
@@ -107,6 +120,12 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                                    "background": "#CCFFFF",
                                                    "padding": "70px 0",
                         }),
+                        # html.Div(children=[dcc.Markdown(  # markdown
+                        #                            news)], style={
+                        #                            # 'textAlign': 'center',
+                        #                            "background": "#CCFFFF",
+                        #                            "padding": "70px 0",
+                        # }),
                         html.Div(children=[dcc.Markdown(  # markdown
                            " Data Resources: [MInistry of Health and Family Welfare, GoI](https://www.mohfw.gov.in/)"
                            " and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
