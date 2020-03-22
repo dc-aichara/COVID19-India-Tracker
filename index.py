@@ -8,23 +8,6 @@ import dash_daq as daq
 from datetime import datetime
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
-inshorts = InshortsNews()
-
-covidin = COVID19India()
-try:
-    df = covidin.moh_data(save=True)
-except:
-    df = pd.read_csv('data/22.03.2020_moh_india.csv')
-
-try:
-    news_data = inshorts.get_news()
-except:
-    news_data = pd.DataFrame(data=["", ""], columns =['headings', 'news'])
-
-news = """
-"""
-for v in news_data.values[:10]:
-    news += f"## {v[0]} \n ```{v[1]}```\n"
 
 colors = {
     'background': 'white',
@@ -47,6 +30,41 @@ x_axis = {
     'spikemode': 'across',
     'spikesnap': 'cursor',
 }
+
+tabs_styles = {
+    'height': '51px'
+}
+tab_style = {
+    'borderBottom': '1px solid #d6d6d6',
+    'padding': '2px',
+    'fontWeight': 'bold'
+}
+
+tab_selected_style = {
+    'borderTop': '1px solid #d6d6d6',
+    'borderBottom': '1px solid #d6d6d6',
+    'backgroundColor': 'black',
+    'color': 'yellow',
+    'padding': '10px'
+}
+
+inshorts = InshortsNews()
+covidin = COVID19India()
+try:
+    df = covidin.moh_data(save=True)
+except:
+    df = pd.read_csv('data/22.03.2020_moh_india.csv')
+
+try:
+    news_data = inshorts.get_news()
+except:
+    news_data = pd.DataFrame(data=["", ""], columns=['headings', 'news'])
+
+news = """
+"""
+for v in news_data.values[:15]:
+    if 'corona' in v[1] or 'covid' in v[1]:
+        news += f"\n## {v[0]} \n### ``` {v[1]} ```\n***"
 
 df2 = covidin.change_cal()
 
@@ -108,18 +126,33 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                  data_ranger], style={'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
                                        'display': 'none'}),
                        html.Div(id='graph-input'),
-                       html.H1(id='graph-output'),
-                       html.Div(children=[dcc.Markdown(  # markdown
-                           f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
-                           'textAlign': 'center',
-                           "background": "yellow"}),
+                       dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
+                           dcc.Tab(label='All Cases', value='tab-1', style=tab_style,
+                                   selected_style=tab_selected_style),
+                           dcc.Tab(label='Cases Analysis', value='tab-2', style=tab_style,
+                                   selected_style=tab_selected_style),
+                           dcc.Tab(label='News', value='tab-3', style=tab_style,
+                                   selected_style=tab_selected_style),
+                           dcc.Tab(label='Help and Information', value='tab-4', style=tab_style,
+                                   selected_style=tab_selected_style),
+                       ], style=tabs_styles,
+                                colors={
+                                    "border": "yellow",
+                                    "primary": "red",
+                                    "background": "orange"
+                                }),
+                       html.Div(id='graph-output'),
+                       # html.Div(children=[dcc.Markdown(  # markdown
+                       #     f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
+                       #     'textAlign': 'center',
+                       #     "background": "yellow"}),
                        html.Div(id='intermediate-value', style={'display': 'none'}),
-                        html.Div(children=[dcc.Markdown(  # markdown
-                                                   data_display)], style={
-                                                   'textAlign': 'center',
-                                                   "background": "#CCFFFF",
-                                                   "padding": "70px 0",
-                        }),
+                        # html.Div(children=[dcc.Markdown(  # markdown
+                        #                            data_display)], style={
+                        #                            'textAlign': 'center',
+                        #                            "background": "#CCFFFF",
+                        #                            "padding": "70px 0",
+                        # }),
                         # html.Div(children=[dcc.Markdown(  # markdown
                         #                            news)], style={
                         #                            # 'textAlign': 'center',
@@ -152,15 +185,26 @@ def get_data(_):
 @app.callback(Output(component_id='graph-output', component_property='children'),
               [Input('intermediate-value', 'children'),
                Input('date-input', 'start_date'),
-               Input('date-input', 'end_date')])
-def render_graph(data, start_date, end_date):
+               Input('date-input', 'end_date'),
+               Input('all-tabs-inline', 'value')])
+def render_graph(data, start_date, end_date, tab):
     try:
         df = pd.read_json(data, orient='split')
     except:
         df = pd.read_csv('data/21-03-2020_jhu_india.csv')
     df['date'] = pd.to_datetime(df['date'])
     data = df[(df.date >= start_date) & (df.date <= end_date)]
-    return dcc.Graph(
+    state_data = html.Div(children=[dcc.Markdown(  # markdown
+                                                   data_display)], style={
+                                                   'textAlign': 'center',
+                                                   "background": "#CCFFFF",
+                                                   "padding": "70px 0",
+                        })
+    data_head = html.Div(children=[dcc.Markdown(  # markdown
+                           f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
+                           'textAlign': 'center',
+                           "background": "yellow"})
+    graph = dcc.Graph(
         id='graph-1',
         figure={
             'data': [
@@ -185,6 +229,26 @@ def render_graph(data, start_date, end_date):
             }
         }
     )
+    news1 = html.Div(children=[dcc.Markdown(  # markdown
+        news),
+        dcc.Markdown(  # markdown
+            '# **Source:**  [InShorts](https://www.inshorts.com/en/read/)',
+        style={'textAlign': 'right'})
+    ], style={
+        # 'textAlign': 'center',
+        "background": "#CCFFFF",
+        "padding": "70px 0",
+    })
+
+    if tab == 'tab-1':
+        return [graph, data_head, state_data]
+
+    elif tab == 'tab-2':
+        return "Coming Soon"
+    elif tab == 'tab-3':
+        return news1
+    elif tab == 'tab-4':
+        return "Coming Soon"
 
 
 @app.callback([Output('active-display', 'children'),
