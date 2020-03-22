@@ -9,7 +9,10 @@ from datetime import datetime
 from data.data import COVID19India
 
 covidin = COVID19India()
-df = pd.read_csv('data/21.03.2020_moh_india.csv')
+try:
+    df = covidin.moh_data(save=True)
+except:
+    df = pd.read_csv('data/22.03.2020_moh_india.csv')
 colors = {
     'background': 'white',
     'background2': 'black',
@@ -32,13 +35,20 @@ x_axis = {
     'spikesnap': 'cursor',
 }
 
+df2 = covidin.change_cal()
+
 data_display = """
 | **Name of State / UT** | **Total Confirmed cases (Indian National)** | **Total Confirmed cases ( Foreign National )** | |**Cured/Discharged/Migrated** |  | **Death** |
 |:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 """
 # df = df.sort_values('Total Confirmed cases (Indian National)', ascending=False)
-for value in df.values:
-    v = f"""|{value[0]}|{value[1]}|{value[2]}||{value[3]}||{value[4]}|\n"""
+for v1, v2 in zip(df.values, df2.values):
+    a = v1[0]
+    b = v1[1] if v2[1] == 0 else f"{v1[1]} (**+{v2[1]}**)"
+    c = v1[2] if v2[2] == 0 else f"{v1[2]} (**+{v2[2]}**)"
+    d = v1[3] if v2[3] == 0 else f"{v1[3]} (**+{v2[3]}**)"
+    e = v1[4] if v2[4] == 0 else f"{v1[4]} (**+{v2[4]}**)"
+    v = f"""|{a}|{b}|{c}||{d}||{e}|\n"""
     data_display += v
 
 data_ranger = dcc.DatePickerRange(
@@ -165,7 +175,7 @@ def render_graph(data, start_date, end_date):
                ],
               [Input('dummy-id', '')])
 def display_cases(_):
-    df = pd.read_csv('data/21.03.2020_moh_india.csv')
+    # df = pd.read_csv('data/21.03.2020_moh_india.csv')
     value = df.values[-1][1:].tolist()
     active_case = value[0] + value[1] - value[2] - value[3]
     recovered_case = value[2]
