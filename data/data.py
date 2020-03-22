@@ -8,8 +8,8 @@ from pathlib import Path
 now = datetime.today().strftime("%d-%m-%Y")
 
 jhu_links = {'confirmed': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv",
-             'deaths': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv",
-             'recovered': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
+             'recovered': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv",
+             'deaths': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
              }
 moh_link = "https://www.mohfw.gov.in/"
 
@@ -39,24 +39,28 @@ class COVID19India():
         url = self.moh_link
         df = pd.read_html(url)[-1]
         del df['S. No.']
+        cols = df.columns.values.tolist()
+        for col in cols[1:]:
+            df[col] = df[col].apply(lambda x: re.findall('[0-9]+', str(x))[0])
         while save:
             content = requests.get(url).content.decode('utf-8')
 
             soup = BeautifulSoup(content, 'html.parser')
             text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
             date = re.findall('[0-9.]+', text)[0]
+            print(date)
             df.to_csv(f"{date}_moh_india.csv", index=False)
             break
         return df
 
     def last_update(self):
-        content = requests.get(url).content.decode('utf-8')
+        content = requests.get(self.moh_link).content.decode('utf-8')
 
         soup = BeautifulSoup(content, 'html.parser')
         text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
         text = re.findall('[a-zA-Z0-9.:]+', text)
         text = " ".join(text[text.index('on'):])
-        return  text
+        return text
 
     def change_cal(self):
         p1 = Path('')

@@ -86,11 +86,10 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                        'display': 'none'}),
                        html.Div(id='graph-input'),
                        html.H1(id='graph-output'),
-                       html.Div(children=[html.H2(children="Data",
-                                                  style={
-                                                      'textAlign': 'center',
-                                                      "background": "yellow"}),
-                                          ]),
+                       html.Div(children=[dcc.Markdown(  # markdown
+                           f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
+                           'textAlign': 'center',
+                           "background": "yellow"}),
                        html.Div(id='intermediate-value', style={'display': 'none'}),
                         html.Div(children=[dcc.Markdown(  # markdown
                                                    data_display)], style={
@@ -129,7 +128,7 @@ def render_graph(data, start_date, end_date):
     try:
         df = pd.read_json(data, orient='split')
     except:
-        df = pd.read_csv('data/20-03-2020_jhu_india.csv')
+        df = pd.read_csv('data/21-03-2020_jhu_india.csv')
     df['date'] = pd.to_datetime(df['date'])
     data = df[(df.date >= start_date) & (df.date <= end_date)]
     return dcc.Graph(
