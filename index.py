@@ -203,7 +203,7 @@ def render_graph(data, start_date, end_date, tab):
                            'textAlign': 'center',
                            "background": "yellow"})
     help_info = """
-     # [GOI official Information](#https://www.mygov.in/covid-19)
+     # [GOI official Information Portal](#https://www.mygov.in/covid-19)
     # [World Health Organization](https://www.who.int/emergencies/diseasesnovel-coronavirus-2019)
     # [Ministry of Health and Family Welfare | GOI](https://www.mohfw.gov.in/)
     """
