@@ -176,7 +176,7 @@ def render_graph(data, start_date, end_date, tab):
     except:
         df = pd.read_csv('data/jhu_india.csv')
     df['date'] = pd.to_datetime(df['date'])
-    date = df.date.values[-1]
+    date = df.date.tolist()[-1].strftime("%d-%m-%Y")
     data = df[(df.date >= start_date) & (df.date <= end_date)]
     state_data = html.Div(children=[dcc.Markdown(  # markdown
                                                    data_display)], style={
@@ -200,7 +200,7 @@ def render_graph(data, start_date, end_date, tab):
                  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
             ],
             'layout': {
-                'title': f'Covid19 India Cases (Updated on {date})',
+                'title': f'Covid19 India Cases (Updated on {date} at 00:00:00 )',
                 'height': 700,
                 'xaxis': x_axis,
                 'yaxis': y_axis,
