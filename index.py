@@ -8,6 +8,7 @@ import dash_daq as daq
 from datetime import datetime
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
+from data.data_processing import get_daily_data, get_interval_data
 
 colors = {
     'background': 'white',
@@ -24,7 +25,15 @@ y_axis = {
 }
 
 x_axis = {
-    'title': 'Time',
+    'title': 'Date',
+    'showspikes': True,
+    'spikedash': 'dot',
+    'spikemode': 'across',
+    'spikesnap': 'cursor',
+}
+
+x_axis_bar = {
+    'title': 'Weeks Count [Starting from 01-03-2020]',
     'showspikes': True,
     'spikedash': 'dot',
     'spikemode': 'across',
@@ -178,6 +187,11 @@ def render_graph(data, start_date, end_date, tab):
     df['date'] = pd.to_datetime(df['date'])
     date = df.date.tolist()[-1].strftime("%d-%m-%Y")
     data = df[(df.date >= start_date) & (df.date <= end_date)]
+
+    df1 = get_daily_data(df)
+    df_itvl = get_interval_data(days=7, cases=df1, cols=None)
+    # print(df_itvl)
+
     state_data = html.Div(children=[dcc.Markdown(  # markdown
                                                    data_display)], style={
                                                    'textAlign': 'center',
@@ -222,6 +236,53 @@ def render_graph(data, start_date, end_date, tab):
             }
         }
     )
+
+    bar_graph = dcc.Graph(
+        id='bar-graph',
+        figure={
+            'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar', 'name': 'Confirmed Cases'},
+                     {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
+                      'name': 'Recovered Cases'},
+                     {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
+                      'name': 'Deaths Cases'},
+            ],
+            'layout': {
+                'title': f'Covid19 India Cases by week',
+                'barmode': 'stack',
+                'height': 700,
+                'xaxis': x_axis_bar,
+                'yaxis': y_axis,
+                'plot_bgcolor': colors['background2'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text'],
+                    'size': 18
+                }
+            }
+        }
+    )
+    bar_graph1 = dcc.Graph(
+        id='bar-graph',
+        figure={
+            'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
+                     {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', 'name': 'Recovered Case'},
+                     {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths', 'color': 'red'}
+                     ],
+            'layout': {
+                'title': f'Covid19 India Cases by Day',
+                'barmode': 'stack',
+                'height': 700,
+                'xaxis': x_axis,
+                'yaxis': y_axis,
+                'plot_bgcolor': colors['background2'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text'],
+                    'size': 18
+                }
+            }
+        }
+    )
     news1 = html.Div(children=[dcc.Markdown(  # markdown
         news),
         dcc.Markdown(  # markdown
@@ -237,7 +298,7 @@ def render_graph(data, start_date, end_date, tab):
         return [graph, data_head, state_data]
 
     elif tab == 'tab-2':
-        return html.H2("Coming Soon!")
+        return [bar_graph1, bar_graph]
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
