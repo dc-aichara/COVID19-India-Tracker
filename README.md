@@ -13,3 +13,8 @@ $ pip install -r requirements.txt # Install dependencies
 $ python index.py  # Run app
 # visit http://127.0.0.1:8050/
 ```
+# Contribute
+- Clone this repo
+- Create a new branch
+- Make changes
+- Submit PR
