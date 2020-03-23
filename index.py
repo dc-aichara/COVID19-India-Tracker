@@ -228,11 +228,11 @@ def render_graph(data, start_date, end_date, tab):
         return [graph, data_head, state_data]
 
     elif tab == 'tab-2':
-        return "Coming Soon"
+        return html.H2("Coming Soon!")
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
-        return "Coming Soon"
+        return html.H2("Coming Soon!")
 
 
 @app.callback([Output('active-display', 'children'),
@@ -248,7 +248,9 @@ def display_cases(_):
     recovered_case = value[2]
     deaths = value[-1]
     counts = len(df) - 1
-    a = daq.LEDDisplay(
+
+    def daq_display(value, clr):
+        display = daq.LEDDisplay(
                             label={'label': "", 'style': {'font-size': "14px",
                                                              'color': 'green',
                                                              'font-family': 'sans-serif',
@@ -257,61 +259,20 @@ def display_cases(_):
                                                         }
                                    },
                             labelPosition='left',
-                            value=str(active_case),
-                            backgroundColor='black',
+                            value=str(value),
+                            backgroundColor=clr,
                             size=18,
                             # family='sans-serif',
                             style={'display': 'inline-block',
                                    },
                         )
-    b = daq.LEDDisplay(
-        label={'label': "", 'style': {'font-size': "14px",
-                                      'color': 'green',
-                                      'font-family': 'sans-serif',
-                                      'background': 'black',
-                                      'padding': '2px'
-                                      }
-               },
-        labelPosition='left',
-        value=str(recovered_case),
-        backgroundColor='green',
-        size=18,
-        # family='sans-serif',
-        style={'display': 'inline-block',
-               },
-    )
-    c = daq.LEDDisplay(
-        label={'label': "", 'style': {'font-size': "14px",
-                                      'color': 'green',
-                                      'font-family': 'sans-serif',
-                                      'background': 'black',
-                                      'padding': '2px'
-                                      }
-               },
-        labelPosition='left',
-        value=str(deaths),
-        backgroundColor='red',
-        size=18,
-        # family='sans-serif',
-        style={'display': 'inline-block',
-               },
-    )
-    d = daq.LEDDisplay(
-        label={'label': "", 'style': {'font-size': "14px",
-                                      'color': 'green',
-                                      'font-family': 'sans-serif',
-                                      'background': 'black',
-                                      'padding': '2px'
-                                      }
-               },
-        labelPosition='left',
-        value=str(counts),
-        backgroundColor='gray',
-        size=18,
-        # family='sans-serif',
-        style={'display': 'inline-block',
-               },
-    )
+        return display
+
+    a = daq_display(active_case, 'black')
+    b = daq_display(recovered_case, 'green')
+    c = daq_display(deaths, 'red')
+    d = daq_display(counts, 'gray')
+
     return [a, b, c, d]
 
 
