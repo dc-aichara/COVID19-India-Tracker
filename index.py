@@ -119,9 +119,8 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                  ], className="row ",
                                 style={
                                     'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
-                                       'display': 'inline-block',
+                                    'display': 'inline-block',
                                        }),
-                       # html.Hr(style={'border': '2px solid black'}),
                        html.Div(['Data Range',
                                  data_ranger], style={'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
                                        'display': 'none'}),
@@ -141,24 +140,8 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                     "primary": "red",
                                     "background": "orange"
                                 }),
-                       html.Div(id='graph-output'),
-                       # html.Div(children=[dcc.Markdown(  # markdown
-                       #     f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
-                       #     'textAlign': 'center',
-                       #     "background": "yellow"}),
+                       html.Div(id='graph-output'),  # Tab output
                        html.Div(id='intermediate-value', style={'display': 'none'}),
-                        # html.Div(children=[dcc.Markdown(  # markdown
-                        #                            data_display)], style={
-                        #                            'textAlign': 'center',
-                        #                            "background": "#CCFFFF",
-                        #                            "padding": "70px 0",
-                        # }),
-                        # html.Div(children=[dcc.Markdown(  # markdown
-                        #                            news)], style={
-                        #                            # 'textAlign': 'center',
-                        #                            "background": "#CCFFFF",
-                        #                            "padding": "70px 0",
-                        # }),
                         html.Div(children=[dcc.Markdown(  # markdown
                            " Data Resources: [MInistry of Health and Family Welfare, GoI](https://www.mohfw.gov.in/)"
                            " and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
@@ -191,8 +174,9 @@ def render_graph(data, start_date, end_date, tab):
     try:
         df = pd.read_json(data, orient='split')
     except:
-        df = pd.read_csv('data/21-03-2020_jhu_india.csv')
+        df = pd.read_csv('data/jhu_india.csv')
     df['date'] = pd.to_datetime(df['date'])
+    date = df.date.values[-1]
     data = df[(df.date >= start_date) & (df.date <= end_date)]
     state_data = html.Div(children=[dcc.Markdown(  # markdown
                                                    data_display)], style={
@@ -216,7 +200,7 @@ def render_graph(data, start_date, end_date, tab):
                  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
             ],
             'layout': {
-                'title': 'Covid19 India Cases',
+                'title': f'Covid19 India Cases (Updated on {date})',
                 'height': 700,
                 'xaxis': x_axis,
                 'yaxis': y_axis,

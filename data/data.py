@@ -31,7 +31,7 @@ class COVID19India():
         data['date'] = pd.to_datetime(data['date'])
         while save:
             date = data.date.tolist()[-1].strftime("%d-%m-%Y")
-            data.to_csv(f"data/{date}_jhu_india.csv", index=False)
+            data.to_csv(f"data/jhu_india.csv", index=False)
             break
         return data
 
