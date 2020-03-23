@@ -91,26 +91,16 @@ for v1, v2 in zip(df.values, df2.values):
     v = f"""|{a}|{b}|{c}||{d}||{e}|\n"""
     data_display += v
 
-data_ranger = dcc.DatePickerRange(
-    id='date-input',
-    stay_open_on_select=False,
-    min_date_allowed=datetime(2020, 1, 30),
-    max_date_allowed=datetime.now(),
-    initial_visible_month=datetime.now(),
-    start_date=datetime(2020, 3, 1),
-    end_date=datetime.now(),
-    number_of_months_shown=2,
-    month_format='MMMM,YYYY',
-    display_format='YYYY-MM-DD',
-    style={
-        'color': '#11ff3b',
-        'font-size': '18px',
-        'margin': 0,
-        'padding': '8px',
-        'background': 'yellow',
-        'display': 'inline-block'
-    }
-)
+help_info = """
+     # [GOI official Information Portal](#https://www.mygov.in/covid-19)
+    # [World Health Organization](https://www.who.int/emergencies/diseasesnovel-coronavirus-2019)
+    # [Ministry of Health and Family Welfare | GOI](https://www.mohfw.gov.in/)
+    """
+info = html.Div(children=[dcc.Markdown(  # markdown
+                       help_info)], style={
+                       'textAlign': 'left',
+                       "background": "gray"})
+
 
 app.layout = html.Div([html.H1("COVID19 India Tracker",
                                style={
@@ -130,9 +120,6 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                     'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
                                     'display': 'inline-block',
                                        }),
-                       html.Div(['Data Range',
-                                 data_ranger], style={'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
-                                       'display': 'none'}),
                        html.Div(id='graph-input'),
                        dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
                            dcc.Tab(label='All Cases', value='tab-1', style=tab_style,
@@ -176,21 +163,18 @@ def get_data(_):
 
 @app.callback(Output(component_id='graph-output', component_property='children'),
               [Input('intermediate-value', 'children'),
-               Input('date-input', 'start_date'),
-               Input('date-input', 'end_date'),
                Input('all-tabs-inline', 'value')])
-def render_graph(data, start_date, end_date, tab):
+def render_graph(data,  tab):
     try:
         df = pd.read_json(data, orient='split')
     except:
         df = pd.read_csv('data/jhu_india.csv')
     df['date'] = pd.to_datetime(df['date'])
     date = df.date.tolist()[-1].strftime("%d-%m-%Y")
-    data = df[(df.date >= start_date) & (df.date <= end_date)]
+    data = df[df.date > "2020-02-29"]
 
     df1 = get_daily_data(df)
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
-    # print(df_itvl)
 
     state_data = html.Div(children=[dcc.Markdown(  # markdown
                                                    data_display)], style={
@@ -202,15 +186,6 @@ def render_graph(data, start_date, end_date, tab):
                            f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
                            'textAlign': 'center',
                            "background": "yellow"})
-    help_info = """
-     # [GOI official Information Portal](#https://www.mygov.in/covid-19)
-    # [World Health Organization](https://www.who.int/emergencies/diseasesnovel-coronavirus-2019)
-    # [Ministry of Health and Family Welfare | GOI](https://www.mohfw.gov.in/)
-    """
-    info = html.Div(children=[dcc.Markdown(  # markdown
-                           help_info)], style={
-                           'textAlign': 'left',
-                           "background": "gray"})
     graph = dcc.Graph(
         id='graph-1',
         figure={
