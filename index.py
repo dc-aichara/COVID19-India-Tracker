@@ -143,7 +143,7 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                        html.Div(id='graph-output'),  # Tab output
                        html.Div(id='intermediate-value', style={'display': 'none'}),
                         html.Div(children=[dcc.Markdown(  # markdown
-                           " Data Resources: [MInistry of Health and Family Welfare, GoI](https://www.mohfw.gov.in/)"
+                           " Data Resources: [MInistry of Health and Family Welfare | GoI](https://www.mohfw.gov.in/)"
                            " and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
                            'textAlign': 'center',
                            "background": "yellow"}),
@@ -188,6 +188,15 @@ def render_graph(data, start_date, end_date, tab):
                            f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
                            'textAlign': 'center',
                            "background": "yellow"})
+    help_info = """
+     # [GOI official Information](#https://www.mygov.in/covid-19)
+    # [World Health Organization](https://www.who.int/emergencies/diseasesnovel-coronavirus-2019)
+    # [Ministry of Health and Family Welfare | GOI](https://www.mohfw.gov.in/)
+    """
+    info = html.Div(children=[dcc.Markdown(  # markdown
+                           help_info)], style={
+                           'textAlign': 'left',
+                           "background": "gray"})
     graph = dcc.Graph(
         id='graph-1',
         figure={
@@ -232,7 +241,7 @@ def render_graph(data, start_date, end_date, tab):
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
-        return html.H2("Coming Soon!")
+        return info
 
 
 @app.callback([Output('active-display', 'children'),
