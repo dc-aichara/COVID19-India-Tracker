@@ -200,7 +200,7 @@ def render_graph(data, start_date, end_date, tab):
                  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
             ],
             'layout': {
-                'title': f'Covid19 India Cases (Updated on {date} at 00:00:00 )',
+                'title': f'Covid19 India Cases (Updated on {date} at 11:59:59 PM)',
                 'height': 700,
                 'xaxis': x_axis,
                 'yaxis': y_axis,
