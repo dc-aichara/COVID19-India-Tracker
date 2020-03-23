@@ -64,7 +64,7 @@ news = """
 """
 for v in news_data.values[:15]:
     if 'corona' in v[1] or 'covid' in v[1]:
-        news += f"\n## {v[0]} \n### ``` {v[1]} ```\n***"
+        news += f"\n## {v[0]} \n#### ``` {v[1]} ```\n***"
 
 df2 = covidin.change_cal()
 
