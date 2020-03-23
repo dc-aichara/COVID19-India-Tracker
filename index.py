@@ -3,8 +3,9 @@ from app import server
 import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
-import pandas as pd
+import dash_dangerously_set_inner_html
 import dash_daq as daq
+import pandas as pd
 from datetime import datetime
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
@@ -203,7 +204,7 @@ def render_graph(data, start_date, end_date, tab):
                            'textAlign': 'center',
                            "background": "yellow"})
     help_info = """
-     # [GOI official Information](#https://www.mygov.in/covid-19)
+     # [GOI official Information Portal](#https://www.mygov.in/covid-19)
     # [World Health Organization](https://www.who.int/emergencies/diseasesnovel-coronavirus-2019)
     # [Ministry of Health and Family Welfare | GOI](https://www.mohfw.gov.in/)
     """
@@ -293,7 +294,9 @@ def render_graph(data, start_date, end_date, tab):
         "background": "#CCFFFF",
         "padding": "70px 0",
     })
-
+    # test = dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
+    #     <h1><blink>Raw</blink> HTML! (dash aint got no blink tag)</h1>
+    # ''')
     if tab == 'tab-1':
         return [graph, data_head, state_data]
 
@@ -302,7 +305,7 @@ def render_graph(data, start_date, end_date, tab):
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
-        return info
+        return [info, test]
 
 
 @app.callback([Output('active-display', 'children'),
