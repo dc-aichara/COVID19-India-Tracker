@@ -75,6 +75,17 @@ for v in news_data.values[:15]:
     if 'corona' in v[1] or 'covid' in v[1]:
         news += f"\n## {v[0]} \n#### ``` {v[1]} ```\n***"
 
+news1 = html.Div(children=[dcc.Markdown(  # markdown
+    news),
+    dcc.Markdown(  # markdown
+        '# **Source:**  [InShorts](https://www.inshorts.com/en/read/)',
+    style={'textAlign': 'right'})
+], style={
+    # 'textAlign': 'center',
+    "background": "#CCFFFF",
+    "padding": "70px 0",
+})
+
 df2 = covidin.change_cal()
 
 data_display = """
@@ -100,6 +111,11 @@ info = html.Div(children=[dcc.Markdown(  # markdown
                        help_info)], style={
                        'textAlign': 'left',
                        "background": "gray"})
+
+data_head = html.Div(children=[dcc.Markdown(  # markdown
+    f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
+    'textAlign': 'center',
+    "background": "yellow"})
 
 
 app.layout = html.Div([html.H1("COVID19 India Tracker",
@@ -137,7 +153,7 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                     "background": "orange"
                                 }),
                        html.Div(id='graph-output'),  # Tab output
-                       html.Div(id='intermediate-value', style={'display': 'none'}),
+                       html.Div(id='jhu-data', style={'display': 'none'}),
                         html.Div(children=[dcc.Markdown(  # markdown
                            " Data Resources: [MInistry of Health and Family Welfare | GoI](https://www.mohfw.gov.in/)"
                            " and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
@@ -154,130 +170,11 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                       )
 
 
-@app.callback(Output('intermediate-value', 'children'),
+@app.callback(Output('jhu-data', 'children'),
               [Input('dummy-id', '')])
 def get_data(_):
     df = covidin.jhu_india_data(save=False)
     return df.to_json(date_format='iso', orient='split')
-
-
-@app.callback(Output(component_id='graph-output', component_property='children'),
-              [Input('intermediate-value', 'children'),
-               Input('all-tabs-inline', 'value')])
-def render_graph(data,  tab):
-    try:
-        df = pd.read_json(data, orient='split')
-    except:
-        df = pd.read_csv('data/jhu_india.csv')
-    df['date'] = pd.to_datetime(df['date'])
-    date = df.date.tolist()[-1].strftime("%d-%m-%Y")
-    data = df[df.date > "2020-02-29"]
-
-    df1 = get_daily_data(df)
-    df_itvl = get_interval_data(days=7, cases=df1, cols=None)
-
-    state_data = html.Div(children=[dcc.Markdown(  # markdown
-                                                   data_display)], style={
-                                                   'textAlign': 'center',
-                                                   "background": "#CCFFFF",
-                                                   "padding": "70px 0",
-                        })
-    data_head = html.Div(children=[dcc.Markdown(  # markdown
-                           f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
-                           'textAlign': 'center',
-                           "background": "yellow"})
-    graph = dcc.Graph(
-        id='graph-1',
-        figure={
-            'data': [
-                {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
-                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
-                {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
-                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open'}},
-                {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
-                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
-            ],
-            'layout': {
-                'title': f'Covid19 India Cases (Updated on {date} at 11:59:59 PM)',
-                'height': 700,
-                'xaxis': x_axis,
-                'yaxis': y_axis,
-                'plot_bgcolor': colors['background2'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text'],
-                    'size': 18
-                }
-            }
-        }
-    )
-
-    bar_graph = dcc.Graph(
-        id='bar-graph',
-        figure={
-            'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar', 'name': 'Confirmed Cases'},
-                     {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
-                      'name': 'Recovered Cases'},
-                     {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
-                      'name': 'Deaths Cases'},
-            ],
-            'layout': {
-                'title': f'Covid19 India Cases by week',
-                'barmode': 'stack',
-                'height': 700,
-                'xaxis': x_axis_bar,
-                'yaxis': y_axis,
-                'plot_bgcolor': colors['background2'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text'],
-                    'size': 18
-                }
-            }
-        }
-    )
-    bar_graph1 = dcc.Graph(
-        id='bar-graph',
-        figure={
-            'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
-                     {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', 'name': 'Recovered Case'},
-                     {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths', 'color': 'red'}
-                     ],
-            'layout': {
-                'title': f'Covid19 India Cases by Day',
-                'barmode': 'stack',
-                'height': 700,
-                'xaxis': x_axis,
-                'yaxis': y_axis,
-                'plot_bgcolor': colors['background2'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text'],
-                    'size': 18
-                }
-            }
-        }
-    )
-    news1 = html.Div(children=[dcc.Markdown(  # markdown
-        news),
-        dcc.Markdown(  # markdown
-            '# **Source:**  [InShorts](https://www.inshorts.com/en/read/)',
-        style={'textAlign': 'right'})
-    ], style={
-        # 'textAlign': 'center',
-        "background": "#CCFFFF",
-        "padding": "70px 0",
-    })
-
-    if tab == 'tab-1':
-        return [graph, data_head, state_data]
-
-    elif tab == 'tab-2':
-        return [bar_graph1, bar_graph]
-    elif tab == 'tab-3':
-        return news1
-    elif tab == 'tab-4':
-        return info
 
 
 @app.callback([Output('active-display', 'children'),
@@ -319,6 +216,112 @@ def display_cases(_):
     d = daq_display(counts, 'gray')
 
     return [a, b, c, d]
+
+
+@app.callback(Output(component_id='graph-output', component_property='children'),
+              [Input('jhu-data', 'children'),
+               Input('all-tabs-inline', 'value')])
+def render_graph(data,  tab):
+    try:
+        df = pd.read_json(data, orient='split')
+    except:
+        df = pd.read_csv('data/jhu_india.csv')
+    df['date'] = pd.to_datetime(df['date'])
+    date = df.date.tolist()[-1].strftime("%d-%m-%Y")
+    data = df[df.date > "2020-02-29"]
+
+    df1 = get_daily_data(df)
+    df_itvl = get_interval_data(days=7, cases=df1, cols=None)
+
+    state_data = html.Div(children=[dcc.Markdown(  # markdown
+                                                   data_display)], style={
+                                                   'textAlign': 'center',
+                                                   "background": "#CCFFFF",
+                                                   "padding": "70px 0",
+                        })
+
+    graph = dcc.Graph(
+        id='graph-1',
+        figure={
+            'data': [
+                {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
+                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
+                {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
+                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open'}},
+                {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
+                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
+            ],
+            'layout': {
+                'title': f'Covid19 India Cases (Updated on {date} at 11:59:59 PM)',
+                'height': 700,
+                'xaxis': x_axis,
+                'yaxis': y_axis,
+                'plot_bgcolor': colors['background2'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text'],
+                    'size': 18
+                }
+            }
+        }
+    )
+
+    bar_graph1 = dcc.Graph(
+        id='bar-graph',
+        figure={
+            'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
+                     {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', 'name': 'Recovered Case'},
+                     {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths', 'color': 'red'}
+                     ],
+            'layout': {
+                'title': f'Covid19 India Cases by Day',
+                'barmode': 'stack',
+                'height': 700,
+                'xaxis': x_axis,
+                'yaxis': y_axis,
+                'plot_bgcolor': colors['background2'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text'],
+                    'size': 18
+                }
+            }
+        }
+    )
+
+    bar_graph2 = dcc.Graph(
+        id='bar-graph',
+        figure={
+            'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar', 'name': 'Confirmed Cases'},
+                     {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
+                      'name': 'Recovered Cases'},
+                     {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
+                      'name': 'Deaths Cases'},
+            ],
+            'layout': {
+                'title': f'Covid19 India Cases by week',
+                'barmode': 'stack',
+                'height': 700,
+                'xaxis': x_axis_bar,
+                'yaxis': y_axis,
+                'plot_bgcolor': colors['background2'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text'],
+                    'size': 18
+                }
+            }
+        }
+    )
+
+    if tab == 'tab-1':
+        return [graph, data_head, state_data]
+    elif tab == 'tab-2':
+        return [bar_graph1, bar_graph2]
+    elif tab == 'tab-3':
+        return news1
+    elif tab == 'tab-4':
+        return info
 
 
 if __name__ == '__main__':
