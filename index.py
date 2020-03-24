@@ -174,8 +174,9 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
 @app.callback(Output('jhu-data', 'children'),
               [Input('dummy-id', '')])
 def get_data(_):
-    df = covidin.jhu_india_data(save=False)
-    return df.to_json(date_format='iso', orient='split')
+    df_jhu = covidin.jhu_india_data(save=False)
+    df_jhu.iloc[61:, 1:] = [471, 35, 9]  # Correction for "23-03-2020"
+    return df_jhu.to_json(date_format='iso', orient='split')
 
 
 @app.callback([Output('active-display', 'children'),
