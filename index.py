@@ -106,6 +106,7 @@ help_info = """
      # [GOI official Information Portal](#https://www.mygov.in/covid-19)
     # [World Health Organization](https://www.who.int/emergencies/diseasesnovel-coronavirus-2019)
     # [Ministry of Health and Family Welfare | GOI](https://www.mohfw.gov.in/)
+    # [Government Laboratories Approved by ICMR](https://icmr.nic.in/sites/default/files/upload_documents/Final_Government_Laboratories_Testing_2303.pdf)
     """
 info = html.Div(children=[dcc.Markdown(  # markdown
                        help_info)], style={
