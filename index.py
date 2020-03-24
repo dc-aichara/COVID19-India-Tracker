@@ -9,7 +9,8 @@ from datetime import datetime
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
 from data.data_processing import get_daily_data, get_interval_data
-
+from data.map import get_map
+import dash_dangerously_set_inner_html
 colors = {
     'background': 'white',
     'background2': 'black',
@@ -64,6 +65,7 @@ try:
 except:
     df = pd.read_csv('data/22.03.2020_moh_india.csv')
 
+map = get_map(data_df=df)
 try:
     news_data = inshorts.get_news()
 except:
@@ -118,6 +120,12 @@ data_head = html.Div(children=[dcc.Markdown(  # markdown
     'textAlign': 'center',
     "background": "yellow"})
 
+# map1 = dash_dangerously_set_inner_html.DangerouslySetInnerHTML(map)
+# map1 = html.A('Map', href='/static/map.html', style={'textAlign': 'center'})
+map1 = html.Div(children=[dcc.Markdown(  # markdown
+    "##  [Covid India Map](/static/map.html)")], style={
+    'textAlign': 'center',
+    "background": "black"})
 
 app.layout = html.Div([html.H1("COVID19 India Tracker",
                                style={
@@ -317,7 +325,7 @@ def render_graph(data,  tab):
     )
 
     if tab == 'tab-1':
-        return [graph, data_head, state_data]
+        return [graph, data_head, state_data, map1]
     elif tab == 'tab-2':
         return [bar_graph1, bar_graph2]
     elif tab == 'tab-3':

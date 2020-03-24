@@ -1,0 +1,38 @@
+codes,Name of State / UT,state_ut_category,latitude,longitude
+IN-AP,Andhra Pradesh,State,15.9240905,80.1863809
+IN-AR,Arunachal Pradesh,State,27.6891712,96.4597226
+IN-AS,Assam,State,26.4073841,93.2551303
+IN-BR,Bihar,State,25.6440845,85.906508
+IN-CT,Chhattisgarh,State,21.6637359,81.8406351
+IN-GA,Goa,State,15.3004543,74.0855134
+IN-GJ,Gujarat,State,22.41540825,72.03149703699282
+IN-HR,Haryana,State,29.0,76.0
+IN-HP,Himachal Pradesh,State,31.81676015,77.34932051968858
+IN-JH,Jharkhand,State,23.4559809,85.2557301
+IN-KA,Karnataka,State,14.5203896,75.7223521
+IN-KL,Kerala,State,10.3528744,76.5120396
+IN-MP,Madhya Pradesh,State,23.8143419,77.5340719
+IN-MH,Maharashtra,State,19.531932,76.0554568
+IN-MN,Manipur,State,24.7208818,93.9229386
+IN-ML,Meghalaya,State,25.5379432,91.2999102
+IN-MZ,Mizoram,State,23.2146169,92.8687612
+IN-NL,Nagaland,State,26.1630556,94.5884911
+IN-OR,Odisha,State,20.5431241,84.6897321
+IN-PB,Punjab,State,30.9293211,75.5004841
+IN-RJ,Rajasthan,State,26.8105777,73.7684549
+IN-SK,Sikkim,State,27.601029,88.45413638680145
+IN-TN,Tamil Nadu,State,10.9094334,78.3665347
+IN-TG,Telengana,State,17.8495919,79.1151663
+IN-TR,Tripura,State,23.7750823,91.7025091
+IN-UT,Uttarakhand,State,30.091993549999998,79.32176659343018
+IN-UP,Uttar Pradesh,State,27.1303344,80.859666
+IN-WB,West Bengal,State,22.9964948,87.6855882
+IN-AN,Andaman and Nicobar Islands,Union territory,10.2188344,92.5771329
+IN-CH,Chandigarh,Union territory,30.7194022,76.7646552
+IN-DN,Dadra and Nagar Haveli,Union territory,20.203950650000003,73.00625077771558
+IN-DD,Daman and Diu,Union territory,20.717985749999997,70.932399240922
+IN-DL,Delhi,Union territory,28.6517178,77.2219388
+IN-JK,Jammu and Kashmir,Union territory,34.0476564,76.7972892
+IN-LA,Ladakh,Union territory,33.9456407,77.6568576
+IN-LD,Lakshadweep,Union territory,10.8832771,72.8171069
+IN-PY,Puducherry,Union territory,11.9340568,79.8306447

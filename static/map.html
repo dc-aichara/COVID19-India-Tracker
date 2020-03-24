@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9a9f73c1d32e4c1a8e3c8a5fcd15a786 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_9a9f73c1d32e4c1a8e3c8a5fcd15a786" ></div>
+        
+</body>
+<script>    
+    
+            var map_9a9f73c1d32e4c1a8e3c8a5fcd15a786 = L.map(
+                "map_9a9f73c1d32e4c1a8e3c8a5fcd15a786",
+                {
+                    center: [20.5937, 78.9629],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4.5,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_66fc450d6c104a58bc9c0a210c8d2bc3 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+            var circle_marker_54055fa958804ff29fa39c375d90cd55 = L.circleMarker(
+                [15.9240905, 80.1863809],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#CD5C5C", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.6, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_7e48b459a1de4a3ca13730ff6ef32e27 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_25e3d16f10fb42cea30324755a21a18e = $(`<div id="html_25e3d16f10fb42cea30324755a21a18e" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Andhra pradesh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>8</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_7e48b459a1de4a3ca13730ff6ef32e27.setContent(html_25e3d16f10fb42cea30324755a21a18e);
+        
+
+        circle_marker_54055fa958804ff29fa39c375d90cd55.bindPopup(popup_7e48b459a1de4a3ca13730ff6ef32e27)
+        ;
+
+        
+    
+    
+            var circle_marker_91faee047cd54a91863dc82b8a947961 = L.circleMarker(
+                [25.6440845, 85.906508],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FA8072", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 2.0999999999999996, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_31334f2c45a048bdbc24dd34f1ce67e9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3be4dca7fb394a239d7eeda13478c707 = $(`<div id="html_3be4dca7fb394a239d7eeda13478c707" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Bihar<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>3</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_31334f2c45a048bdbc24dd34f1ce67e9.setContent(html_3be4dca7fb394a239d7eeda13478c707);
+        
+
+        circle_marker_91faee047cd54a91863dc82b8a947961.bindPopup(popup_31334f2c45a048bdbc24dd34f1ce67e9)
+        ;
+
+        
+    
+    
+            var circle_marker_306a7214d1f84b14a83c6d33d98e5da3 = L.circleMarker(
+                [21.6637359, 81.84063509999999],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA07A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 0.7, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_cda0fd91c4ee4c79b7619792b320e83d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5e537fbec1004b7d95636145ee491888 = $(`<div id="html_5e537fbec1004b7d95636145ee491888" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Chhattisgarh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>1</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_cda0fd91c4ee4c79b7619792b320e83d.setContent(html_5e537fbec1004b7d95636145ee491888);
+        
+
+        circle_marker_306a7214d1f84b14a83c6d33d98e5da3.bindPopup(popup_cda0fd91c4ee4c79b7619792b320e83d)
+        ;
+
+        
+    
+    
+            var circle_marker_a86926bd410443b3a2e6cbbb53bb73bb = L.circleMarker(
+                [28.6517178, 77.22193879999999],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B22222", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21.0, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_c813519b211945c89346d0a95a0c943d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_dc272258d3394abfac9990a23f2e81fd = $(`<div id="html_dc272258d3394abfac9990a23f2e81fd" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Delhi<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>30</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>6</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_c813519b211945c89346d0a95a0c943d.setContent(html_dc272258d3394abfac9990a23f2e81fd);
+        
+
+        circle_marker_a86926bd410443b3a2e6cbbb53bb73bb.bindPopup(popup_c813519b211945c89346d0a95a0c943d)
+        ;
+
+        
+    
+    
+            var circle_marker_ecbfa9578ad341458a743ae809ac7a2d = L.circleMarker(
+                [22.41540825, 72.03149703699282],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.099999999999998, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_2c87f24d5a1f439e84ed9d708a9a1c8e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_af69d4a7cb0641abad1744e11f0853e7 = $(`<div id="html_af69d4a7cb0641abad1744e11f0853e7" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Gujarat<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>33</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_2c87f24d5a1f439e84ed9d708a9a1c8e.setContent(html_af69d4a7cb0641abad1744e11f0853e7);
+        
+
+        circle_marker_ecbfa9578ad341458a743ae809ac7a2d.bindPopup(popup_2c87f24d5a1f439e84ed9d708a9a1c8e)
+        ;
+
+        
+    
+    
+            var circle_marker_9756a16b9b8f4d38b96cb4b1faab0b19 = L.circleMarker(
+                [29.0, 76.0],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B22222", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19.599999999999998, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_885dde1df45f44fba7bd043d02c02f02 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a14e34d9f99743538ade3532dee52bf6 = $(`<div id="html_a14e34d9f99743538ade3532dee52bf6" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Haryana<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>28</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>11</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_885dde1df45f44fba7bd043d02c02f02.setContent(html_a14e34d9f99743538ade3532dee52bf6);
+        
+
+        circle_marker_9756a16b9b8f4d38b96cb4b1faab0b19.bindPopup(popup_885dde1df45f44fba7bd043d02c02f02)
+        ;
+
+        
+    
+    
+            var circle_marker_40995576fae54ce9b1c5439ea1bd154a = L.circleMarker(
+                [31.81676015, 77.34932051968858],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FA8072", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 2.0999999999999996, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_f46090e38300468dbcc9a384f97f39d1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0a4a9d299b2144d190378f5ea88597b1 = $(`<div id="html_0a4a9d299b2144d190378f5ea88597b1" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Himachal pradesh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>3</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_f46090e38300468dbcc9a384f97f39d1.setContent(html_0a4a9d299b2144d190378f5ea88597b1);
+        
+
+        circle_marker_40995576fae54ce9b1c5439ea1bd154a.bindPopup(popup_f46090e38300468dbcc9a384f97f39d1)
+        ;
+
+        
+    
+    
+            var circle_marker_72e86a0342eb40a29a224c9a24ee6f85 = L.circleMarker(
+                [14.520389600000001, 75.7223521],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#800000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25.9, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_6324d5db24e146e08398c394685122ac = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f8d3c344c4e449bca783df88682f808f = $(`<div id="html_f8d3c344c4e449bca783df88682f808f" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Karnataka<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>37</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>3</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_6324d5db24e146e08398c394685122ac.setContent(html_f8d3c344c4e449bca783df88682f808f);
+        
+
+        circle_marker_72e86a0342eb40a29a224c9a24ee6f85.bindPopup(popup_6324d5db24e146e08398c394685122ac)
+        ;
+
+        
+    
+    
+            var circle_marker_fdac9fedf9604ffd8c04aaf5b2218fd8 = L.circleMarker(
+                [10.352874400000001, 76.5120396],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#800000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 66.5, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_d9b857f4ef2b4356be1685938d5e47bd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_77bdc2514cde4db1a8b93d7c3ecab37b = $(`<div id="html_77bdc2514cde4db1a8b93d7c3ecab37b" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Kerala<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>95</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>4</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_d9b857f4ef2b4356be1685938d5e47bd.setContent(html_77bdc2514cde4db1a8b93d7c3ecab37b);
+        
+
+        circle_marker_fdac9fedf9604ffd8c04aaf5b2218fd8.bindPopup(popup_d9b857f4ef2b4356be1685938d5e47bd)
+        ;
+
+        
+    
+    
+            var circle_marker_3576b039fe9d4d67ba0839ea4db1db15 = L.circleMarker(
+                [23.8143419, 77.5340719],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F08080", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8999999999999995, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_ceaed336f932424898604868836254d8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_937a3a084dc34940b0d07610d9dcd1f4 = $(`<div id="html_937a3a084dc34940b0d07610d9dcd1f4" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Madhya pradesh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>7</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_ceaed336f932424898604868836254d8.setContent(html_937a3a084dc34940b0d07610d9dcd1f4);
+        
+
+        circle_marker_3576b039fe9d4d67ba0839ea4db1db15.bindPopup(popup_ceaed336f932424898604868836254d8)
+        ;
+
+        
+    
+    
+            var circle_marker_38df4aaa23ac411299d49a18aca15933 = L.circleMarker(
+                [19.531932, 76.0554568],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#800000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 62.3, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_3d20e91ac75d486187de77712a4c3e7c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fd6c5f86ed2f4a29ac4f68a0c52c4798 = $(`<div id="html_fd6c5f86ed2f4a29ac4f68a0c52c4798" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Maharashtra<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>89</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>2</div>`)[0];
+            popup_3d20e91ac75d486187de77712a4c3e7c.setContent(html_fd6c5f86ed2f4a29ac4f68a0c52c4798);
+        
+
+        circle_marker_38df4aaa23ac411299d49a18aca15933.bindPopup(popup_3d20e91ac75d486187de77712a4c3e7c)
+        ;
+
+        
+    
+    
+            var circle_marker_e002a5f322d54b91b1cfb1232e27689b = L.circleMarker(
+                [24.7208818, 93.9229386],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA07A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 0.7, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_4b654be9c05c447a953bd5656f880225 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d3a1f0452ce6478ebeea3c7ad75d7a8d = $(`<div id="html_d3a1f0452ce6478ebeea3c7ad75d7a8d" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Manipur<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>1</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_4b654be9c05c447a953bd5656f880225.setContent(html_d3a1f0452ce6478ebeea3c7ad75d7a8d);
+        
+
+        circle_marker_e002a5f322d54b91b1cfb1232e27689b.bindPopup(popup_4b654be9c05c447a953bd5656f880225)
+        ;
+
+        
+    
+    
+            var circle_marker_74eb27c3a69e4b83b8642458c72ce3c3 = L.circleMarker(
+                [20.5431241, 84.6897321],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FA8072", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1.4, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_73ffab8fccc54f36886d2f84f8bb9967 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d0bed0e6a7834ad39314d677c4ccce5e = $(`<div id="html_d0bed0e6a7834ad39314d677c4ccce5e" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Odisha<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>2</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_73ffab8fccc54f36886d2f84f8bb9967.setContent(html_d0bed0e6a7834ad39314d677c4ccce5e);
+        
+
+        circle_marker_74eb27c3a69e4b83b8642458c72ce3c3.bindPopup(popup_73ffab8fccc54f36886d2f84f8bb9967)
+        ;
+
+        
+    
+    
+            var circle_marker_48dd04b4468e44ac98c62aab6848b8af = L.circleMarker(
+                [11.934056800000002, 79.83064470000001],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA07A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 0.7, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_ceaa121a56e44046a4a1949795ad11bd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a582fa3096bf4940b296c5668d2c9980 = $(`<div id="html_a582fa3096bf4940b296c5668d2c9980" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Puducherry<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>1</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_ceaa121a56e44046a4a1949795ad11bd.setContent(html_a582fa3096bf4940b296c5668d2c9980);
+        
+
+        circle_marker_48dd04b4468e44ac98c62aab6848b8af.bindPopup(popup_ceaa121a56e44046a4a1949795ad11bd)
+        ;
+
+        
+    
+    
+            var circle_marker_79ce02589bde401a8d538c69075e8f43 = L.circleMarker(
+                [30.929321100000003, 75.5004841],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B22222", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20.299999999999997, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_b4a0dc2e2462450aa5bb413deff4e34b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d0c6ce47996842a2898550681696d8a4 = $(`<div id="html_d0c6ce47996842a2898550681696d8a4" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Punjab<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>29</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_b4a0dc2e2462450aa5bb413deff4e34b.setContent(html_d0c6ce47996842a2898550681696d8a4);
+        
+
+        circle_marker_79ce02589bde401a8d538c69075e8f43.bindPopup(popup_b4a0dc2e2462450aa5bb413deff4e34b)
+        ;
+
+        
+    
+    
+            var circle_marker_20f58befa79049cd9a01daff9825c577 = L.circleMarker(
+                [26.8105777, 73.76845490000001],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22.4, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_6f7d26fb1a084aa3af90d4a96582d8b0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_252ad2d824f24a82b4c0492c889c6f77 = $(`<div id="html_252ad2d824f24a82b4c0492c889c6f77" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Rajasthan<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>32</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>3</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_6f7d26fb1a084aa3af90d4a96582d8b0.setContent(html_252ad2d824f24a82b4c0492c889c6f77);
+        
+
+        circle_marker_20f58befa79049cd9a01daff9825c577.bindPopup(popup_6f7d26fb1a084aa3af90d4a96582d8b0)
+        ;
+
+        
+    
+    
+            var circle_marker_d1cd9bd73fb64ba393a3a5f61ead1d4d = L.circleMarker(
+                [10.909433400000001, 78.3665347],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#DC143C", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.5, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_6f4b221d3eda4d51896fe5ecd5655f08 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eb241e5fc4be494abbe96ff8a8b82b04 = $(`<div id="html_eb241e5fc4be494abbe96ff8a8b82b04" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Tamil nadu<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>15</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>1</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_6f4b221d3eda4d51896fe5ecd5655f08.setContent(html_eb241e5fc4be494abbe96ff8a8b82b04);
+        
+
+        circle_marker_d1cd9bd73fb64ba393a3a5f61ead1d4d.bindPopup(popup_6f4b221d3eda4d51896fe5ecd5655f08)
+        ;
+
+        
+    
+    
+            var circle_marker_e943ae743c094820a27425bb4f1c94d1 = L.circleMarker(
+                [17.8495919, 79.1151663],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8B0000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 24.5, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_ecdafcd6bc714854bf368b1239b76ca1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f7309d72e04a4bd88151af04360d8cb5 = $(`<div id="html_f7309d72e04a4bd88151af04360d8cb5" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Telengana<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>35</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>1</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_ecdafcd6bc714854bf368b1239b76ca1.setContent(html_f7309d72e04a4bd88151af04360d8cb5);
+        
+
+        circle_marker_e943ae743c094820a27425bb4f1c94d1.bindPopup(popup_ecdafcd6bc714854bf368b1239b76ca1)
+        ;
+
+        
+    
+    
+            var circle_marker_33251ac613f54a16b7394cff4705cf0f = L.circleMarker(
+                [30.7194022, 76.7646552],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F08080", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8999999999999995, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_952bd581c19b4a459e91be2a2f97b32f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4c370ee144d74ca79095e0d9d571c631 = $(`<div id="html_4c370ee144d74ca79095e0d9d571c631" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Chandigarh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>7</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_952bd581c19b4a459e91be2a2f97b32f.setContent(html_4c370ee144d74ca79095e0d9d571c631);
+        
+
+        circle_marker_33251ac613f54a16b7394cff4705cf0f.bindPopup(popup_952bd581c19b4a459e91be2a2f97b32f)
+        ;
+
+        
+    
+    
+            var circle_marker_af44a7a599af48299d899fb5ad12070f = L.circleMarker(
+                [34.0476564, 76.7972892],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E9967A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 2.8, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_759b470f4a144a759663edbad66c319d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_63bc9aaa160748be91298c188467a8eb = $(`<div id="html_63bc9aaa160748be91298c188467a8eb" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Jammu and kashmir<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>4</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_759b470f4a144a759663edbad66c319d.setContent(html_63bc9aaa160748be91298c188467a8eb);
+        
+
+        circle_marker_af44a7a599af48299d899fb5ad12070f.bindPopup(popup_759b470f4a144a759663edbad66c319d)
+        ;
+
+        
+    
+    
+            var circle_marker_55cc2256471c4a7cad7982d51965f9db = L.circleMarker(
+                [33.9456407, 77.6568576],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#DC143C", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.1, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_26253b1c006a441fa9ce910a2559783e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_471532f5b631489784c1d4d2b5c614c3 = $(`<div id="html_471532f5b631489784c1d4d2b5c614c3" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Ladakh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>13</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_26253b1c006a441fa9ce910a2559783e.setContent(html_471532f5b631489784c1d4d2b5c614c3);
+        
+
+        circle_marker_55cc2256471c4a7cad7982d51965f9db.bindPopup(popup_26253b1c006a441fa9ce910a2559783e)
+        ;
+
+        
+    
+    
+            var circle_marker_ad3acd080f0846e3af581ef9f5411957 = L.circleMarker(
+                [27.1303344, 80.859666],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.099999999999998, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_d6d9e45e0de54b6b93718557aadaee48 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a47f06487ea44ac3a869f2816fcd3228 = $(`<div id="html_a47f06487ea44ac3a869f2816fcd3228" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Uttar pradesh<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>33</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>11</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_d6d9e45e0de54b6b93718557aadaee48.setContent(html_a47f06487ea44ac3a869f2816fcd3228);
+        
+
+        circle_marker_ad3acd080f0846e3af581ef9f5411957.bindPopup(popup_d6d9e45e0de54b6b93718557aadaee48)
+        ;
+
+        
+    
+    
+            var circle_marker_9e87124de3b94d52bd65821a9476f545 = L.circleMarker(
+                [30.09199355, 79.32176659343018],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E9967A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 2.8, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_d756203f9b324311b0930496484d227a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_66425c22c9ad439d9f6ef44ced4cf70f = $(`<div id="html_66425c22c9ad439d9f6ef44ced4cf70f" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>Uttarakhand<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>4</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>0</div>`)[0];
+            popup_d756203f9b324311b0930496484d227a.setContent(html_66425c22c9ad439d9f6ef44ced4cf70f);
+        
+
+        circle_marker_9e87124de3b94d52bd65821a9476f545.bindPopup(popup_d756203f9b324311b0930496484d227a)
+        ;
+
+        
+    
+    
+            var circle_marker_165ff8acad334cb58aadedfea27cd2fd = L.circleMarker(
+                [22.9964948, 87.6855882],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#CD5C5C", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.3, "stroke": true, "weight": 3}
+            ).addTo(map_9a9f73c1d32e4c1a8e3c8a5fcd15a786);
+        
+    
+        var popup_fdc9960225b54c51bd19c3276cdf72d9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_57a9cedf77c24876b805946da6328abd = $(`<div id="html_57a9cedf77c24876b805946da6328abd" style="width: 100.0%; height: 100.0%;"><strong style='color:orange;'>State/UT: </strong>West bengal<br><strong style='color:orange;'>Total Confirmed: </strong><strong style='color:blue;'>9</strong><br><strong style='color:orange;'>Cured: </strong><strong style='color:green;'>0</strong><br><strong style='color:orange;'>Deaths: </strong><strong style='color:red;'></strong>1</div>`)[0];
+            popup_fdc9960225b54c51bd19c3276cdf72d9.setContent(html_57a9cedf77c24876b805946da6328abd);
+        
+
+        circle_marker_165ff8acad334cb58aadedfea27cd2fd.bindPopup(popup_fdc9960225b54c51bd19c3276cdf72d9)
+        ;
+
+        
+    
+</script>
