@@ -25,7 +25,7 @@ def get_map(data_df):
                  5: '#DC143C',
                  6: '#B22222', 7: '#FF0000',
                  8: "#8B0000", 9: "#800000"}
-    df_geo['TC_quartile'] = pd.qcut(df_geo['Total_confirmed'], 10, labels=False)
+    df_geo['TC_quartile'] = pd.qcut(df_geo['Total_confirmed'], 5, labels=False)
 
     latitude = 20.5937
     longitude = 78.9629
