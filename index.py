@@ -63,7 +63,7 @@ covidin = COVID19India()
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/22.03.2020_moh_india.csv')
+    df = pd.read_csv('data/25.03.2020_moh_india.csv')
 
 map = get_map(data_df=df)
 try:

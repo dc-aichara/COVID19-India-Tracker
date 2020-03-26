@@ -14,7 +14,7 @@ jhu_links = {'confirmed': "https://raw.githubusercontent.com/CSSEGISandData/COVI
 moh_link = "https://www.mohfw.gov.in/"
 
 
-class COVID19India():
+class COVID19India(object):
 
     def __init__(self):
         self.jhu_links = jhu_links
@@ -41,7 +41,11 @@ class COVID19India():
         del df['S. No.']
         cols = df.columns.values.tolist()
         for col in cols[1:]:
-            df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
+            try:
+                df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
+            except: 
+                df = df[:-1]
+                df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
         while save:
             content = requests.get(url).content.decode('utf-8')
 
@@ -67,7 +71,6 @@ class COVID19India():
         files = list(p1.glob('*.csv'))
         f_path = []
         for file in files:
-#             print(file.parts)
             if 'moh' in file.parts[-1]:
                 f_path.append(file)
         # print(f_path)

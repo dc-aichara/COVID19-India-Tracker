@@ -14,7 +14,7 @@ jhu_links = {'confirmed': "https://raw.githubusercontent.com/CSSEGISandData/COVI
 moh_link = "https://www.mohfw.gov.in/"
 
 
-class COVID19India():
+class COVID19India(object):
 
     def __init__(self):
         self.jhu_links = jhu_links
@@ -31,7 +31,7 @@ class COVID19India():
         data['date'] = pd.to_datetime(data['date'])
         while save:
             date = data.date.tolist()[-1].strftime("%d-%m-%Y")
-            data.to_csv(f"{date}_jhu_india.csv", index=False)
+            data.to_csv(f"data/jhu_india.csv", index=False)
             break
         return data
 
@@ -41,15 +41,19 @@ class COVID19India():
         del df['S. No.']
         cols = df.columns.values.tolist()
         for col in cols[1:]:
-            df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
+            try:
+                df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
+            except: 
+                df = df[:-1]
+                df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
         while save:
             content = requests.get(url).content.decode('utf-8')
 
             soup = BeautifulSoup(content, 'html.parser')
             text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
             date = re.findall('[0-9.]+', text)[0]
-            print(date)
-            df.to_csv(f"{date}_moh_india.csv", index=False)
+            # print(date)
+            df.to_csv(f"data/{date}_moh_india.csv", index=False)
             break
         return df
 
@@ -67,23 +71,23 @@ class COVID19India():
         files = list(p1.glob('*.csv'))
         f_path = []
         for file in files:
-#             print(file.parts)
             if 'moh' in file.parts[-1]:
                 f_path.append(file)
-#         print(f_path)
+        # print(f_path)
+        f_path = sorted(f_path)
         df = pd.read_csv(f_path[-1])
         df1 = pd.read_csv(f_path[-2])
         lst = []
-        values = df['Name of State / UT'].values if len(df)>len(df1) else df['Name of State / UT'].values
-        print(df['Name of State / UT'].values)
-        for name in values:
-            if name in df1['Name of State / UT'].values:
-                a = (df[df['Name of State / UT'] == name]).values[0][1:].astype(np.int64)
-                b = (df1[df1['Name of State / UT'] == name]).values[0][1:].astype(np.int64)
-                lst.append([name] + list(abs(a - b)))
+        a, b = [df, df1] if len(df) > len(df1) else [df1, df]
+        # print(a.shape, b.shape)
+        for name in a['Name of State / UT'].values:
+            if name in b['Name of State / UT'].values:
+                c = (a[a['Name of State / UT'] == name]).values[0][1:].astype(np.int64)
+                d = (b[b['Name of State / UT'] == name]).values[0][1:].astype(np.int64)
+                lst.append([name] + list(abs(c - d)))
             else:
-                a = list((df[df['Name of State / UT'] == name]).values[0])
-                lst.append(a)
+                c = list((a[a['Name of State / UT'] == name]).values[0])
+                lst.append(c)
         df2 = pd.DataFrame(data=lst, columns=df.columns)
         return df2
 
