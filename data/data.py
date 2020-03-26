@@ -3,47 +3,34 @@ import numpy as np
 from bs4 import BeautifulSoup
 import requests
 import re
+import json
 from datetime import datetime
 from pathlib import Path
-now = datetime.today().strftime("%d-%m-%Y")
 
-jhu_links = {'confirmed': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv",
-             'recovered': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv",
-             'deaths': "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
-             }
+now = datetime.today().strftime("%d-%m-%Y")
 moh_link = "https://www.mohfw.gov.in/"
+url_state = "https://api.covid19india.org/state_district_wise.json"
+data_india = "https://www.covid19india.org/india.json"
+data_data = "https://api.covid19india.org/data.json"
 
 
 class COVID19India(object):
 
     def __init__(self):
-        self.jhu_links = jhu_links
-        self.moh_link = moh_link
-
-    def jhu_india_data(self, save=False):
-        data = pd.DataFrame()
-        for key, link in self.jhu_links.items():
-            df = pd.read_csv(link)
-            df = df[df["Country/Region"] == "India"]
-            data["date"] = df.columns.values.tolist()[4:]
-            data[key] = df.values[0].tolist()[4:]
-
-        data['date'] = pd.to_datetime(data['date'])
-        while save:
-            date = data.date.tolist()[-1].strftime("%d-%m-%Y")
-            data.to_csv(f"data/jhu_india.csv", index=False)
-            break
-        return data
+        self.moh_url = moh_link  # MOHFW website
+        self.url_state = url_state  # districtwise data
+        self.india_url = data_india  # India map
+        self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
 
     def moh_data(self, save=False):
-        url = self.moh_link
+        url = self.moh_url
         df = pd.read_html(url)[-1]
         del df['S. No.']
         cols = df.columns.values.tolist()
         for col in cols[1:]:
             try:
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
-            except: 
+            except:
                 df = df[:-1]
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
         while save:
@@ -58,7 +45,7 @@ class COVID19India(object):
         return df
 
     def last_update(self):
-        content = requests.get(self.moh_link).content.decode('utf-8')
+        content = requests.get(self.moh_url).content.decode('utf-8')
 
         soup = BeautifulSoup(content, 'html.parser')
         text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
@@ -91,3 +78,77 @@ class COVID19India(object):
         df2 = pd.DataFrame(data=lst, columns=df.columns)
         return df2
 
+    def state_district_data(self):
+
+        content = requests.get(self.url_state).content.decode('utf-8')
+        state_data = json.loads(content)
+        key1 = state_data.keys()
+        Values = []
+        for k in key1:
+            key2 = state_data[k]['districtData'].keys()
+            for k2 in key2:
+                c = list(state_data[k]['districtData'][k2].values())
+                v = [k, k2, c[1], c[0], c[2], c[4]]
+                Values.append(v)
+        state_data = pd.DataFrame(Values,
+                                  columns=['State_UT', 'District', 'Confirmed', 'Active', 'Deaths', 'Recovered'])
+
+        return state_data
+
+    def StateWise_data(self):
+
+        content = requests.get(self.data_url).content.decode('utf-8')
+        data = json.loads(content)
+        data_state = []
+        for v in data['statewise']:
+            v = [v['state'],
+                 v['confirmed'],
+                 v['active'],
+                 v['recovered'],
+                 v['deaths'],
+                 v['lastupdatedtime']]
+            data_state.append(v)
+
+        data_state1 = []
+        for v in data['statewise']:
+            v = [v['state'],
+                 v['delta']['confirmed'],
+                 v['delta']['active'],
+                 v['delta']['recovered'],
+                 v['delta']['deaths'],
+                 v['lastupdatedtime']]
+            data_state1.append(v)
+
+        states = pd.DataFrame(data=data_state, columns=['state_ut', 'confirmed', 'active',
+                                                        'recovered', 'deaths', 'last_updated'])
+        states_new = pd.DataFrame(data=data_state1, columns=['state_ut', 'confirmed', 'active',
+                                                             'recovered', 'deaths', 'last_updated'])
+        return states, states_new
+
+    def timeseries_data(self):
+
+        content = requests.get(self.data_url).content.decode('utf-8')
+        data = json.loads(content)
+        tm = []
+        for v in data['cases_time_series']:
+            v = list(v.values())
+            tm.append(v)
+
+        tm = pd.DataFrame(tm, columns=data['cases_time_series'][0].keys())
+
+        return tm
+
+    def current_update(self):
+        content = requests.get(self.data_url).content.decode('utf-8')
+        data = json.loads(content)
+        data = data["key_values"]
+        return data
+
+    def tests(self):
+        content = requests.get(self.data_url).content.decode('utf-8')
+        data = json.loads(content)
+        values = []
+        for v in data['tested']:
+            values.append(list(v.values())[1:])
+        data = pd.DataFrame(values, columns=list(v.keys())[1:])
+        return data
