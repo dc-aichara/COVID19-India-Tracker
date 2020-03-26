@@ -184,7 +184,7 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
 def get_data(_):
     df_jhu = covidin.jhu_india_data(save=False)
     df_jhu.iloc[61:, 1:] = [471, 35, 9]  # Correction for "23-03-2020"
-    row = [[pd.to_datetime("2020-03-24"), 536, 41, 9]]  # Correction for "24-03-2020"
+    row = [[pd.to_datetime("2020-03-24"), 536, 41, 9], [pd.to_datetime("2020-03-25"), 657, 43, 12] ]
     df_jhu = pd.concat([df_jhu, pd.DataFrame(row, columns=df_jhu.columns)], ignore_index=True)
     return df_jhu.to_json(date_format='iso', orient='split')
 
