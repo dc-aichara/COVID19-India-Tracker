@@ -182,7 +182,11 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
 @app.callback(Output('jhu-data', 'children'),
               [Input('dummy-id', '')])
 def get_data(_):
-    df_jhu = covidin.jhu_india_data(save=False)
+    try:
+        df_jhu = covidin.jhu_india_data(save=False)
+    except:
+        df_jhu = pd.read_csv("data/jhu_india.csv")
+    df_jhu['date'] = pd.to_datetime(df_jhu['date'])
     df_jhu.iloc[61:, 1:] = [471, 35, 9]  # Correction for "23-03-2020"
     row = [[pd.to_datetime("2020-03-24"), 536, 41, 9], [pd.to_datetime("2020-03-25"), 657, 43, 12] ]
     df_jhu = pd.concat([df_jhu, pd.DataFrame(row, columns=df_jhu.columns)], ignore_index=True)
