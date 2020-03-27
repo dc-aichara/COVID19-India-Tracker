@@ -132,18 +132,20 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                    'textAlign': 'center',
                                    "background": "yellow"}),
                        html.Div([
-                                 html.Span("Total Active Cases: "),
-                                 html.Div(id='active-display', style={'display': 'inline-block'}),
-                                html.Span("Total Recovered Cases: "),
-                                html.Div(id='recovered-display', style={'display': 'inline-block'}),
-                                html.Span("Total Deaths: "),
-                                 html.Div(id='death-display', style={'display': 'inline-block'}),
+                                 html.Span("Confirmed Cases: "),
+                                 html.Div(id='confirm-display', style={'display': 'inline-block', 'font-size': 14}),
+                                 html.Span("Active Cases: "),
+                                 html.Div(id='active-display', style={'display': 'inline-block', 'font-size': 14}),
+                                html.Span("Recovered Cases: "),
+                                html.Div(id='recovered-display', style={'display': 'inline-block', 'font-size': 14}),
+                                html.Span("Deaths: "),
+                                 html.Div(id='death-display', style={'display': 'inline-block', 'font-size': 14}),
                                 html.Span("Total affected States and UTs: "),
-                                 html.Div(id='counts-display', style={'display': 'inline-block'})
+                                 html.Div(id='counts-display', style={'display': 'inline-block', 'font-size': 14,})
                                  ], className="row ",
                                 style={
                                     'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
-                                    'display': 'inline-block',
+                                    'display': 'inline-block', "position": "auto"
                                        }),
                        html.Div(id='graph-input'),
                        dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
@@ -190,7 +192,8 @@ def get_data(_):
 @app.callback([Output('active-display', 'children'),
                 Output('recovered-display', 'children'),
                 Output('death-display', 'children'),
-               Output('counts-display', 'children')
+                Output('counts-display', 'children'),
+                Output('confirm-display', 'children')
                ],
               [Input('dummy-id', '')])
 def display_cases(_):
@@ -200,14 +203,15 @@ def display_cases(_):
     recovered_case = value[2]
     deaths = value[-1]
     counts = len(df) - 1
+    total = active_case + recovered_case + deaths
 
     def daq_display(value, clr):
         display = daq.LEDDisplay(
-                            label={'label': "", 'style': {'font-size': "14px",
+                            label={'label': "  ", 'style': {'font-size': "14px",
                                                              'color': 'green',
                                                              'font-family': 'sans-serif',
                                                              'background': 'black',
-                                                             'padding': '2px'
+                                                             'padding': '2px',
                                                         }
                                    },
                             labelPosition='left',
@@ -215,7 +219,7 @@ def display_cases(_):
                             backgroundColor=clr,
                             size=18,
                             # family='sans-serif',
-                            style={'display': 'inline-block',
+                            style={'display': 'inline-block','size': "10px"
                                    },
                         )
         return display
@@ -224,8 +228,9 @@ def display_cases(_):
     b = daq_display(recovered_case, 'green')
     c = daq_display(deaths, 'red')
     d = daq_display(counts, 'gray')
+    e = daq_display(total, '#6F727A')
 
-    return [a, b, c, d]
+    return [a, b, c, d, e]
 
 
 @app.callback(Output(component_id='graph-output', component_property='children'),
@@ -262,57 +267,9 @@ def render_graph(data,  tab):
                  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
             ],
             'layout': {
-                'title': f'Covid19 India Cases (Updated on {date} at 11:59:59 PM)',
+                'title': f'Covid19 India Datewise Cases (Updated on {date} at 11:59:59 PM)',
                 'height': 700,
                 'xaxis': x_axis,
-                'yaxis': y_axis,
-                'plot_bgcolor': colors['background2'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text'],
-                    'size': 18
-                }
-            }
-        }
-    )
-
-    bar_graph1 = dcc.Graph(
-        id='bar-graph',
-        figure={
-            'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
-                     {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', 'name': 'Recovered Case'},
-                     {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths', 'color': 'red'}
-                     ],
-            'layout': {
-                'title': f'Covid19 India Cases by Day',
-                'barmode': 'stack',
-                'height': 700,
-                'xaxis': x_axis,
-                'yaxis': y_axis,
-                'plot_bgcolor': colors['background2'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text'],
-                    'size': 18
-                }
-            }
-        }
-    )
-
-    bar_graph2 = dcc.Graph(
-        id='bar-graph',
-        figure={
-            'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar', 'name': 'Confirmed Cases'},
-                     {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
-                      'name': 'Recovered Cases'},
-                     {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
-                      'name': 'Deaths Cases'},
-            ],
-            'layout': {
-                'title': f'Covid19 India Cases by week',
-                'barmode': 'stack',
-                'height': 700,
-                'xaxis': x_axis_bar,
                 'yaxis': y_axis,
                 'plot_bgcolor': colors['background2'],
                 'paper_bgcolor': colors['background'],
@@ -326,7 +283,57 @@ def render_graph(data,  tab):
 
     if tab == 'tab-1':
         return [graph, data_head, state_data, map1]
+
     elif tab == 'tab-2':
+        bar_graph1 = dcc.Graph(
+            id='bar-graph1',
+            figure={
+                'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
+                         {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', 'name': 'Recovered Case'},
+                         {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths', 'color': 'red'}
+                         ],
+                'layout': {
+                    'title': f'Covid19 India Cases by Day',
+                    'barmode': 'stack',
+                    'height': 700,
+                    'xaxis': x_axis,
+                    'yaxis': y_axis,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    }
+                }
+            }
+        )
+
+        bar_graph2 = dcc.Graph(
+            id='bar-graph2',
+            figure={
+                'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar',
+                          'name': 'Confirmed Cases'},
+                         {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
+                          'name': 'Recovered Cases'},
+                         {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
+                          'name': 'Deaths Cases'},
+                         ],
+                'layout': {
+                    'title': f'Covid19 India Cases by week',
+                    'barmode': 'stack',
+                    'height': 700,
+                    'xaxis': x_axis_bar,
+                    'yaxis': y_axis,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    }
+                }
+            }
+        )
+
         return [bar_graph1, bar_graph2]
     elif tab == 'tab-3':
         return news1

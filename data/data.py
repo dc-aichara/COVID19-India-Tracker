@@ -114,11 +114,17 @@ class COVID19India(object):
             key2 = state_data[k]['districtData'].keys()
             for k2 in key2:
                 c = list(state_data[k]['districtData'][k2].values())
-                v = [k, k2, c[1], c[0], c[2], c[4]]
+                try:
+                    v = [k, k2, c[1], c[0], c[2], c[4]]
+                except:
+                    v = [k, k2, c[0]]
                 Values.append(v)
-        state_data = pd.DataFrame(Values,
-                                  columns=['State_UT', 'District', 'Confirmed', 'Active', 'Deaths', 'Recovered'])
-
+        try:
+            state_data = pd.DataFrame(Values,
+                                      columns=['State_UT', 'District', 'Confirmed', 'Active', 'Deaths', 'Recovered'])
+        except:
+            state_data = pd.DataFrame(Values,
+                                      columns=['State_UT', 'District', 'Confirmed'])
         return state_data
 
     def StateWise_data(self):
