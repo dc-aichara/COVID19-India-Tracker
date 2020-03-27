@@ -4,9 +4,9 @@ import folium
 
 def get_map(data_df):
     """
-
-    :param data_df:
-    :return:
+    Create and save map as html
+    :param data_df: (DataFrame)
+    :return: (html)
     """
     states = pd.read_csv('data/states.csv')
 
@@ -38,7 +38,7 @@ def get_map(data_df):
     for lat, lon, tc, crrd, dth, name, bins in geo_data:
         folium.CircleMarker(
             [lat, lon],
-            radius=0.7 * tc,
+            radius=0.4 * tc,
             popup=("<strong style='color:orange;'>" + 'State/UT: ' + "</strong>" + str(name).capitalize() + '<br>'
                     "<strong style='color:orange;'>" + "Total Confirmed: " + "</strong>" + "<strong style='color:blue;'>" + str(
                 tc) + "</strong>" + '<br>'
