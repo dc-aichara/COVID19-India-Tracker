@@ -133,18 +133,18 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                    "background": "yellow"}),
                        html.Div([
                                  html.Span("Confirmed Cases: "),
-                                 html.Div(id='confirm-display', style={'display': 'inline-block', 'font-size': 14}),
+                                 html.Div(id='confirm-display', style={'display': 'inline-block', 'font-size': 12}),
                                  html.Span("Active Cases: "),
-                                 html.Div(id='active-display', style={'display': 'inline-block', 'font-size': 14}),
+                                 html.Div(id='active-display', style={'display': 'inline-block', 'font-size': 12}),
                                 html.Span("Recovered Cases: "),
-                                html.Div(id='recovered-display', style={'display': 'inline-block', 'font-size': 14}),
+                                html.Div(id='recovered-display', style={'display': 'inline-block', 'font-size': 12}),
                                 html.Span("Deaths: "),
-                                 html.Div(id='death-display', style={'display': 'inline-block', 'font-size': 14}),
+                                 html.Div(id='death-display', style={'display': 'inline-block', 'font-size': 12}),
                                 html.Span("Total affected States and UTs: "),
-                                 html.Div(id='counts-display', style={'display': 'inline-block', 'font-size': 14,})
+                                 html.Div(id='counts-display', style={'display': 'inline-block', 'font-size': 12,})
                                  ], className="row ",
                                 style={
-                                    'marginTop': 0, 'marginBottom': 0, 'font-size': 30, 'color': 'white',
+                                    'marginTop': 1, 'marginBottom': 2, 'font-size': 30, 'color': 'white',
                                     'display': 'inline-block', "position": "auto"
                                        }),
                        html.Div(id='graph-input'),
@@ -164,14 +164,16 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                                     "background": "orange"
                                 }),
                        html.Div(id='graph-output'),  # Tab output
-                       html.Div(id='jhu-data', style={'display': 'none'}),
+                       html.Div(id='api-data', style={'display': 'none'}),
                         html.Div(children=[dcc.Markdown(  # markdown
-                           " Data Resources: [MInistry of Health and Family Welfare | GoI](https://www.mohfw.gov.in/)"
-                           " and [Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19) ")], style={
+                           "Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
+                           "https://www.mohfw.gov.in/) "
+                           " and [covid19india API](https://api.covid19india.org/data.json) ")], style={
                            'textAlign': 'center',
                            "background": "yellow"}),
                        html.Div(children=[dcc.Markdown(  # markdown
-                           " © 2020 [DCAICHARA](https://github.com/dc-aichara)  All Rights Reserved.")], style={
+                           "© 2020 [DCAICHARA](https://github.com/dc-aichara/COVID19-India-Tracker)  All Rights "
+                           "Reserved.")], style={
                            'textAlign': 'center',
                            "background": "yellow"}),
                        html.Div(id='dummy-id'),
@@ -181,12 +183,21 @@ app.layout = html.Div([html.H1("COVID19 India Tracker",
                       )
 
 
-@app.callback(Output('jhu-data', 'children'),
+@app.callback(Output('api-data', 'children'),
               [Input('dummy-id', '')])
 def get_data(_):
-    df_jhu = pd.read_csv("data/jhu_india.csv")
-    df_jhu['date'] = pd.to_datetime(df_jhu['date'])
-    return df_jhu.to_json(date_format='iso', orient='split')
+    try:
+        df_api = covidin.timeseries_data()
+        df_api['date'] = pd.to_datetime(df_api['date'] + '2020')
+        df_api = df_api[df_api['dailyconfirmed'] != ""]
+        df_api = df_api[["date", "totalconfirmed", "totaldeceased", "totalrecovered"]]
+        df_api.columns = ['date', 'confirmed', 'deaths', 'recovered']
+        df_api.to_csv('api_india.csv', index=False)
+    except:
+        df_api = pd.read_csv("data/api_india.csv")
+
+    df_api['date'] = pd.to_datetime(df_api['date'])
+    return df_api.to_json(date_format='iso', orient='split')
 
 
 @app.callback([Output('active-display', 'children'),
@@ -197,7 +208,6 @@ def get_data(_):
                ],
               [Input('dummy-id', '')])
 def display_cases(_):
-    # df = pd.read_csv('data/21.03.2020_moh_india.csv')
     value = df.values[-1][1:].tolist()
     active_case = value[0] + value[1] - value[2] - value[3]
     recovered_case = value[2]
@@ -234,13 +244,13 @@ def display_cases(_):
 
 
 @app.callback(Output(component_id='graph-output', component_property='children'),
-              [Input('jhu-data', 'children'),
+              [Input('api-data', 'children'),
                Input('all-tabs-inline', 'value')])
 def render_graph(data,  tab):
     try:
         df = pd.read_json(data, orient='split')
     except:
-        df = pd.read_csv('data/jhu_india.csv')
+        df = pd.read_csv('data/api_india.csv')
     df['date'] = pd.to_datetime(df['date'])
     date = df.date.tolist()[-1].strftime("%d-%m-%Y")
     data = df[df.date > "2020-02-29"]
@@ -255,33 +265,35 @@ def render_graph(data,  tab):
                                                    "padding": "70px 0",
                         })
 
-    graph = dcc.Graph(
-        id='graph-1',
-        figure={
-            'data': [
-                {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
-                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
-                {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
-                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open'}},
-                {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
-                 "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
-            ],
-            'layout': {
-                'title': f'Covid19 India Datewise Cases (Updated on {date} at 11:59:59 PM)',
-                'height': 700,
-                'xaxis': x_axis,
-                'yaxis': y_axis,
-                'plot_bgcolor': colors['background2'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text'],
-                    'size': 18
+    if tab == 'tab-1':
+        graph = dcc.Graph(
+            id='graph-1',
+            figure={
+                'data': [
+                    {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
+                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
+                    {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
+                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open'}},
+                    {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
+                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
+                    # {'x': data['date'], 'y': data["deaths"]/data["confirmed"]*100, 'type': 'line', 'name': 'Deaths Rate',
+                    #  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
+                ],
+                'layout': {
+                    'title': f'Covid19 India Datewise Cases (Updated on {date} at 11:59:59 PM)',
+                    'height': 700,
+                    'xaxis': x_axis,
+                    'yaxis': y_axis,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    }
                 }
             }
-        }
-    )
+        )
 
-    if tab == 'tab-1':
         return [graph, data_head, state_data, map1]
 
     elif tab == 'tab-2':
