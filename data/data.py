@@ -22,7 +22,21 @@ class COVID19India(object):
         self.india_url = data_india  # India map
         self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
 
+    def __request(self, url):
+        """
+        Requests get method to extract data
+        :param url: Link to data api or website
+        :return: api/link content
+        """
+        content = requests.get(url).content.decode('utf-8')
+        return content
+
     def moh_data(self, save=False):
+        """
+        Get lasted data from Ministry of Health and Family Welfare | GOI
+        :param save: (bool)
+        :return: (DataFrame) Statewise data
+        """
         url = self.moh_url
         df = pd.read_html(url)[-1]
         del df['S. No.']
@@ -34,7 +48,7 @@ class COVID19India(object):
                 df = df[:-1]
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
         while save:
-            content = requests.get(url).content.decode('utf-8')
+            content = self.__request(url)
 
             soup = BeautifulSoup(content, 'html.parser')
             text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
@@ -45,7 +59,11 @@ class COVID19India(object):
         return df
 
     def last_update(self):
-        content = requests.get(self.moh_url).content.decode('utf-8')
+        """
+        Last data update on MoHFW | GOI website
+        :return: (str) Last Update date and time
+        """
+        content = self.__request(self.moh_url)
 
         soup = BeautifulSoup(content, 'html.parser')
         text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
@@ -54,6 +72,10 @@ class COVID19India(object):
         return text
 
     def change_cal(self):
+        """
+        Calculation changes in cases from previous day (MoHFW data)
+        :return: (DataFrame)
+        """
         p1 = Path('data/')
         files = list(p1.glob('*.csv'))
         f_path = []
@@ -79,8 +101,12 @@ class COVID19India(object):
         return df2
 
     def state_district_data(self):
+        """
+        Districtwise data of each state
+        :return: (DataFrame) districtwise data of each state
+        """
 
-        content = requests.get(self.url_state).content.decode('utf-8')
+        content = self.__request(self.url_state)
         state_data = json.loads(content)
         key1 = state_data.keys()
         Values = []
@@ -96,8 +122,11 @@ class COVID19India(object):
         return state_data
 
     def StateWise_data(self):
-
-        content = requests.get(self.data_url).content.decode('utf-8')
+        """
+        Statewise data (total and new data)
+        :return: (Dataframes) Statewise data (total and new data)
+        """
+        content = self.__request(self.data_url)
         data = json.loads(content)
         data_state = []
         for v in data['statewise']:
@@ -126,8 +155,11 @@ class COVID19India(object):
         return states, states_new
 
     def timeseries_data(self):
-
-        content = requests.get(self.data_url).content.decode('utf-8')
+        """
+        TimeSeries covid19 data of India
+        :return: (DataFrame) TimeSeries covid19 data of India
+        """
+        content = self.__request(self.data_url)
         data = json.loads(content)
         tm = []
         for v in data['cases_time_series']:
@@ -139,13 +171,21 @@ class COVID19India(object):
         return tm
 
     def current_update(self):
-        content = requests.get(self.data_url).content.decode('utf-8')
+        """
+        Lastest covid19 cases counts
+        :return: (json) Lastest covid19 cases
+        """
+        content = self.__request(self.data_url)
         data = json.loads(content)
         data = data["key_values"]
         return data
 
     def tests(self):
-        content = requests.get(self.data_url).content.decode('utf-8')
+        """
+        Test statistics
+        :return: (DataFrame) Test counts and results by day
+        """
+        content = self.__request(self.data_url)
         data = json.loads(content)
         values = []
         for v in data['tested']:
