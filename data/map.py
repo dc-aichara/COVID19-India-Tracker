@@ -14,7 +14,7 @@ def get_map(data_df):
                       how='left')
 
     df_geo = df_geo.iloc[:-1, :]
-
+    # print(data_df)
     df_geo['Total_confirmed'] = df_geo["Total Confirmed cases (Indian National)"] + df_geo[
         "Total Confirmed cases ( Foreign National )"]
 
