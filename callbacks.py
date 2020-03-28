@@ -89,7 +89,7 @@ news1 = html.Div(children=[dcc.Markdown(  # markdown
     news),
     dcc.Markdown(  # markdown
         '# **Source:**  [InShorts](https://www.inshorts.com/en/read/)',
-    style={'textAlign': 'right'})
+    style={'textAlign': 'right', "white-space": "pre", "overflow-x": "scroll"})
 ], style={
     # 'textAlign': 'center',
     "background": "#CCFFFF",
@@ -143,6 +143,7 @@ def display_cases(_):
     # deaths = 19
     # active_case = 748
     # recovered_case = 66
+
     def daq_display(value, clr):
         display = daq.LEDDisplay(
                             label={'label': "  ", 'style': {'font-size': "14px",
@@ -191,6 +192,7 @@ def render_graph(data,  tab):
                                                    'textAlign': 'center',
                                                    "background": "#CCFFFF",
                                                    "padding": "70px 0",
+                                                    # "white-space": "pre", "overflow-x": "scroll"
                         })
 
     if tab == 'tab-1':

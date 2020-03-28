@@ -31,9 +31,10 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                                 html.Span("Recovered Cases: "),
                                 html.Div(id='recovered-display', style={'display': 'inline-block', 'font-size': 12}),
                                 html.Span("Deaths: "),
-                                 html.Div(id='death-display', style={'display': 'inline-block', 'font-size': 12}),
-                                html.Span("Total affected States and UTs: "),
-                                 html.Div(id='counts-display', style={'display': 'inline-block', 'font-size': 12,})
+                                html.Div(id='death-display', style={'display': 'inline-block', 'font-size': 12}),
+                                html.Span("Affected States and UTs: "),
+                                html.Div(id='counts-display', style={'display': 'inline-block', 'font-size': 12}),
+                                html.A("(MoHFW)", href='https://www.mohfw.gov.in/', style={'display': 'inline-block', 'font-size': 20})
                                  ], className="row ",
                                 style={
                                     'marginTop': 1, 'marginBottom': 2, 'font-size': 30, 'color': 'white',
