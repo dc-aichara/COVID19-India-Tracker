@@ -139,10 +139,10 @@ def display_cases(_):
     deaths = value[-1]
     counts = len(df) - 1
     total = active_case + recovered_case + deaths
-    total = 833
-    deaths = 19
-    active_case = 748
-    recovered_case = 66
+    # total = 833
+    # deaths = 19
+    # active_case = 748
+    # recovered_case = 66
     def daq_display(value, clr):
         display = daq.LEDDisplay(
                             label={'label': "  ", 'style': {'font-size': "14px",
