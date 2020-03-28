@@ -1,6 +1,7 @@
 from dash.dependencies import Input, Output
 import dash_html_components as html
 import dash_core_components as dcc
+import dash_dangerously_set_inner_html
 import dash_daq as daq
 from app import app
 import pandas as pd
@@ -117,7 +118,7 @@ def get_data(_):
         df_api = df_api[df_api['dailyconfirmed'] != ""]
         df_api = df_api[["date", "totalconfirmed", "totaldeceased", "totalrecovered"]]
         df_api.columns = ['date', 'confirmed', 'deaths', 'recovered']
-        df_api.to_csv('api_india.csv', index=False)
+        df_api.to_csv('data/api_india.csv', index=False)
     except:
         df_api = pd.read_csv("data/api_india.csv")
 
@@ -210,7 +211,7 @@ def render_graph(data,  tab):
                     #  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
                 ],
                 'layout': {
-                    'title': f'Covid19 India Datewise Cases (Updated on {date} at 11:59:59 PM)',
+                    'title': f'Covid19 India Datewise Cases [Unofficial]<br>(Updated on {date} at 11:59:59 PM)',
                     'height': 700,
                     'xaxis': x_axis,
                     'yaxis': y_axis,
