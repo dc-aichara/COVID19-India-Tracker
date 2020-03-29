@@ -3,6 +3,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_dangerously_set_inner_html
 import dash_daq as daq
+from datetime import datetime
 from app import app
 import pandas as pd
 from data.map import get_map
@@ -105,7 +106,7 @@ news1 = html.Div(children=[dcc.Markdown(  # markdown
     news),
     dcc.Markdown(  # markdown
         '# **Source:**  [InShorts](https://www.inshorts.com/en/read/)',
-    style={'textAlign': 'right', "white-space": "pre", "overflow-x": "scroll"})
+        style={'textAlign': 'right', "white-space": "pre", "overflow-x": "scroll"})
 ], style={
     # 'textAlign': 'center',
     "background": "#CCFFFF",
@@ -119,9 +120,9 @@ help_info = """
     # [Government Laboratories Approved by ICMR](https://icmr.nic.in/sites/default/files/upload_documents/Final_Government_Laboratories_Testing_2303.pdf)
     """
 info = html.Div(children=[dcc.Markdown(  # markdown
-                       help_info)], style={
-                       'textAlign': 'left',
-                       "background": "gray"})
+    help_info)], style={
+    'textAlign': 'left',
+    "background": "gray"})
 
 
 @app.callback(Output('api-data', 'children'),
@@ -142,10 +143,10 @@ def get_data(_):
 
 
 @app.callback([Output('active-display', 'children'),
-                Output('recovered-display', 'children'),
-                Output('death-display', 'children'),
-                Output('counts-display', 'children'),
-                Output('confirm-display', 'children')
+               Output('recovered-display', 'children'),
+               Output('death-display', 'children'),
+               Output('counts-display', 'children'),
+               Output('confirm-display', 'children')
                ],
               [Input('dummy-id', '')])
 def display_cases(_):
@@ -155,6 +156,7 @@ def display_cases(_):
     deaths = value[-1]
     counts = len(df) - 1
     total = active_case + recovered_case + deaths
+
     # total = 833
     # deaths = 19
     # active_case = 748
@@ -162,21 +164,21 @@ def display_cases(_):
 
     def daq_display(value, clr):
         display = daq.LEDDisplay(
-                            label={'label': "  ", 'style': {'font-size': "14px",
-                                                             'color': 'green',
-                                                             'font-family': 'sans-serif',
-                                                             'background': 'black',
-                                                             'padding': '2px',
-                                                        }
-                                   },
-                            labelPosition='left',
-                            value=str(value),
-                            backgroundColor=clr,
-                            size=18,
-                            # family='sans-serif',
-                            style={'display': 'inline-block','size': "10px"
-                                   },
-                        )
+            label={'label': "  ", 'style': {'font-size': "14px",
+                                            'color': 'green',
+                                            'font-family': 'sans-serif',
+                                            'background': 'black',
+                                            'padding': '2px',
+                                            }
+                   },
+            labelPosition='left',
+            value=str(value),
+            backgroundColor=clr,
+            size=18,
+            # family='sans-serif',
+            style={'display': 'inline-block', 'size': "10px"
+                   },
+        )
         return display
 
     a = daq_display(active_case, 'black')
@@ -191,7 +193,7 @@ def display_cases(_):
 @app.callback(Output(component_id='graph-output', component_property='children'),
               [Input('api-data', 'children'),
                Input('all-tabs-inline', 'value')])
-def render_graph(data,  tab):
+def render_graph(data, tab):
     try:
         df_daily = pd.read_json(data, orient='split')
     except:
@@ -204,12 +206,22 @@ def render_graph(data,  tab):
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
 
     state_data = html.Div(children=[dcc.Markdown(  # markdown
-                                                   data_display)], style={
-                                                   'textAlign': 'center',
-                                                   "background": "#CCFFFF",
-                                                   "padding": "70px 0",
-                                                    # "white-space": "pre", "overflow-x": "scroll"
-                        })
+        data_display)], style={
+        'textAlign': 'center',
+        "background": "#CCFFFF",
+        "padding": "70px 0",
+        # "white-space": "pre", "overflow-x": "scroll"
+    })
+    dates_index = [6, 13, 20, 27]
+    annotations = [{
+        'x': pd.to_datetime(data['date'].values[i]),  # datetime(2020, 3, 7),
+        'y': data['confirmed'].values[i],
+        'showarrow': True,
+        'text': f"Week{j}: {data['confirmed'].values[i]}",
+        "font": {"color": 'black'},
+        'xref': 'x',
+        'yref': 'y',
+    } for j, i in enumerate(dates_index)]
 
     if tab == 'tab-1':
         graph = dcc.Graph(
@@ -235,7 +247,8 @@ def render_graph(data,  tab):
                     'font': {
                         'color': colors['text'],
                         'size': 18
-                    }
+                    },
+                    'annotations': annotations,
                 }
             }
         )
@@ -263,7 +276,8 @@ def render_graph(data,  tab):
                     'font': {
                         'color': colors['text'],
                         'size': 18
-                    }
+                    },
+                    # 'annotations': annotations
                 }
             }
         )
@@ -276,7 +290,7 @@ def render_graph(data,  tab):
                          {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
                           "marker": {'color': "green"}, 'name': 'Recovered Cases'},
                          {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
-                         "marker": {'color': "red"}, 'name': 'Deaths Cases'},
+                          "marker": {'color': "red"}, 'name': 'Deaths Cases'},
                          ],
                 'layout': {
                     'title': f'Covid19 India Cases by week',
@@ -295,12 +309,12 @@ def render_graph(data,  tab):
         )
         try:
             line = html.Div(children=[dcc.Markdown(  # markdown
-                           "## Cases by States and UTs")], style={
-                           'textAlign': 'center',
-                           "background": "yellow"})
+                "## Cases by States and UTs")], style={
+                'textAlign': 'center',
+                "background": "yellow"})
             bar = df.sort_values('Total Confirmed cases (Indian National)')
             bar = bar[:-1]
-            bar['Total'] = bar['Total Confirmed cases (Indian National)'] +\
+            bar['Total'] = bar['Total Confirmed cases (Indian National)'] + \
                            bar["Total Confirmed cases ( Foreign National )"]
             bar = bar.sort_values('Total')
             # print(bar)
@@ -308,7 +322,7 @@ def render_graph(data,  tab):
                 id='bar-graph3',
                 figure={
                     'data': [{'y': bar['Name of State / UT'], 'x': bar['Total'],
-                              'type': 'bar', "orientation": 'h',  'name': 'Confirmed Cases'},
+                              'type': 'bar', "orientation": 'h', 'name': 'Confirmed Cases'},
                              {'y': bar['Name of State / UT'], 'x': bar["Cured/Discharged/Migrated"], 'type': 'bar',
                               "orientation": 'h', "marker": {'color': "green"}, 'name': 'Recovered Case'},
                              {'y': bar['Name of State / UT'], 'x': bar["Death"], 'type': 'bar', "orientation": 'h',
@@ -337,4 +351,3 @@ def render_graph(data,  tab):
         return news1
     elif tab == 'tab-4':
         return info
-
