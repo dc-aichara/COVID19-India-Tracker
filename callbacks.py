@@ -234,8 +234,6 @@ def render_graph(data, tab):
                      "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open', 'color': 'green'}},
                     {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
                      "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open', 'color': "red"}},
-                    # {'x': data['date'], 'y': data["deaths"]/data["confirmed"]*100, 'type': 'line', 'name': 'Deaths Rate',
-                    #  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
                 ],
                 'layout': {
                     'title': f'Covid19 India Datewise Cases [Unofficial]',
@@ -315,14 +313,15 @@ def render_graph(data, tab):
             bar = df.sort_values('Total Confirmed cases (Indian National)')
             bar = bar[:-1]
             bar['Total'] = bar['Total Confirmed cases (Indian National)'] + \
-                           bar["Total Confirmed cases ( Foreign National )"]
+                           bar["Total Confirmed cases ( Foreign National )"] -\
+                           bar["Cured/Discharged/Migrated"] - bar['Death']
             bar = bar.sort_values('Total')
             # print(bar)
             bar_graph3 = dcc.Graph(
                 id='bar-graph3',
                 figure={
                     'data': [{'y': bar['Name of State / UT'], 'x': bar['Total'],
-                              'type': 'bar', "orientation": 'h', 'name': 'Confirmed Cases'},
+                              'type': 'bar', "orientation": 'h', 'name': 'Active Cases'},
                              {'y': bar['Name of State / UT'], 'x': bar["Cured/Discharged/Migrated"], 'type': 'bar',
                               "orientation": 'h', "marker": {'color': "green"}, 'name': 'Recovered Case'},
                              {'y': bar['Name of State / UT'], 'x': bar["Death"], 'type': 'bar', "orientation": 'h',
