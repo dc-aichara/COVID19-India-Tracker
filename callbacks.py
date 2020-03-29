@@ -157,11 +157,6 @@ def display_cases(_):
     counts = len(df) - 1
     total = active_case + recovered_case + deaths
 
-    # total = 833
-    # deaths = 19
-    # active_case = 748
-    # recovered_case = 66
-
     def daq_display(value, clr):
         display = daq.LEDDisplay(
             label={'label': "  ", 'style': {'font-size': "14px",
@@ -214,10 +209,10 @@ def render_graph(data, tab):
     })
     dates_index = [6, 13, 20, 27]
     annotations = [{
-        'x': pd.to_datetime(data['date'].values[i]),  # datetime(2020, 3, 7),
+        'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
         'showarrow': True,
-        'text': f"Week{j}: {data['confirmed'].values[i]}",
+        'text': f"Week{j + 1 }: {data['confirmed'].values[i]}",
         "font": {"color": 'black'},
         'xref': 'x',
         'yref': 'y',
@@ -313,7 +308,7 @@ def render_graph(data, tab):
             bar = df.sort_values('Total Confirmed cases (Indian National)')
             bar = bar[:-1]
             bar['Total'] = bar['Total Confirmed cases (Indian National)'] + \
-                           bar["Total Confirmed cases ( Foreign National )"] -\
+                           bar["Total Confirmed cases ( Foreign National )"] - \
                            bar["Cured/Discharged/Migrated"] - bar['Death']
             bar = bar.sort_values('Total')
             # print(bar)
