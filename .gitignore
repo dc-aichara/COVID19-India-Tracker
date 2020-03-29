@@ -1,4 +1,5 @@
 *.pyc
 .DS_Store
 static/*
-untitled.ipynb
+*.ipynb
+Notebooks
