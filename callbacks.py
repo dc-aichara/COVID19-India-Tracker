@@ -14,9 +14,9 @@ inshorts = InshortsNews()
 covidin = COVID19India()
 
 colors = {
-    'background': 'black',
-    'background2': 'white',
-    'text': 'gray'
+    'background': 'white',
+    'background2': '#D0D3D4',
+    'text': '#263a90'
 }
 
 y_axis = {
