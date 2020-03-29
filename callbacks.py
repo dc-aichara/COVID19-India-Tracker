@@ -16,7 +16,7 @@ covidin = COVID19India()
 colors = {
     'background': 'black',
     'background2': 'white',
-    'text': 'yellow'
+    'text': 'gray'
 }
 
 y_axis = {
