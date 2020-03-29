@@ -14,9 +14,9 @@ inshorts = InshortsNews()
 covidin = COVID19India()
 
 colors = {
-    'background': 'white',
-    'background2': 'black',
-    'text': '#000080'
+    'background': 'black',
+    'background2': 'white',
+    'text': 'yellow'
 }
 
 y_axis = {
@@ -43,6 +43,21 @@ x_axis_bar = {
     'spikesnap': 'cursor',
 }
 
+y_axis_h = {
+    'title': 'States',
+    'showspikes': True,
+    'spikedash': 'dot',
+    'spikemode': 'across',
+    'spikesnap': 'cursor',
+}
+
+x_axis_h = {
+    'title': 'Cases',
+    'showspikes': True,
+    'spikedash': 'dot',
+    'spikemode': 'across',
+    'spikesnap': 'cursor',
+}
 
 try:
     df = covidin.moh_data(save=True)
@@ -178,14 +193,14 @@ def display_cases(_):
                Input('all-tabs-inline', 'value')])
 def render_graph(data,  tab):
     try:
-        df = pd.read_json(data, orient='split')
+        df_daily = pd.read_json(data, orient='split')
     except:
-        df = pd.read_csv('data/api_india.csv')
-    df['date'] = pd.to_datetime(df['date'])
-    date = df.date.tolist()[-1].strftime("%d-%m-%Y")
-    data = df[df.date > "2020-02-29"]
+        df_daily = pd.read_csv('data/api_india.csv')
+    df_daily['date'] = pd.to_datetime(df_daily['date'])
+    date = df_daily.date.tolist()[-1].strftime("%d-%m-%Y")
+    data = df_daily[df_daily.date > "2020-02-29"]
 
-    df1 = get_daily_data(df)
+    df1 = get_daily_data(df_daily)
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
 
     state_data = html.Div(children=[dcc.Markdown(  # markdown
@@ -204,9 +219,9 @@ def render_graph(data,  tab):
                     {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
                      "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
                     {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
-                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open'}},
+                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open', 'color': 'green'}},
                     {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
-                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
+                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open', 'color': "red"}},
                     # {'x': data['date'], 'y': data["deaths"]/data["confirmed"]*100, 'type': 'line', 'name': 'Deaths Rate',
                     #  "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open'}},
                 ],
@@ -232,8 +247,10 @@ def render_graph(data,  tab):
             id='bar-graph1',
             figure={
                 'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
-                         {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', 'name': 'Recovered Case'},
-                         {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths', 'color': 'red'}
+                         {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', "marker": {'color': "green"},
+                          'name': 'Recovered Case'},
+                         {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths',
+                          "marker": {'color': "red"}, }
                          ],
                 'layout': {
                     'title': f'Covid19 India Cases by Day',
@@ -257,9 +274,9 @@ def render_graph(data,  tab):
                 'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar',
                           'name': 'Confirmed Cases'},
                          {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
-                          'name': 'Recovered Cases'},
+                          "marker": {'color': "green"}, 'name': 'Recovered Cases'},
                          {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
-                          'name': 'Deaths Cases'},
+                         "marker": {'color': "red"}, 'name': 'Deaths Cases'},
                          ],
                 'layout': {
                     'title': f'Covid19 India Cases by week',
@@ -276,8 +293,46 @@ def render_graph(data,  tab):
                 }
             }
         )
-
-        return [bar_graph1, bar_graph2]
+        try:
+            line = html.Div(children=[dcc.Markdown(  # markdown
+                           "## Cases by States and UTs")], style={
+                           'textAlign': 'center',
+                           "background": "yellow"})
+            bar = df.sort_values('Total Confirmed cases (Indian National)')
+            bar = bar[:-1]
+            bar['Total'] = bar['Total Confirmed cases (Indian National)'] +\
+                           bar["Total Confirmed cases ( Foreign National )"]
+            bar = bar.sort_values('Total')
+            # print(bar)
+            bar_graph3 = dcc.Graph(
+                id='bar-graph3',
+                figure={
+                    'data': [{'y': bar['Name of State / UT'], 'x': bar['Total'],
+                              'type': 'bar', "orientation": 'h',  'name': 'Confirmed Cases'},
+                             {'y': bar['Name of State / UT'], 'x': bar["Cured/Discharged/Migrated"], 'type': 'bar',
+                              "orientation": 'h', "marker": {'color': "green"}, 'name': 'Recovered Case'},
+                             {'y': bar['Name of State / UT'], 'x': bar["Death"], 'type': 'bar', "orientation": 'h',
+                              'name': 'Deaths', "marker": {'color': "red"}}
+                             ],
+                    'layout': {
+                        'title': f'Covid19 India Cases by State',
+                        'barmode': 'stack',
+                        'height': 700,
+                        'xaxis': x_axis_h,
+                        'yaxis': y_axis_h,
+                        'plot_bgcolor': colors['background2'],
+                        'paper_bgcolor': colors['background'],
+                        'font': {
+                            'color': colors['text'],
+                            'size': 18
+                        },
+                        "margin": {"l": 230, 'b': 30, "t": 50}
+                    }
+                }
+            )
+            return [bar_graph1, bar_graph2, line, bar_graph3]
+        except:
+            return [bar_graph1, bar_graph2]
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
