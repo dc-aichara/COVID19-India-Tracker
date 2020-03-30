@@ -2,7 +2,7 @@
 
 ***
 
-<img src="images/web.png">
+<img src="assets/images/web.png">
 
 # Usages
 
