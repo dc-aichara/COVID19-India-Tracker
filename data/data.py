@@ -54,8 +54,8 @@ class COVID19India(object):
 
             soup = BeautifulSoup(content, 'html.parser')
             text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
+            text = text.split('as on')[-1].split("at")[0]
             date = re.findall('[0-9.]+', text)[0]
-            # print(date)
             df.to_csv(f"data/{date}_moh_india.csv", index=False)
             break
         return df

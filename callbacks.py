@@ -68,17 +68,17 @@ map = get_map(data_df=df)
 df2 = covidin.change_cal()
 
 data_display = """
-| **Name of State / UT** | **Total Confirmed cases (Indian National)** | **Total Confirmed cases ( Foreign National )** | |**Cured/Discharged/Migrated** |  | **Death** |
+| **Name of State / UT** | **Total Confirmed cases *** |  | |**Cured/Discharged/Migrated** |  | **Death** |
 |:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 """
-# df = df.sort_values('Total Confirmed cases (Indian National)', ascending=False)
+# df = df.sort_values('Total Confirmed cases *', ascending=False)
 for v1, v2 in zip(df.values, df2.values):
     a = v1[0]
     b = v1[1] if v2[1] == 0 else f"{v1[1]} (**+{v2[1]}**)"
     c = v1[2] if v2[2] == 0 else f"{v1[2]} (**+{v2[2]}**)"
     d = v1[3] if v2[3] == 0 else f"{v1[3]} (**+{v2[3]}**)"
-    e = v1[4] if v2[4] == 0 else f"{v1[4]} (**+{v2[4]}**)"
-    v = f"""|{a}|{b}|{c}||{d}||{e}|\n"""
+    # e = v1[4] if v2[4] == 0 else f"{v1[4]} (**+{v2[4]}**)"
+    v = f"""|{a}|{b}|||{c}||{d}|\n"""
     data_display += v
 
 data_head = html.Div(children=[dcc.Markdown(  # markdown
@@ -151,11 +151,11 @@ def get_data(_):
               [Input('dummy-id', '')])
 def display_cases(_):
     value = df.values[-1][1:].tolist()
-    active_case = value[0] + value[1] - value[2] - value[3]
-    recovered_case = value[2]
+    active_case = value[0] - value[1] - value[2]
+    recovered_case = value[1]
     deaths = value[-1]
     counts = len(df) - 1
-    total = active_case + recovered_case + deaths
+    total = value[0]
 
     def daq_display(value, clr):
         display = daq.LEDDisplay(
@@ -305,10 +305,9 @@ def render_graph(data, tab):
                 "## Cases by States and UTs")], style={
                 'textAlign': 'center',
                 "background": "yellow"})
-            bar = df.sort_values('Total Confirmed cases (Indian National)')
+            bar = df.sort_values('Total Confirmed cases *')
             bar = bar[:-1]
-            bar['Total'] = bar['Total Confirmed cases (Indian National)'] + \
-                           bar["Total Confirmed cases ( Foreign National )"] - \
+            bar['Total'] = bar['Total Confirmed cases *'] - \
                            bar["Cured/Discharged/Migrated"] - bar['Death']
             bar = bar.sort_values('Total')
             # print(bar)
