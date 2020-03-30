@@ -1,26 +1,26 @@
-Name of State / UT,Total Confirmed cases (Indian National),Total Confirmed cases ( Foreign National ),Cured/Discharged/Migrated,Death
-Andhra Pradesh,8,0,0,0
-Bihar,3,0,0,1
-Chhattisgarh,1,0,0,0
-Delhi,29,1,6,2
-Gujarat,32,1,0,1
-Haryana,14,14,11,0
-Himachal Pradesh,3,0,0,1
-Karnataka,37,0,3,1
-Kerala,87,8,4,0
-Madhya Pradesh,7,0,0,0
-Maharashtra,86,3,0,2
-Manipur,1,0,0,0
-Odisha,2,0,0,0
-Puducherry,1,0,0,0
-Punjab,29,0,0,1
-Rajasthan,30,2,3,0
-Tamil Nadu,13,2,1,0
-Telengana,25,10,1,0
-Chandigarh,7,0,0,0
-Jammu and Kashmir,4,0,0,0
-Ladakh,13,0,0,0
-Uttar Pradesh,32,1,11,0
-Uttarakhand,3,1,0,0
-West Bengal,9,0,0,1
-Total number of confirmed cases in India,476,43,40,10
+Name of State / UT,Total Confirmed cases *,Cured/Discharged/Migrated,Death
+Andhra Pradesh,8,0,0
+Bihar,3,0,1
+Chhattisgarh,1,0,0
+Delhi,30,6,2
+Gujarat,33,0,1
+Haryana,28,11,0
+Himachal Pradesh,3,0,1
+Karnataka,37,3,1
+Kerala,95,4,0
+Madhya Pradesh,7,0,0
+Maharashtra,89,0,2
+Manipur,1,0,0
+Odisha,2,0,0
+Puducherry,1,0,0
+Punjab,29,0,1
+Rajasthan,32,3,0
+Tamil Nadu,15,1,0
+Telengana,35,1,0
+Chandigarh,7,0,0
+Jammu and Kashmir,4,0,0
+Ladakh,13,0,0
+Uttar Pradesh,33,11,0
+Uttarakhand,4,0,0
+West Bengal,9,0,1
+Total number of confirmed cases in India,519,40,10

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-
+import re
+from pathlib import Path
 
 def get_daily_data(df):
     df1 = df[df['date'] > "2020-02-29"].reset_index(drop=True)
@@ -29,3 +30,29 @@ def get_interval_data(days=7, cases=pd.DataFrame(), cols=None):
     for col in cols:
         data[col + "_cum_sum"] = data[col].cumsum()
     return data
+
+def get_state_daily():
+    p = Path("Data/")
+
+    files = sorted([f for f in list(Path.glob(p, '*.csv')) if "moh" in f.parts[-1]])
+
+    states = pd.read_csv("data/states.csv")
+
+    daily_data = {}
+
+    for value in states['Name of State / UT'].values:
+        daily_data[value] = {"Date": [], 'Total Confirmed cases *': [],
+                             'Cured/Discharged/Migrated': [], 'Death': []}
+
+    for f in files:
+        df = pd.read_csv(f)
+        date = re.findall("[0-9.]+", f.parts[-1])[0]
+        for k in daily_data.keys():
+            if k in df['Name of State / UT'].values:
+                v = df[df['Name of State / UT'] == k].values[0]
+                daily_data[k]['Date'].append(date)
+                daily_data[k]['Total Confirmed cases *'].append(v[1])
+                daily_data[k]['Cured/Discharged/Migrated'].append(v[2])
+                daily_data[k]['Death'].append(v[3])
+
+    return daily_data

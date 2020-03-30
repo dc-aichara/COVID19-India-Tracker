@@ -9,7 +9,7 @@ import pandas as pd
 from data.map import get_map
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
-from data.data_processing import get_daily_data, get_interval_data
+from data.data_processing import get_daily_data, get_interval_data, get_state_daily
 
 inshorts = InshortsNews()
 covidin = COVID19India()
@@ -64,6 +64,8 @@ try:
     df = covidin.moh_data(save=True)
 except:
     df = pd.read_csv('data/27.03.2020_moh_india.csv')
+
+s50 = df[df["Total Confirmed cases *"] > 50]['Name of State / UT'].values[:-1].tolist()
 map = get_map(data_df=df)
 df2 = covidin.change_cal()
 
@@ -125,6 +127,30 @@ info = html.Div(children=[dcc.Markdown(  # markdown
     'textAlign': 'left',
     "background": "gray"})
 
+
+
+daily_state = get_state_daily()
+line_graph2 = dcc.Graph(
+            id='graph-1',
+            figure={
+                'data': [
+                    {'x': pd.to_datetime(daily_state[s]['Date']), 'y':daily_state[s]['Total Confirmed cases *'], 'type': 'line', 'name': s,
+                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s50],
+                'layout': {
+                    'title': f'Covid19 India Statewise Cases',
+                    'height': 700,
+                    'xaxis': x_axis,
+                    'yaxis': y_axis,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    },
+                    # 'annotations': annotations,
+                }
+            }
+        )
 
 @app.callback(Output('api-data', 'children'),
               [Input('dummy-id', '')])
@@ -339,9 +365,10 @@ def render_graph(data, tab):
                     }
                 }
             )
-            return [bar_graph1, bar_graph2, line, bar_graph3]
+
+            return [bar_graph1, bar_graph2, line, bar_graph3, line_graph2]
         except:
-            return [bar_graph1, bar_graph2]
+            return [bar_graph1, bar_graph2, line_graph2]
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
