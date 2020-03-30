@@ -68,7 +68,7 @@ map = get_map(data_df=df)
 df2 = covidin.change_cal()
 
 data_display = """
-| **Name of State / UT** | **Total Confirmed cases *** |  | |**Cured/Discharged/Migrated** |  | **Death** |
+| **Name of State / UT** | **Total Confirmed cases *** |**Cured/Discharged/Migrated** | **Death** |
 |:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 """
 # df = df.sort_values('Total Confirmed cases *', ascending=False)
@@ -78,13 +78,14 @@ for v1, v2 in zip(df.values, df2.values):
     c = v1[2] if v2[2] == 0 else f"{v1[2]} (**+{v2[2]}**)"
     d = v1[3] if v2[3] == 0 else f"{v1[3]} (**+{v2[3]}**)"
     # e = v1[4] if v2[4] == 0 else f"{v1[4]} (**+{v2[4]}**)"
-    v = f"""|{a}|{b}|||{c}||{d}|\n"""
+    v = f"""|{a}|{b}|{c}|{d}|\n"""
     data_display += v
 
 data_head = html.Div(children=[dcc.Markdown(  # markdown
     f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
     'textAlign': 'center',
-    "background": "yellow"})
+    "background": "yellow",
+    })
 
 map1 = html.Div(children=[dcc.Markdown(  # markdown
     "##  [Covid India Map](/static/map.html)")], style={
@@ -110,7 +111,7 @@ news1 = html.Div(children=[dcc.Markdown(  # markdown
 ], style={
     # 'textAlign': 'center',
     "background": "#CCFFFF",
-    "padding": "70px 0",
+    "padding": "10px 0",
 })
 
 help_info = """
@@ -201,11 +202,12 @@ def render_graph(data, tab):
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
 
     state_data = html.Div(children=[dcc.Markdown(  # markdown
-        data_display)], style={
+        data_display)],
+        style={
         'textAlign': 'center',
-        "background": "#CCFFFF",
-        "padding": "70px 0",
-        # "white-space": "pre", "overflow-x": "scroll"
+        "background": "#bccad0",
+        "padding": "10px 0",
+        "white-space": "pre", "overflow-x": "scroll"
     })
     dates_index = [6, 13, 20, 27]
     annotations = [{
