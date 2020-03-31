@@ -255,16 +255,16 @@ def render_graph(data, tab):
         return [line_graph1, data_head, state_data, map1]
 
     elif tab == 'tab-2':
-        annots = [{
-            'x': pd.to_datetime(daily_state[s]['Date'][-1]),
-            'y': daily_state[s]['Total Confirmed cases *'][-1],
-            'showarrow': False,
-            'text': f"{s}",
-            "font": {"color": 'red', "size": 8},
-            'xref': 'x',
-            'yref': 'y',
-        } for s in s50
-        ]
+        # annots = [{
+        #     'x': pd.to_datetime(daily_state[s]['Date'][-1]),
+        #     'y': daily_state[s]['Total Confirmed cases *'][-1],
+        #     'showarrow': False,
+        #     'text': f"{s}",
+        #     "font": {"color": 'red', "size": 8},
+        #     'xref': 'x',
+        #     'yref': 'y',
+        # } for s in s50
+        # ]
         line_graph2 = dcc.Graph(
             id='graph-1',
             figure={
