@@ -127,30 +127,8 @@ info = html.Div(children=[dcc.Markdown(  # markdown
     'textAlign': 'left',
     "background": "gray"})
 
-
-
 daily_state = get_state_daily()
-line_graph2 = dcc.Graph(
-            id='graph-1',
-            figure={
-                'data': [
-                    {'x': pd.to_datetime(daily_state[s]['Date']), 'y':daily_state[s]['Total Confirmed cases *'], 'type': 'line', 'name': s,
-                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s50],
-                'layout': {
-                    'title': f'Covid19 India Statewise Cases',
-                    'height': 700,
-                    'xaxis': x_axis,
-                    'yaxis': y_axis,
-                    'plot_bgcolor': colors['background2'],
-                    'paper_bgcolor': colors['background'],
-                    'font': {
-                        'color': colors['text'],
-                        'size': 18
-                    },
-                    # 'annotations': annotations,
-                }
-            }
-        )
+
 
 @app.callback(Output('api-data', 'children'),
               [Input('dummy-id', '')])
@@ -247,7 +225,7 @@ def render_graph(data, tab):
     } for j, i in enumerate(dates_index)]
 
     if tab == 'tab-1':
-        graph = dcc.Graph(
+        line_graph1 = dcc.Graph(
             id='graph-1',
             figure={
                 'data': [
@@ -274,9 +252,41 @@ def render_graph(data, tab):
             }
         )
 
-        return [graph, data_head, state_data, map1]
+        return [line_graph1, data_head, state_data, map1]
 
     elif tab == 'tab-2':
+        annots = [{
+            'x': pd.to_datetime(daily_state[s]['Date'][-1]),
+            'y': daily_state[s]['Total Confirmed cases *'][-1],
+            'showarrow': False,
+            'text': f"{s}",
+            "font": {"color": 'red', "size": 8},
+            'xref': 'x',
+            'yref': 'y',
+        } for s in s50
+        ]
+        line_graph2 = dcc.Graph(
+            id='graph-1',
+            figure={
+                'data': [
+                    {'x': pd.to_datetime(daily_state[s]['Date']), 'y': daily_state[s]['Total Confirmed cases *'],
+                     'type': 'line', 'name': s,
+                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s50],
+                'layout': {
+                    'title': f'Covid19 India Statewise Cases',
+                    'height': 700,
+                    'xaxis': x_axis,
+                    'yaxis': y_axis,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    },
+                    # 'annotations': annots,
+                }
+            }
+        )
         bar_graph1 = dcc.Graph(
             id='bar-graph1',
             figure={
