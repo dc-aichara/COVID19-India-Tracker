@@ -53,9 +53,8 @@ class COVID19India(object):
             content = self.__request(url)
 
             soup = BeautifulSoup(content, 'html.parser')
-            text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
-            text = text.split('as on')[-1].split("at")[0]
-            date = re.findall('[0-9.]+', text)[0]
+            text = soup.find_all('div', attrs={'class': 'status-update'})[0].text.strip()
+            date = pd.to_datetime(text.split(':')[1].split(',')[0]).strftime('%d.%m.%Y')
             df.to_csv(f"data/{date}_moh_india.csv", index=False)
             break
         return df
@@ -68,9 +67,8 @@ class COVID19India(object):
         content = self.__request(self.moh_url)
 
         soup = BeautifulSoup(content, 'html.parser')
-        text = [text.text for text in soup.find_all('p') if 'as on' in text.text][-1]
-        text = re.findall('[a-zA-Z0-9.:]+', text)
-        text = " ".join(text[text.index('on'):])
+        text = soup.find_all('div', attrs={'class': 'status-update'})[0].text.strip()
+        text = text.split(" : ")[-1]
         return text
 
     def change_cal(self):

@@ -41,7 +41,7 @@ def get_state_daily():
     daily_data = {}
 
     for value in states['Name of State / UT'].values:
-        daily_data[value] = {"Date": [], 'Total Confirmed cases *': [],
+        daily_data[value] = {"Date": [], 'Total Confirmed cases': [],
                              'Cured/Discharged/Migrated': [], 'Death': []}
 
     for f in files:
@@ -51,7 +51,7 @@ def get_state_daily():
             if k in df['Name of State / UT'].values:
                 v = df[df['Name of State / UT'] == k].values[0]
                 daily_data[k]['Date'].append(date)
-                daily_data[k]['Total Confirmed cases *'].append(v[1])
+                daily_data[k]['Total Confirmed cases'].append(v[1])
                 daily_data[k]['Cured/Discharged/Migrated'].append(v[2])
                 daily_data[k]['Death'].append(v[3])
 

@@ -65,15 +65,15 @@ try:
 except:
     df = pd.read_csv('data/27.03.2020_moh_india.csv')
 
-s50 = df[df["Total Confirmed cases *"] > 50]['Name of State / UT'].values[:-1].tolist()
+s50 = df[df["Total Confirmed cases"] > 50]['Name of State / UT'].values[:-1].tolist()
 map = get_map(data_df=df)
 df2 = covidin.change_cal()
 
 data_display = """
-| **Name of State / UT** | **Total Confirmed cases *** |**Cured/Discharged/Migrated** | **Death** |
+| **Name of State / UT** | **Total Confirmed cases** |**Cured/Discharged/Migrated** | **Death** |
 |:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 """
-# df = df.sort_values('Total Confirmed cases *', ascending=False)
+# df = df.sort_values('Total Confirmed cases', ascending=False)
 for v1, v2 in zip(df.values, df2.values):
     a = v1[0]
     b = v1[1] if v2[1] == 0 else f"{v1[1]} (**+{v2[1]}**)"
@@ -84,7 +84,7 @@ for v1, v2 in zip(df.values, df2.values):
     data_display += v
 
 data_head = html.Div(children=[dcc.Markdown(  # markdown
-    f"# COVID19 STATEWISE STATUS \n(Last updated {covidin.last_update()})")], style={
+    f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()})")], style={
     'textAlign': 'center',
     "background": "yellow",
     })
@@ -204,7 +204,6 @@ def render_graph(data, tab):
 
     df1 = get_daily_data(df_daily)
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
-
     state_data = html.Div(children=[dcc.Markdown(  # markdown
         data_display)],
         style={
@@ -257,7 +256,7 @@ def render_graph(data, tab):
     elif tab == 'tab-2':
         # annots = [{
         #     'x': pd.to_datetime(daily_state[s]['Date'][-1]),
-        #     'y': daily_state[s]['Total Confirmed cases *'][-1],
+        #     'y': daily_state[s]['Total Confirmed cases'][-1],
         #     'showarrow': False,
         #     'text': f"{s}",
         #     "font": {"color": 'red', "size": 8},
@@ -269,7 +268,7 @@ def render_graph(data, tab):
             id='graph-1',
             figure={
                 'data': [
-                    {'x': pd.to_datetime(daily_state[s]['Date']), 'y': daily_state[s]['Total Confirmed cases *'],
+                    {'x': pd.to_datetime(daily_state[s]['Date']), 'y': daily_state[s]['Total Confirmed cases'],
                      'type': 'line', 'name': s,
                      "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s50],
                 'layout': {
@@ -343,9 +342,9 @@ def render_graph(data, tab):
                 "## Cases by States and UTs")], style={
                 'textAlign': 'center',
                 "background": "yellow"})
-            bar = df.sort_values('Total Confirmed cases *')
+            bar = df.sort_values('Total Confirmed cases')
             bar = bar[:-1]
-            bar['Total'] = bar['Total Confirmed cases *'] - \
+            bar['Total'] = bar['Total Confirmed cases'] - \
                            bar["Cured/Discharged/Migrated"] - bar['Death']
             bar = bar.sort_values('Total')
             # print(bar)
