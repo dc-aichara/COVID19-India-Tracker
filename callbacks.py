@@ -63,7 +63,7 @@ x_axis_h = {
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/27.03.2020_moh_india.csv')
+    df = pd.read_csv('data/2020.03.27_moh_india.csv')
 
 s50 = df[df["Total Confirmed cases"] > 50]['Name of State / UT'].values[:-1].tolist()
 map = get_map(data_df=df)

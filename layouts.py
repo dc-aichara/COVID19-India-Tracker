@@ -19,6 +19,11 @@ tab_selected_style = {
     "font-size": 20
 }
 
+dis = html.Div(className="site-stats-count", children=[html.Ul(children=
+        [html.Li(className='bg-blue', children=[html.Img(src='assets/images/icon-infected.png', alt='Active Status'), html.Strong(20), html.Span('Active Cases')], style={'display': 'inline-block'}),
+        html.Li(className='bg-green', children=[html.Img(src='assets/images/icon-inactive.png'), html.Strong(1), html.Span('Cured')], style={'display': 'inline-block'}),
+        html.Li(className='bg-red', children=[html.Img(src='assets/images/icon-death.png'), html.Strong(1), html.Span('Deaths')], style={'display': 'inline-block'})])
+                                        ], style={'background': 'orange'})
 
 layout = html.Div([html.H1("COVID19 India Tracker",
                                style={
@@ -41,6 +46,7 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                                     'marginTop': 1, 'marginBottom': 2, 'font-size': 30, 'color': 'white',
                                     'display': 'inline-block', "position": "auto"
                                        }),
+                   # dis,
                        html.Div(id='graph-input'),
                        dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
                            dcc.Tab(label='All Cases', value='tab-1', style=tab_style,

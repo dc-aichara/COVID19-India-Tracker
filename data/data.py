@@ -40,6 +40,7 @@ class COVID19India(object):
         url = self.moh_url
         df = pd.read_html(url)[-1]
         del df['S. No.']
+        df.columns = ['Name of State / UT', 'Total Confirmed cases', 'Cured/Discharged/Migrated', 'Death']
         cols = df.columns.values.tolist()
         for col in cols[1:]:
             try:
@@ -54,7 +55,7 @@ class COVID19India(object):
 
             soup = BeautifulSoup(content, 'html.parser')
             text = soup.find_all('div', attrs={'class': 'status-update'})[0].text.strip()
-            date = pd.to_datetime(text.split(':')[1].split(',')[0]).strftime('%d.%m.%Y')
+            date = pd.to_datetime(text.split(':')[1].split(',')[0]).strftime('%Y.%m.%d')
             df.to_csv(f"data/{date}_moh_india.csv", index=False)
             break
         return df
@@ -82,8 +83,8 @@ class COVID19India(object):
         for file in files:
             if 'moh' in file.parts[-1]:
                 f_path.append(file)
-        # print(f_path)
         f_path = sorted(f_path)
+        # print(f_path)
         df = pd.read_csv(f_path[-1])
         df1 = pd.read_csv(f_path[-2])
         lst = []

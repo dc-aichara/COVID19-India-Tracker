@@ -2,6 +2,8 @@ table {
 margin-left: auto;
 margin-right: auto;
 border-collapse: collapse;
+width: 100%;
+font-size: 20px;
 }
 
 th {
@@ -20,7 +22,9 @@ h4 {
 color: blue;
 }
 
-/*
-table, td, th {
-  border: 1px solid gray;
-}*/
+.bg-blue {
+    color: #002c56;
+    }
+.site-stats .site-stats-count ul li img{ max-height: 25px;}
+.site-stats .site-stats-count ul li strong{ font-size: 18px; line-height: 18px; margin: 6px 0 -1px;}
+.site-stats .site-stats-count ul{ margin: 0 0 10px;}
