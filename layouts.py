@@ -23,8 +23,8 @@ tab_selected_style = {
 dis = html.Div([html.Div(children=
                          [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
                                                                                          alt='position status',
-                                                                                         style={'height': '33%',
-                                                                                                'width': '33%'}),
+                                                                                         style={'height': '37%',
+                                                                                                'width': '37%'}),
                                                                                 html.H5(id="confirm-display"),
                                                                                 html.P('Confirm Cases')], style={
                              'display': 'inline-block',
@@ -58,8 +58,8 @@ dis = html.Div([html.Div(children=
                               }),
                           html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
                                                                                           alt='states UTs status',
-                                                                                          style={'height': '29%',
-                                                                                                 'width': '29%'}),
+                                                                                          style={'height': '32%',
+                                                                                                 'width': '32%'}),
                                                                                  html.H5(id='counts-display'),
                                                                                  html.P('Affected States/UTs')], style={
                               'display': 'inline-block',

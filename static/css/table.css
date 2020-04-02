@@ -43,7 +43,7 @@ background-color: #f9f9f9;
     padding: 15px;
     position: relative;
     box-shadow: 2px 2px 2px lightgrey;
-    line-height: 1.2;
+    line-height: .6;
 }
 
 #total, #active, #cure, #death, #states {
