@@ -167,7 +167,7 @@ def display_cases(_):
             label={'label': "  ", 'style': {'font-size': "14px",
                                             'color': 'green',
                                             'font-family': 'sans-serif',
-                                            'background': 'black',
+                                            'background': 'white',
                                             'padding': '2px',
                                             }
                    },
@@ -375,9 +375,9 @@ def render_graph(data, tab):
                 }
             )
 
-            return [bar_graph1, bar_graph2, line, bar_graph3, line_graph2]
+            return [bar_graph1, bar_graph2, line, bar_graph3]  # , line_graph2]
         except:
-            return [bar_graph1, bar_graph2, line_graph2]
+            return [bar_graph1, bar_graph2]  # , line_graph2]
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':

@@ -22,9 +22,36 @@ h4 {
 color: blue;
 }
 
-.bg-blue {
-    color: #002c56;
+.bg-yellow {
+background-color: #002c56;
+}
+.bg-blue{
+background-color: #015b25;
+}
+.bg-red {
+background-color: #5a0502;
+}
+.bg-yellow{
+background-color: #582700;
+}
+.bg-orange{
+background-color: #f9f9f9;
+}
+
+.bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .bg-info {
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    margin: 10px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 2px 2px 2px lightgrey;
+    line-height: 1.2;
+}
+
+#total, #active, #cure, #death, #states {
+    flex: 2;
+}
+body {
+    font-size: 14px;
+    line-height: 1.12;
     }
-.site-stats .site-stats-count ul li img{ max-height: 25px;}
-.site-stats .site-stats-count ul li strong{ font-size: 18px; line-height: 18px; margin: 6px 0 -1px;}
-.site-stats .site-stats-count ul{ margin: 0 0 10px;}

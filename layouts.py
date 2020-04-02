@@ -7,7 +7,8 @@ tabs_styles = {
 tab_style = {
     'borderBottom': '1px solid #d6d6d6',
     'padding': '2px',
-    'fontWeight': 'bold'
+    'fontWeight': 'bold',
+    'vertical-align': 'middle',
 }
 
 tab_selected_style = {
@@ -19,65 +20,101 @@ tab_selected_style = {
     "font-size": 20
 }
 
-dis = html.Div(className="site-stats-count", children=[html.Ul(children=
-        [html.Li(className='bg-blue', children=[html.Img(src='assets/images/icon-infected.png', alt='Active Status'), html.Strong(20), html.Span('Active Cases')], style={'display': 'inline-block'}),
-        html.Li(className='bg-green', children=[html.Img(src='assets/images/icon-inactive.png'), html.Strong(1), html.Span('Cured')], style={'display': 'inline-block'}),
-        html.Li(className='bg-red', children=[html.Img(src='assets/images/icon-death.png'), html.Strong(1), html.Span('Deaths')], style={'display': 'inline-block'})])
-                                        ], style={'background': 'orange'})
+dis = html.Div([html.Div(children=
+                         [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
+                                                                                         alt='position status',
+                                                                                         style={'height': '30%',
+                                                                                                'width': '30%'}),
+                                                                                html.H5(id="confirm-display"),
+                                                                                html.P('Confirm Cases')], style={
+                             'display': 'inline-block',
+                             "textAlign": "center",
+                             "width": "130px",
+                         }),
+                          html.Div(className='bg-blue', id="active",
+                                   children=[html.Img(src='assets/images/icon-infected.png',
+                                                      alt='active status'),
+                                             html.H5(id="active-display"), html.P('Active Cases')], style={
+                                  'display': 'inline-block',
+                                  "textAlign": "center",
+                                  "width": "140px",
+                              }),
+                          html.Div(className='bg-green', id="cure",
+                                   children=[html.Img(src='assets/images/icon-inactive.png',
+                                                      alt='cured status'),
+                                             html.H5(id="recovered-display"),
+                                             html.P('Recovered Cases')], style={
+                                  'display': 'inline-block',
+                                  "textAlign": "center",
+                                  "width": "140px",
+                              }),
+                          html.Div(className='bg-red', id="death",
+                                   children=[html.Img(src='assets/images/icon-death.png',
+                                                      alt='death status'), html.H5(id="death-display"),
+                                             html.P('Deaths')], style={
+                                  'display': 'inline-block',
+                                  "textAlign": "center",
+                                  "width": "140px",
+                              }),
+                          html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
+                                                                                          alt='states UTs status',
+                                                                                          style={'height': '27%',
+                                                                                                 'width': '27%'}),
+                                                                                 html.H5(id='counts-display'),
+                                                                                 html.P('Affected States/UTs')], style={
+                              'display': 'inline-block',
+                              "textAlign": "center",
+                              "width": "140px",
+                          }),
+                          # html.Div(className='bg-info', id="source",
+                          #          children=[html.A("(MoHFW)", href='https://www.mohfw.gov.in/'), html.P(""),
+                          #                     html.P(""),],
+                          #          style={
+                          #              'display': 'inline-block',
+                          #              "textAlign": "center",
+                          #              "width": "140px",
+                          #              'vertical-align': 'middle'
+                          #          }
+                          #          )
+                          ], className="row container-display", style={'textAlign': 'center'})
+                ], className="row", style={'background': 'orange'})
 
 layout = html.Div([html.H1("COVID19 India Tracker",
-                               style={
-                                   'textAlign': 'center',
-                                   "background": "yellow"}),
-                       html.Div([
-                                 html.Span("Confirmed Cases: "),
-                                 html.Div(id='confirm-display', style={'display': 'inline-block', 'font-size': 12}),
-                                 html.Span("Active Cases: "),
-                                 html.Div(id='active-display', style={'display': 'inline-block', 'font-size': 12}),
-                                html.Span("Recovered Cases: "),
-                                html.Div(id='recovered-display', style={'display': 'inline-block', 'font-size': 12}),
-                                html.Span("Deaths: "),
-                                html.Div(id='death-display', style={'display': 'inline-block', 'font-size': 12}),
-                                html.Span("Affected States and UTs: "),
-                                html.Div(id='counts-display', style={'display': 'inline-block', 'font-size': 12}),
-                                html.A("(MoHFW)", href='https://www.mohfw.gov.in/', style={'display': 'inline-block', 'font-size': 24})
-                                 ], className="row ",
-                                style={
-                                    'marginTop': 1, 'marginBottom': 2, 'font-size': 30, 'color': 'white',
-                                    'display': 'inline-block', "position": "auto"
-                                       }),
-                   # dis,
-                       html.Div(id='graph-input'),
-                       dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
-                           dcc.Tab(label='All Cases', value='tab-1', style=tab_style,
-                                   selected_style=tab_selected_style),
-                           dcc.Tab(label='Cases Analysis', value='tab-2', style=tab_style,
-                                   selected_style=tab_selected_style),
-                           dcc.Tab(label='News', value='tab-3', style=tab_style,
-                                   selected_style=tab_selected_style),
-                           dcc.Tab(label='Help and Information', value='tab-4', style=tab_style,
-                                   selected_style=tab_selected_style),
-                       ], style=tabs_styles,
-                                colors={
-                                    "border": "yellow",
-                                    "primary": "red",
-                                    "background": "orange"
-                                }),
-                       html.Div(id='graph-output'),  # Tab output
-                       html.Div(id='api-data', style={'display': 'none'}),
-                        html.Div(children=[dcc.Markdown(  # markdown
-                           "Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
-                           "https://www.mohfw.gov.in/) "
-                           " and [covid19india API](https://api.covid19india.org/data.json) ")], style={
-                           'textAlign': 'center',
-                           "background": "yellow"}),
-                       html.Div(children=[dcc.Markdown(  # markdown
-                           "© 2020 [DCAICHARA](https://github.com/dc-aichara/COVID19-India-Tracker)  All Rights "
-                           "Reserved.")], style={
-                           'textAlign': 'center',
-                           "background": "yellow"}),
-                       html.Div(id='dummy-id'),
+                           style={
+                               'textAlign': 'center',
+                               "background": "yellow"}),
+                   dis,
+                   html.Div(id='graph-input'),
+                   dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
+                       dcc.Tab(label='All Cases', value='tab-1', style=tab_style,
+                               selected_style=tab_selected_style),
+                       dcc.Tab(label='Cases Analysis', value='tab-2', style=tab_style,
+                               selected_style=tab_selected_style),
+                       dcc.Tab(label='News', value='tab-3', style=tab_style,
+                               selected_style=tab_selected_style),
+                       dcc.Tab(label='Help and Information', value='tab-4', style=tab_style,
+                               selected_style=tab_selected_style),
+                   ], style=tabs_styles,
+                            colors={
+                                "border": "yellow",
+                                "primary": "red",
+                                "background": "orange"
+                            }),
+                   html.Div(id='graph-output'),  # Tab output
+                   html.Div(id='api-data', style={'display': 'none'}),
+                   html.Div(children=[dcc.Markdown(  # markdown
+                       "Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
+                       "https://www.mohfw.gov.in/) "
+                       " and [covid19india API](https://api.covid19india.org/data.json) ")], style={
+                       'textAlign': 'center',
+                       "background": "yellow"}),
+                   html.Div(children=[dcc.Markdown(  # markdown
+                       "© 2020 [DCAICHARA](https://github.com/dc-aichara/COVID19-India-Tracker)  All Rights "
+                       "Reserved.")], style={
+                       'textAlign': 'center',
+                       "background": "yellow"}),
+                   html.Div(id='dummy-id'),
 
-                       ], style={
+                   ], style={
     "background": "#000080"}
-                      )
+                  )
