@@ -77,7 +77,7 @@ dis = html.Div([html.Div(children=
                           #          }
                           #          )
                           ], className="row container-display", style={'textAlign': 'center'})
-                ], className="row", style={'background': 'orange'})
+                ], className="row", style={'background': 'rgb(0, 0, 128)'})
 
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={
