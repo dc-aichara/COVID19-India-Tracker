@@ -23,8 +23,8 @@ tab_selected_style = {
 dis = html.Div([html.Div(children=
                          [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
                                                                                          alt='position status',
-                                                                                         style={'height': '37%',
-                                                                                                'width': '37%'}),
+                                                                                         style={'height': '40%',
+                                                                                                'width': '40%'}),
                                                                                 html.H5(id="confirm-display"),
                                                                                 html.P('Confirm Cases')], style={
                              'display': 'inline-block',
