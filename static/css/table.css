@@ -32,14 +32,13 @@ background-color: #c5bdae;
 background-color: #97d6b6;
 }
 .bg-green{
-background-color: #5a0502;
+background-color: #30d6e6fa;
 }
 .bg-orange{
 background-color: #f9f9f9;
 }
 .bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .bg-info {
     border-radius: 10px;
-    background-color: #f9f9f9;
     margin: 10px;
     padding: 15px;
     position: relative;
