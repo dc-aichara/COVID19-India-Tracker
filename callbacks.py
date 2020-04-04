@@ -174,9 +174,9 @@ def display_cases(_):
             labelPosition='left',
             value=str(value),
             backgroundColor=clr,
-            size=18,
+            size=19,
             # family='sans-serif',
-            style={'display': 'inline-block', 'size': "4px"
+            style={'display': 'inline-block',
                    },
         )
         return display

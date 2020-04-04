@@ -68,7 +68,10 @@ dis = html.Div([html.Div(children=
                           }),
                           html.Div(className='bg-info', id="source",
                                    children=[html.A(html.Img(src='assets/images/icon-state.png',
-                                                       alt='states-data'), href="#state-data"),
+                                                       alt='states-data',
+                                                             style={'height': '100%',
+                                                                    'width': '95%'}
+                                                             ), href="#state-data"),
                                              html.H5("Data Source"),
                                              html.A("MoHFW", href='https://www.mohfw.gov.in/',
                                                     style={'font-size': "23px"}),
@@ -76,7 +79,7 @@ dis = html.Div([html.Div(children=
                                    style={
                                        'display': 'inline-block',
                                        "textAlign": "center",
-                                       # "width": "140px",
+                                       "width": "140px",
                                        # "height": "140px",
                                        # 'vertical-align': 'middle'
                                    }
