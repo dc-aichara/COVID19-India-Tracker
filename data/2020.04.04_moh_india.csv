@@ -1,32 +1,32 @@
 Name of State / UT,Total Confirmed cases,Cured/Discharged/Migrated,Death
-Andhra Pradesh,132,1,1
+Andhra Pradesh,161,1,1
 Andaman and Nicobar Islands,10,0,0
 Arunachal Pradesh,1,0,0
-Assam,16,0,0
+Assam,24,0,0
 Bihar,29,0,1
 Chandigarh,18,0,0
 Chhattisgarh,9,3,0
-Delhi,219,8,4
+Delhi,386,8,6
 Goa,6,0,0
-Gujarat,95,10,8
+Gujarat,95,10,9
 Haryana,49,24,0
 Himachal Pradesh,6,1,1
 Jammu and Kashmir,75,3,2
 Jharkhand,2,0,0
-Karnataka,124,10,3
-Kerala,286,27,2
+Karnataka,128,12,3
+Kerala,295,41,2
 Ladakh,14,3,0
 Madhya Pradesh,104,0,6
-Maharashtra,335,42,16
+Maharashtra,423,42,19
 Manipur,2,0,0
 Mizoram,1,0,0
 Odisha,5,0,0
 Puducherry,5,1,0
-Punjab,48,1,5
-Rajasthan,167,3,0
-Tamil Nadu,309,6,1
+Punjab,53,1,5
+Rajasthan,179,3,0
+Tamil Nadu,411,6,1
 Telengana,158,1,7
-Uttarakhand,10,2,0
-Uttar Pradesh,172,14,2
+Uttarakhand,16,2,0
+Uttar Pradesh,174,19,2
 West Bengal,63,3,3
-Total number of confirmed cases in India,2547,163,62
+Total number of confirmed cases in India,2902,184,68

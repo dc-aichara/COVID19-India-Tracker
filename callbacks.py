@@ -176,7 +176,7 @@ def display_cases(_):
             backgroundColor=clr,
             size=18,
             # family='sans-serif',
-            style={'display': 'inline-block', 'size': "10px"
+            style={'display': 'inline-block', 'size': "4px"
                    },
         )
         return display

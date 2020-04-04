@@ -37,19 +37,40 @@ background-color: #30d6e6fa;
 .bg-orange{
 background-color: #f9f9f9;
 }
+
+.bg-info{
+background-color: #64c347;
+}
+
 .bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .bg-info {
     border-radius: 10px;
     margin: 10px;
-    padding: 15px;
+    padding: 5px;
     position: relative;
     box-shadow: 2px 2px 2px lightgrey;
     line-height: .6;
 }
-
-#total, #active, #cure, #death, #states {
+.bg-info {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+    position: relative;
+    box-shadow: 2px 2px 2px lightgrey;
+    line-height: .9;
+}
+#total, #active, #cure, #death, #states, #source {
     flex: 2;
 }
 body {
     font-size: 14px;
     line-height: 1.12;
     }
+p {
+font-size: 15.5px;
+font-weight: bold;
+}
+a {
+color: #3c1edb;
+text-decoration: blink;
+cursor: pointer;
+}

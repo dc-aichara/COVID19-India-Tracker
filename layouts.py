@@ -61,21 +61,23 @@ dis = html.Div([html.Div(children=
                                                                                           style={'height': '32%',
                                                                                                  'width': '32%'}),
                                                                                  html.H5(id='counts-display'),
-                                                                                 html.P('Affected States/UTs')], style={
+                                                                                 html.P('Affected States')], style={
                               'display': 'inline-block',
                               "textAlign": "center",
                               "width": "140px",
                           }),
-                          # html.Div(className='bg-info', id="source",
-                          #          children=[html.A("(MoHFW)", href='https://www.mohfw.gov.in/'), html.P(""),
-                          #                     html.P(""),],
-                          #          style={
-                          #              'display': 'inline-block',
-                          #              "textAlign": "center",
-                          #              "width": "140px",
-                          #              'vertical-align': 'middle'
-                          #          }
-                          #          )
+                          html.Div(className='bg-info', id="source",
+                                   children=[html.P("Data Source"),
+                                             html.A("MoHFW", href='https://www.mohfw.gov.in/',
+                                                    style={'font-size': "23px"}),
+                                             ],
+                                   style={
+                                       'display': 'inline-block',
+                                       "textAlign": "center",
+                                       # "width": "140px",
+                                       'vertical-align': 'middle'
+                                   }
+                                   )
                           ], className="row container-display", style={'textAlign': 'center'})
                 ], className="row", style={'background': 'rgb(0, 0, 128)'})
 
