@@ -83,7 +83,7 @@ for v1, v2 in zip(df.values, df2.values):
     v = f"""|{a}|{b}|{c}|{d}|\n"""
     data_display += v
 
-data_head = html.Div(children=[dcc.Markdown(  # markdown
+data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()})")], style={
     'textAlign': 'center',
     "background": "yellow",

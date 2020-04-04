@@ -67,7 +67,9 @@ dis = html.Div([html.Div(children=
                               "width": "140px",
                           }),
                           html.Div(className='bg-info', id="source",
-                                   children=[html.P("Data Source"),
+                                   children=[html.A(html.Img(src='assets/images/icon-state.png',
+                                                       alt='states-data'), href="#state-data"),
+                                             html.H5("Data Source"),
                                              html.A("MoHFW", href='https://www.mohfw.gov.in/',
                                                     style={'font-size': "23px"}),
                                              ],
@@ -75,11 +77,12 @@ dis = html.Div([html.Div(children=
                                        'display': 'inline-block',
                                        "textAlign": "center",
                                        # "width": "140px",
-                                       'vertical-align': 'middle'
+                                       # "height": "140px",
+                                       # 'vertical-align': 'middle'
                                    }
                                    )
                           ], className="row container-display", style={'textAlign': 'center'})
-                ], className="row", style={'background': 'rgb(0, 0, 128)'})
+                ], className="row", style={'background': 'rgb(0, 0, 128)', 'vertical-align': 'middle'})
 
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={
