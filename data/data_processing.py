@@ -17,6 +17,13 @@ def get_daily_data(df):
 
 
 def get_interval_data(days=7, cases=pd.DataFrame(), cols=None):
+    """
+    Get data by a interval (days9
+    :param days: (int) Number of days
+    :param cases: (DataFrame)
+    :param cols: (Columns of DataFrame)
+    :return: (DataFrame)
+    """
     if cols is None:
         cols = ["daily_confirmed", 'daily_recovered', 'daily_deaths']
     data = {}
@@ -29,9 +36,15 @@ def get_interval_data(days=7, cases=pd.DataFrame(), cols=None):
     data = pd.DataFrame(data=[[k] + v for k, v in data.items()], columns=['interval'] + cols)
     for col in cols:
         data[col + "_cum_sum"] = data[col].cumsum()
+    # print(data)
     return data
 
+
 def get_state_daily():
+    """
+    State cases
+    :return: (json) Statewise cases by data
+    """
     p = Path("Data/")
 
     files = sorted([f for f in list(Path.glob(p, '*.csv')) if "moh" in f.parts[-1]])

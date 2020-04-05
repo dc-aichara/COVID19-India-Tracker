@@ -212,7 +212,7 @@ def render_graph(data, tab):
         "padding": "10px 0",
         "white-space": "pre", "overflow-x": "scroll"
     })
-    dates_index = [6, 13, 20, 27]
+    dates_index = [6, 13, 20, 27, 34]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
@@ -289,7 +289,8 @@ def render_graph(data, tab):
         bar_graph1 = dcc.Graph(
             id='bar-graph1',
             figure={
-                'data': [{'x': df1['date'], 'y': df1['confirmed'], 'type': 'bar', 'name': 'Confirmed Cases'},
+                'data': [{'x': df1['date'], 'y': df1['confirmed'] - df1["recovered"] - df1["deaths"],
+                          'type': 'bar', 'name': 'Active Cases'},
                          {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', "marker": {'color': "green"},
                           'name': 'Recovered Case'},
                          {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths',
@@ -315,8 +316,10 @@ def render_graph(data, tab):
         bar_graph2 = dcc.Graph(
             id='bar-graph2',
             figure={
-                'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'], 'type': 'bar',
-                          'name': 'Confirmed Cases'},
+                'data': [{'x': df_itvl['interval'], 'y': df_itvl['daily_confirmed_cum_sum'] -
+                                                         df_itvl['daily_recovered_cum_sum'] -
+                                                         df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
+                          'name': 'Active Cases'},
                          {'x': df_itvl['interval'], 'y': df_itvl['daily_recovered_cum_sum'], 'type': 'bar',
                           "marker": {'color': "green"}, 'name': 'Recovered Cases'},
                          {'x': df_itvl['interval'], 'y': df_itvl['daily_deaths_cum_sum'], 'type': 'bar',
