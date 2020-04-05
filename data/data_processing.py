@@ -3,7 +3,13 @@ import numpy as np
 import re
 from pathlib import Path
 
+
 def get_daily_data(df):
+    """
+    Clean daily data
+    :param df: (DataFrame)
+    :return: (DataFrame) Cleaned DataFrame
+    """
     df1 = df[df['date'] > "2020-02-29"].reset_index(drop=True)
 
     def get_daily_cases(x):
