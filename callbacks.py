@@ -3,6 +3,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_dangerously_set_inner_html
 import dash_daq as daq
+import plotly.graph_objects as go
 from datetime import datetime
 from app import app
 import pandas as pd
@@ -65,7 +66,7 @@ try:
 except:
     df = pd.read_csv('data/2020.03.27_moh_india.csv')
 
-s50 = df[df["Total Confirmed cases"] > 50]['Name of State / UT'].values[:-1].tolist()
+s100 = df[df["Total Confirmed cases"] > 100]['Name of State / UT'].values[:-1].tolist()
 map = get_map(data_df=df)
 df2 = covidin.change_cal()
 
@@ -229,11 +230,14 @@ def render_graph(data, tab):
             figure={
                 'data': [
                     {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
-                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'cross-open'}},
+                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross-open'}},
+                    {'x': data['date'], 'y': data["confirmed"]-data["recovered"]-data["deaths"], 'type': 'line',
+                     'name': 'Active Cases',
+                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross', 'color': 'gray'}},
                     {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
-                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'star-open', 'color': 'green'}},
+                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'star-open', 'color': 'green'}},
                     {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
-                     "mode": 'lines+markers', "marker": {"size": 10, 'symbol': 'x-open', 'color': "red"}},
+                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'x-open', 'color': "red"}},
                 ],
                 'layout': {
                     'title': f'Covid19 India Datewise Cases [Unofficial]',
@@ -254,38 +258,47 @@ def render_graph(data, tab):
         return [line_graph1, data_head, state_data, map1]
 
     elif tab == 'tab-2':
+        # df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
+        #
+        # for s in s100:
+        #     df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 100], columns=[s])
+        #     df_100 = pd.concat([df_100, df_s], 1)
+        # l = len(df_100[df_100['Maharashtra'] > 0])
+        # df_100 = df_100[:l]
+        #
         # annots = [{
-        #     'x': pd.to_datetime(daily_state[s]['Date'][-1]),
-        #     'y': daily_state[s]['Total Confirmed cases'][-1],
+        #     'x': df_100['days'].values[-1],
+        #     'y': df_100[s].values[-1],
         #     'showarrow': False,
         #     'text': f"{s}",
         #     "font": {"color": 'red', "size": 8},
         #     'xref': 'x',
         #     'yref': 'y',
-        # } for s in s50
+        # } for s in s100
         # ]
-        line_graph2 = dcc.Graph(
-            id='graph-1',
-            figure={
-                'data': [
-                    {'x': pd.to_datetime(daily_state[s]['Date']), 'y': daily_state[s]['Total Confirmed cases'],
-                     'type': 'line', 'name': s,
-                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s50],
-                'layout': {
-                    'title': f'Covid19 India Statewise Cases',
-                    'height': 700,
-                    'xaxis': x_axis,
-                    'yaxis': y_axis,
-                    'plot_bgcolor': colors['background2'],
-                    'paper_bgcolor': colors['background'],
-                    'font': {
-                        'color': colors['text'],
-                        'size': 18
-                    },
-                    # 'annotations': annots,
-                }
-            }
-        )
+
+        # line_graph2 = dcc.Graph(
+        #     id='graph-1',
+        #     figure={
+        #         'data': [
+        #             {'x': df_100['days'], 'y': df_100[s],
+        #              'type': 'line', 'name': s,
+        #              "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
+        #         'layout': {
+        #             'title': f'Covid19 India Statewise Cases',
+        #             'height': 700,
+        #             'xaxis': x_axis,
+        #             'yaxis': y_axis,
+        #             'plot_bgcolor': colors['background2'],
+        #             'paper_bgcolor': colors['background'],
+        #             'font': {
+        #                 'color': colors['text'],
+        #                 'size': 18
+        #             },
+        #             'annotations': annots,
+        #         }
+        #     }
+        # )
         bar_graph1 = dcc.Graph(
             id='bar-graph1',
             figure={
@@ -377,8 +390,24 @@ def render_graph(data, tab):
                     }
                 }
             )
-
-            return [bar_graph1, bar_graph2, line, bar_graph3]  # , line_graph2]
+            piev = [df1['confirmed'].values[-1], (df1['confirmed'] - df1["recovered"] - df1["deaths"]).values[-1],
+                        df1["recovered"].values[-1], df1["deaths"].values[-1]]
+            fig = go.Figure(go.Sunburst(
+                labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths", ],
+                parents=["", "Covid19", "Confirmed", "Covid19", "Covid19"],
+                values=[0] + piev,
+                marker=dict(
+                    # colors=["blue", 'gray', 'orange', 'yellow', 'red'],
+                    colors=([0] + piev)/piev[0]*100,
+                    colorscale='RdBu',
+                    cmid=50
+                ),
+                hovertemplate='<b> %{label} Cases <br> </b> %{value} (%{color:.2f} %)',
+                name='1'
+            ))
+            fig.update_layout(margin=dict(t=0, l=0, r=0, b=0))
+            pie = dcc.Graph(id='pie-chart', figure=fig)
+            return [bar_graph1, bar_graph2, line, bar_graph3]  #, pie]  # , line_graph2]
         except:
             return [bar_graph1, bar_graph2]  # , line_graph2]
     elif tab == 'tab-3':
