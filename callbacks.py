@@ -138,7 +138,7 @@ def get_data(_):
         df_api = covidin.timeseries_data()
         df_api['date'] = pd.to_datetime(df_api['date'] + '2020')
         df_api = df_api[df_api['dailyconfirmed'] != ""]
-        df_api = df_api[["date", "totalconfirmed", "totaldeceased", "totalrecovered", 'dailyconfirmed', 'dailyrecovered', 'dailydeceased']]
+        df_api = df_api[["date", "totalconfirmed", "totalrecovered", "totaldeceased", 'dailyconfirmed', 'dailyrecovered', 'dailydeceased']]
         df_api.columns = ['date', 'confirmed', 'recovered', 'deaths', 'daily_confirmed', 'daily_recovered', 'daily_deaths']
         df_api.to_csv('data/api_india.csv', index=False)
     except:
