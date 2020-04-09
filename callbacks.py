@@ -64,7 +64,7 @@ x_axis_h = {
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/2020.03.27_moh_india.csv')
+    df = pd.read_csv('data/2020.04.08_moh_india.csv')
 
 s100 = df[df["Total Confirmed cases"] > 100]['Name of State / UT'].values[:-1].tolist()
 map = get_map(data_df=df)
@@ -138,8 +138,8 @@ def get_data(_):
         df_api = covidin.timeseries_data()
         df_api['date'] = pd.to_datetime(df_api['date'] + '2020')
         df_api = df_api[df_api['dailyconfirmed'] != ""]
-        df_api = df_api[["date", "totalconfirmed", "totaldeceased", "totalrecovered"]]
-        df_api.columns = ['date', 'confirmed', 'deaths', 'recovered']
+        df_api = df_api[["date", "totalconfirmed", "totaldeceased", "totalrecovered", 'dailyconfirmed', 'dailyrecovered', 'dailydeceased']]
+        df_api.columns = ['date', 'confirmed', 'recovered', 'deaths', 'daily_confirmed', 'daily_recovered', 'daily_deaths']
         df_api.to_csv('data/api_india.csv', index=False)
     except:
         df_api = pd.read_csv("data/api_india.csv")
@@ -176,7 +176,6 @@ def display_cases(_):
             value=str(value),
             backgroundColor=clr,
             size=19,
-            # family='sans-serif',
             style={'display': 'inline-block',
                    },
         )
@@ -299,78 +298,92 @@ def render_graph(data, tab):
         #         }
         #     }
         # )
-        piev = [df1['confirmed'].values[-1], (df1['confirmed'] - df1["recovered"] - df1["deaths"]).values[-1],
-                df1["recovered"].values[-1], df1["deaths"].values[-1]]
+        t = df.values[-1][1:]
+        piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
         fig = go.Figure(go.Sunburst(
             labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths", ],
             parents=["", "Covid19", "Confirmed", "Covid19", "Covid19"],
             values=[0] + piev,
             marker=dict(
                 # colors=["blue", 'gray', 'orange', 'yellow', 'red'],
-                colors=([0] + piev) / piev[0] * 100,
+                colors=[a/piev[0]*100 for a in [0] + piev],
                 colorscale='RdBu',
                 cmid=50
             ),
             hovertemplate='<b> %{label} Cases <br> </b> %{value} (%{color:.2f} %)',
             name='1'
         ))
-        fig.update_layout(margin=dict(t=0, l=0, r=0, b=0))
+        fig.update_layout(margin=dict(t=40, l=10, r=10, b=0),
+                          title='Covid19 India Cases Distribution',
+                          height=400,
+                          width=450,
+                          paper_bgcolor='gray',
+                          font={'size': 18}
+                          )
         pie = dcc.Graph(id='pie-chart', figure=fig)
         analysis1 = html.Div([html.Div(children=
-                                       [html.Div(className="r-rate", id='rrate', children=[html.H5("Recover Rate"),
-                                                                                           html.P("15%"),
-                                                                                           ],
+                                       [html.Div(className="r-rate", id='rrate',
+                                                 children=[html.H4("Recover Rate", style={'color': 'green'}),
+                                                           html.H3(f"{piev[2]/piev[0]:.2%}"),
+                                                           html.P('on total')
+                                                           ],
                                                  style={
-                                                     # 'display': 'inline-block',
                                                      "textAlign": "center",
-                                                     "width": "140px",
+                                                     "width": "160px",
                                                  }
                                                  ),
-                                        html.Div(className="d-rate", id='drate', children=[html.H5("Death Rate"),
-                                                                                           html.P("3%"),
-                                                                                           ],
+                                        html.Div(className="d-rate", id='drate',
+                                                 children=[html.H4("Death Rate", style={'color': 'red'}),
+                                                           html.H3(f"{piev[3]/piev[0]:.2%}"),
+                                                           ],
                                                  style={
-                                                     # 'display': 'inline-block',
                                                      "textAlign": "center",
-                                                     "width": "140px",
-                                                 })
+                                                     "width": "160px",
+                                                 }),
+                                        html.Span('on total confirm cases')
                                         ],
-                                       className="container-display1", style={'textAlign': 'left',
+                                       className="container-display1", style={'textAlign': 'center',
                                                                                 'display': 'inline-block',
                                                                                 "verticalAlign": "top",
-                                                                                 # "width": "300px",
                                                                                  }
                                        ),
-                              html.Div([pie], style={'textAlign': 'center', "verticalAlign": "text-top", 'display': 'inline-block'})],
+                              html.Div([pie], style={'textAlign': 'center',
+                                                     "verticalAlign": "text-top",
+                                                     'display': 'inline-block'}),
+                              html.Div(children=
+                                       [html.Div(className="r-rate", id='rrate',
+                                                 children=[html.H4("Recover Rate", style={'color': 'green'}),
+                                                           html.H3(f"{piev[2] / (piev[2] + piev[3]):.2%}"),
+                                                           html.P('on total')
+                                                           ],
+                                                 style={
+                                                     "textAlign": "center",
+                                                     "width": "160px",
+                                                 }
+                                                 ),
+                                        html.Div(className="d-rate", id='drate',
+                                                 children=[html.H4("Death Rate", style={'color': 'red'}),
+                                                           html.H3(f"{piev[3] / (piev[2] + piev[3]):.2%}"),
+                                                           ],
+                                                 style={
+                                                     "textAlign": "center",
+                                                     "width": "160px",
+                                                 }),
+                                        html.Span('on total outcomes'),
+                                        html.Br(),
+                                        html.Span('(Recover + Death)')
+                                        ],
+                                       className="container-display1", style={'textAlign': 'center',
+                                                                              'display': 'inline-block',
+                                                                              "verticalAlign": "top",
+                                                                              }
+                                       ),
+                              ],
                              className="row", style={
                                                     # 'display': 'inline-block',
-                                                     'background': 'gray'})
-        bar_graph1 = dcc.Graph(
-            id='bar-graph1',
-            figure={
-                'data': [{'x': df1['date'], 'y': df1['confirmed'] - df1["recovered"] - df1["deaths"],
-                          'type': 'bar', 'name': 'Active Cases'},
-                         {'x': df1['date'], 'y': df1["recovered"], 'type': 'bar', "marker": {'color': "green"},
-                          'name': 'Recovered Case'},
-                         {'x': df1['date'], 'y': df1["deaths"], 'type': 'bar', 'name': 'Deaths',
-                          "marker": {'color': "red"}, }
-                         ],
-                'layout': {
-                    'title': f'Covid19 India Cases by Day',
-                    'barmode': 'stack',
-                    'height': 700,
-                    'xaxis': x_axis,
-                    'yaxis': y_axis,
-                    'plot_bgcolor': colors['background2'],
-                    'paper_bgcolor': colors['background'],
-                    'font': {
-                        'color': colors['text'],
-                        'size': 18
-                    },
-                    # 'annotations': annotations
-                }
-            }
-        )
+                                                     'background': 'gray',
+                                                    'textAlign': 'center'})
+
 
         bar_graph2 = dcc.Graph(
             id='bar-graph2',
@@ -400,16 +413,11 @@ def render_graph(data, tab):
             }
         )
         try:
-            line = html.Div(children=[dcc.Markdown(  # markdown
-                "## Cases by States and UTs")], style={
-                'textAlign': 'center',
-                "background": "yellow"})
             bar = df.sort_values('Total Confirmed cases')
             bar = bar[:-1]
             bar['Total'] = bar['Total Confirmed cases'] - \
                            bar["Cured/Discharged/Migrated"] - bar['Death']
             bar = bar.sort_values('Total')
-            # print(bar)
             bar_graph3 = dcc.Graph(
                 id='bar-graph3',
                 figure={
@@ -437,9 +445,9 @@ def render_graph(data, tab):
                 }
             )
 
-            return [bar_graph1, bar_graph2, bar_graph3]  #, analysis1]  # line,  #, pie]  # , line_graph2]
+            return [analysis1, bar_graph2, bar_graph3]
         except:
-            return [bar_graph1, bar_graph2]  # , line_graph2]
+            return [bar_graph2]
     elif tab == 'tab-3':
         return news1
     elif tab == 'tab-4':
