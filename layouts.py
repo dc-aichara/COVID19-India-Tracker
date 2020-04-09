@@ -61,14 +61,15 @@ dis = html.Div([html.Div(children=
                                                                                           style={'height': '32%',
                                                                                                  'width': '32%'}),
                                                                                  html.H5(id='counts-display'),
-                                                                                 html.P('Affected States')], style={
-                              'display': 'inline-block',
-                              "textAlign": "center",
-                              "width": "140px",
-                          }),
+                                                                                 html.P('Affected States')],
+                                   style={
+                                       'display': 'inline-block',
+                                       "textAlign": "center",
+                                       "width": "140px",
+                                   }),
                           html.Div(className='bg-info', id="source",
                                    children=[html.A(html.Img(src='assets/images/icon-state.png',
-                                                       alt='states-data',
+                                                             alt='states-data',
                                                              style={'height': '100%',
                                                                     'width': '95%'}
                                                              ), href="#state-data"),
@@ -80,12 +81,10 @@ dis = html.Div([html.Div(children=
                                        'display': 'inline-block',
                                        "textAlign": "center",
                                        "width": "140px",
-                                       # "height": "140px",
-                                       # 'vertical-align': 'middle'
                                    }
                                    )
                           ], className="row container-display", style={'textAlign': 'center'})
-                ], className="row", style={'background': 'rgb(0, 0, 128)', 'vertical-align': 'middle'})
+                ], className="row", style={'background': 'gray', 'vertical-align': 'middle'})
 
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={

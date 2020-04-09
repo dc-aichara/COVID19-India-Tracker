@@ -299,6 +299,52 @@ def render_graph(data, tab):
         #         }
         #     }
         # )
+        piev = [df1['confirmed'].values[-1], (df1['confirmed'] - df1["recovered"] - df1["deaths"]).values[-1],
+                df1["recovered"].values[-1], df1["deaths"].values[-1]]
+        fig = go.Figure(go.Sunburst(
+            labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths", ],
+            parents=["", "Covid19", "Confirmed", "Covid19", "Covid19"],
+            values=[0] + piev,
+            marker=dict(
+                # colors=["blue", 'gray', 'orange', 'yellow', 'red'],
+                colors=([0] + piev) / piev[0] * 100,
+                colorscale='RdBu',
+                cmid=50
+            ),
+            hovertemplate='<b> %{label} Cases <br> </b> %{value} (%{color:.2f} %)',
+            name='1'
+        ))
+        fig.update_layout(margin=dict(t=0, l=0, r=0, b=0))
+        pie = dcc.Graph(id='pie-chart', figure=fig)
+        analysis1 = html.Div([html.Div(children=
+                                       [html.Div(className="r-rate", id='rrate', children=[html.H5("Recover Rate"),
+                                                                                           html.P("15%"),
+                                                                                           ],
+                                                 style={
+                                                     # 'display': 'inline-block',
+                                                     "textAlign": "center",
+                                                     "width": "140px",
+                                                 }
+                                                 ),
+                                        html.Div(className="d-rate", id='drate', children=[html.H5("Death Rate"),
+                                                                                           html.P("3%"),
+                                                                                           ],
+                                                 style={
+                                                     # 'display': 'inline-block',
+                                                     "textAlign": "center",
+                                                     "width": "140px",
+                                                 })
+                                        ],
+                                       className="container-display1", style={'textAlign': 'left',
+                                                                                'display': 'inline-block',
+                                                                                "verticalAlign": "top",
+                                                                                 # "width": "300px",
+                                                                                 }
+                                       ),
+                              html.Div([pie], style={'textAlign': 'center', "verticalAlign": "text-top", 'display': 'inline-block'})],
+                             className="row", style={
+                                                    # 'display': 'inline-block',
+                                                     'background': 'gray'})
         bar_graph1 = dcc.Graph(
             id='bar-graph1',
             figure={
@@ -390,24 +436,8 @@ def render_graph(data, tab):
                     }
                 }
             )
-            piev = [df1['confirmed'].values[-1], (df1['confirmed'] - df1["recovered"] - df1["deaths"]).values[-1],
-                        df1["recovered"].values[-1], df1["deaths"].values[-1]]
-            fig = go.Figure(go.Sunburst(
-                labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths", ],
-                parents=["", "Covid19", "Confirmed", "Covid19", "Covid19"],
-                values=[0] + piev,
-                marker=dict(
-                    # colors=["blue", 'gray', 'orange', 'yellow', 'red'],
-                    colors=([0] + piev)/piev[0]*100,
-                    colorscale='RdBu',
-                    cmid=50
-                ),
-                hovertemplate='<b> %{label} Cases <br> </b> %{value} (%{color:.2f} %)',
-                name='1'
-            ))
-            fig.update_layout(margin=dict(t=0, l=0, r=0, b=0))
-            pie = dcc.Graph(id='pie-chart', figure=fig)
-            return [bar_graph1, bar_graph2, line, bar_graph3]  #, pie]  # , line_graph2]
+
+            return [bar_graph1, bar_graph2, bar_graph3]  #, analysis1]  # line,  #, pie]  # , line_graph2]
         except:
             return [bar_graph1, bar_graph2]  # , line_graph2]
     elif tab == 'tab-3':

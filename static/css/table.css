@@ -25,10 +25,10 @@ color: blue;
 .bg-yellow {
 background-color: #f5f0ec;
 }
-.bg-blue{
+.bg-blue, .r-rate{
 background-color: #c5bdae;
 }
-.bg-red {
+.bg-red, .d-rate {
 background-color: #97d6b6;
 }
 .bg-green{
@@ -42,7 +42,7 @@ background-color: #f9f9f9;
 background-color: #697964;
 }
 
-.bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange{
+.bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .r-rate, .d-rate{
     border-radius: 10px;
     margin: 10px;
     padding: 5px;
@@ -58,7 +58,20 @@ background-color: #697964;
     box-shadow: 2px 2px 2px lightgrey;
     line-height: .9;
 }
-#total, #active, #cure, #death, #states, #source {
+
+.container-display1 {
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 20px;
+    margin: 30px;
+    padding: 10px;
+    position: relative;
+    box-shadow: 3px 3px 3px #d4bebe;
+    line-height: 1;
+    background: #84a27b;
+}
+#total, #active, #cure, #death, #states, #source, #drate, #rrate {
     flex: 2;
 }
 body {
