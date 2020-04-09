@@ -316,9 +316,9 @@ def render_graph(data, tab):
         fig.update_layout(margin=dict(t=40, l=10, r=10, b=0),
                           title='Covid19 India Cases Distribution',
                           height=400,
-                          width=450,
+                          width=430,
                           paper_bgcolor='gray',
-                          font={'size': 18}
+                          font={'size': 17}
                           )
         pie = dcc.Graph(id='pie-chart', figure=fig)
         analysis1 = html.Div([html.Div(children=
