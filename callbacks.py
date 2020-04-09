@@ -315,30 +315,29 @@ def render_graph(data, tab):
         ))
         fig.update_layout(margin=dict(t=40, l=10, r=10, b=0),
                           title='Covid19 India Cases Distribution',
-                          height=400,
-                          width=430,
+                          height=350,
+                          width=410,
                           paper_bgcolor='gray',
-                          font={'size': 17}
+                          font={'size': 16}
                           )
         pie = dcc.Graph(id='pie-chart', figure=fig)
         analysis1 = html.Div([html.Div(children=
                                        [html.Div(className="r-rate", id='rrate',
-                                                 children=[html.H4("Recover Rate", style={'color': 'green'}),
-                                                           html.H3(f"{piev[2]/piev[0]:.2%}"),
-                                                           html.P('on total')
+                                                 children=[html.H5("Recover Rate", style={'color': 'green'}),
+                                                           html.H5(f"{piev[2]/piev[0]:.2%}"),
                                                            ],
                                                  style={
                                                      "textAlign": "center",
-                                                     "width": "160px",
+                                                     "width": "140px",
                                                  }
                                                  ),
                                         html.Div(className="d-rate", id='drate',
-                                                 children=[html.H4("Death Rate", style={'color': 'red'}),
-                                                           html.H3(f"{piev[3]/piev[0]:.2%}"),
+                                                 children=[html.H5("Death Rate", style={'color': 'red'}),
+                                                           html.H5(f"{piev[3]/piev[0]:.2%}"),
                                                            ],
                                                  style={
                                                      "textAlign": "center",
-                                                     "width": "160px",
+                                                     "width": "140px",
                                                  }),
                                         html.Span('on total confirm cases')
                                         ],
@@ -352,22 +351,21 @@ def render_graph(data, tab):
                                                      'display': 'inline-block'}),
                               html.Div(children=
                                        [html.Div(className="r-rate", id='rrate',
-                                                 children=[html.H4("Recover Rate", style={'color': 'green'}),
-                                                           html.H3(f"{piev[2] / (piev[2] + piev[3]):.2%}"),
-                                                           html.P('on total')
+                                                 children=[html.H5("Recover Rate", style={'color': 'green'}),
+                                                           html.H5(f"{piev[2] / (piev[2] + piev[3]):.2%}"),
                                                            ],
                                                  style={
                                                      "textAlign": "center",
-                                                     "width": "160px",
+                                                     "width": "140px",
                                                  }
                                                  ),
                                         html.Div(className="d-rate", id='drate',
-                                                 children=[html.H4("Death Rate", style={'color': 'red'}),
-                                                           html.H3(f"{piev[3] / (piev[2] + piev[3]):.2%}"),
+                                                 children=[html.H5("Death Rate", style={'color': 'red'}),
+                                                           html.H5(f"{piev[3] / (piev[2] + piev[3]):.2%}"),
                                                            ],
                                                  style={
                                                      "textAlign": "center",
-                                                     "width": "160px",
+                                                     "width": "140px",
                                                  }),
                                         html.Span('on total outcomes'),
                                         html.Br(),
