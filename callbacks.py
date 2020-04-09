@@ -313,7 +313,7 @@ def render_graph(data, tab):
             hovertemplate='<b> %{label} Cases <br> </b> %{value} (%{color:.2f} %)',
             name='1'
         ))
-        fig.update_layout(margin=dict(t=40, l=10, r=10, b=0),
+        fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
                           title='Covid19 India Cases Distribution',
                           height=350,
                           width=410,

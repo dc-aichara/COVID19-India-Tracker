@@ -26,10 +26,10 @@ color: blue;
 background-color: #f5f0ec;
 }
 .bg-blue, .r-rate{
-background-color: #c5bdae;
+background-color: #ecebf3;
 }
 .bg-red, .d-rate {
-background-color: #97d6b6;
+background-color: #b7aeaf;
 }
 .bg-green{
 background-color: #30d6e6fa;
@@ -69,7 +69,7 @@ background-color: #697964;
     position: relative;
     box-shadow: 3px 3px 3px #d4bebe;
     line-height: 1;
-    background: #84a27b;
+    background: #73d829;
 }
 #total, #active, #cure, #death, #states, #source, #drate, #rrate {
     flex: 2;
