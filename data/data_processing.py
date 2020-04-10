@@ -75,3 +75,4 @@ def get_state_daily():
                 daily_data[k]['Death'].append(v[3])
 
     return daily_data
+

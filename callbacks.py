@@ -14,6 +14,7 @@ from data.data_processing import get_daily_data, get_interval_data, get_state_da
 
 inshorts = InshortsNews()
 covidin = COVID19India()
+daily_state = get_state_daily()
 
 colors = {
     'background': 'white',
@@ -64,10 +65,12 @@ x_axis_h = {
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/2020.04.08_moh_india.csv')
+    df = pd.read_csv('data/2020.04.10_moh_india.csv')
+
+# Create map
+map = get_map(data_df=df)
 
 s100 = df[df["Total Confirmed cases"] > 100]['Name of State / UT'].values[:-1].tolist()
-map = get_map(data_df=df)
 df2 = covidin.change_cal()
 
 data_display = """
@@ -95,6 +98,13 @@ map1 = html.Div(children=[dcc.Markdown(  # markdown
     'textAlign': 'center',
     "background": "black"})
 
+# Daily tests
+tests = covidin.tests()
+tests = tests[tests['totalpositivecases'] != ""]
+tests['positive_rate'] = round((tests['totalpositivecases'].astype(int)/tests["totalsamplestested"].astype(int))*100, 2)
+tests['updatetimestamp'] = pd.to_datetime(tests['updatetimestamp'].apply(lambda x: x.split(": ")[0]))
+
+# New on corona virus
 try:
     news_data = inshorts.get_news()
 except:
@@ -117,6 +127,7 @@ news1 = html.Div(children=[dcc.Markdown(  # markdown
     "padding": "10px 0",
 })
 
+# Information on corona virus
 help_info = """
      # [GOI official Information Portal](https://www.mygov.in/covid-19)
     # [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019)
@@ -127,8 +138,6 @@ info = html.Div(children=[dcc.Markdown(  # markdown
     help_info)], style={
     'textAlign': 'left',
     "background": "gray"})
-
-daily_state = get_state_daily()
 
 
 @app.callback(Output('api-data', 'children'),
@@ -239,6 +248,7 @@ def render_graph(data, tab):
                      "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'x-open', 'color': "red"}},
                 ],
                 'layout': {
+                    'legend': {'x': 0.10, 'y': 0.9},
                     'title': f'Covid19 India Datewise Cases [Unofficial]',
                     'height': 700,
                     'xaxis': x_axis,
@@ -315,9 +325,9 @@ def render_graph(data, tab):
         ))
         fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
                           title='Covid19 India Cases Distribution',
-                          height=350,
+                          height=280,
                           width=410,
-                          paper_bgcolor='gray',
+                          paper_bgcolor='#eae2e2',
                           font={'size': 16}
                           )
         pie = dcc.Graph(id='pie-chart', figure=fig)
@@ -379,9 +389,8 @@ def render_graph(data, tab):
                               ],
                              className="row", style={
                                                     # 'display': 'inline-block',
-                                                     'background': 'gray',
+                                                     'background': '#eae2e2',
                                                     'textAlign': 'center'})
-
 
         bar_graph2 = dcc.Graph(
             id='bar-graph2',
@@ -396,6 +405,7 @@ def render_graph(data, tab):
                           "marker": {'color': "red"}, 'name': 'Deaths Cases'},
                          ],
                 'layout': {
+                    'legend': {'x': 0.10, 'y': 0.9},
                     'title': f'Covid19 India Cases by week',
                     'barmode': 'stack',
                     'height': 700,
@@ -405,7 +415,7 @@ def render_graph(data, tab):
                     'paper_bgcolor': colors['background'],
                     'font': {
                         'color': colors['text'],
-                        'size': 18
+                        'size': 16
                     }
                 }
             }
@@ -427,6 +437,7 @@ def render_graph(data, tab):
                               'name': 'Deaths', "marker": {'color': "red"}}
                              ],
                     'layout': {
+                        'legend': {'x': 0.80, 'y': 0.9},
                         'title': f'Covid19 India Cases by State',
                         'barmode': 'stack',
                         'height': 700,
@@ -436,9 +447,9 @@ def render_graph(data, tab):
                         'paper_bgcolor': colors['background'],
                         'font': {
                             'color': colors['text'],
-                            'size': 18
+                            'size': 13
                         },
-                        "margin": {"l": 230, 'b': 30, "t": 50}
+                        "margin": {"l": 200, 'b': 50, "t": 50}
                     }
                 }
             )

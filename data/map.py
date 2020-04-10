@@ -37,7 +37,7 @@ def get_map(data_df):
     for lat, lon, tc, crrd, dth, name, bins in geo_data:
         folium.CircleMarker(
             [lat, lon],
-            radius=0.2 * tc,
+            radius=0.05 * tc,
             popup=("<strong style='color:orange;'>" + 'State/UT: ' + "</strong>" + str(name).capitalize() + '<br>'
                     "<strong style='color:orange;'>" + "Total Confirmed: " + "</strong>" + "<strong style='color:blue;'>" + str(
                 tc) + "</strong>" + '<br>'
