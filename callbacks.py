@@ -230,7 +230,7 @@ def render_graph(data, tab):
             df_100 = pd.concat([df_100, df_s], 1)
         l = len(df_100[df_100['Maharashtra'] > 0])
         df_100 = df_100[:l]
-        print(df_100)
+        # print(df_100)
         annots = [{
             'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
             'y': df_100[s].values[~np.isnan(df_100[s].values)][-1],
@@ -252,7 +252,7 @@ def render_graph(data, tab):
         })
 
         line_graph2 = dcc.Graph(
-            id='graph-1',
+            id='graph-p',
             figure={
                 'data': [
                     {'x': df_100['days'], 'y': df_100[s],
