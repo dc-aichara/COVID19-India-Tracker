@@ -214,7 +214,7 @@ def render_graph(data, tab):
                 ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
-                    'title': f'Covid19 India Datewise Cases [Unofficial]',
+                    'title': f'Outbreak Spread Trend [Unofficial]',
                     'height': 700,
                     'xaxis': x_axis,
                     'yaxis': y_axis,
