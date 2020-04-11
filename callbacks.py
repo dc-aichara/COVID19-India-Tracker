@@ -7,60 +7,16 @@ import plotly.graph_objects as go
 from datetime import datetime
 from app import app
 import pandas as pd
+import numpy as np
 from data.map import get_map
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
 from data.data_processing import get_daily_data, get_interval_data, get_state_daily
-
+from styles import colors, y_axis, x_axis, x_axis_bar, y_axis_h, x_axis_h, y_axis_p, x_axis_p
 inshorts = InshortsNews()
 covidin = COVID19India()
 daily_state = get_state_daily()
 
-colors = {
-    'background': 'white',
-    'background2': '#D0D3D4',
-    'text': '#263a90'
-}
-
-y_axis = {
-    'title': 'Cases',
-    'showspikes': True,
-    'spikedash': 'dot',
-    'spikemode': 'across',
-    'spikesnap': 'cursor',
-}
-
-x_axis = {
-    'title': 'Date',
-    'showspikes': True,
-    'spikedash': 'dot',
-    'spikemode': 'across',
-    'spikesnap': 'cursor',
-}
-
-x_axis_bar = {
-    'title': 'Weeks Count [Starting from 01-03-2020]',
-    'showspikes': True,
-    'spikedash': 'dot',
-    'spikemode': 'across',
-    'spikesnap': 'cursor',
-}
-
-y_axis_h = {
-    'title': 'States',
-    'showspikes': True,
-    'spikedash': 'dot',
-    'spikemode': 'across',
-    'spikesnap': 'cursor',
-}
-
-x_axis_h = {
-    'title': 'Cases',
-    'showspikes': True,
-    'spikedash': 'dot',
-    'spikemode': 'across',
-    'spikesnap': 'cursor',
-}
 
 try:
     df = covidin.moh_data(save=True)
@@ -70,7 +26,7 @@ except:
 # Create map
 map = get_map(data_df=df)
 
-s100 = df[df["Total Confirmed cases"] > 100]['Name of State / UT'].values[:-1].tolist()
+s100 = df[df["Total Confirmed cases"] > 200]['Name of State / UT'].values[:-1].tolist()
 df2 = covidin.change_cal()
 
 data_display = """
@@ -267,47 +223,56 @@ def render_graph(data, tab):
         return [line_graph1, data_head, state_data, map1]
 
     elif tab == 'tab-2':
-        # df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
-        #
-        # for s in s100:
-        #     df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 100], columns=[s])
-        #     df_100 = pd.concat([df_100, df_s], 1)
-        # l = len(df_100[df_100['Maharashtra'] > 0])
-        # df_100 = df_100[:l]
-        #
-        # annots = [{
-        #     'x': df_100['days'].values[-1],
-        #     'y': df_100[s].values[-1],
-        #     'showarrow': False,
-        #     'text': f"{s}",
-        #     "font": {"color": 'red', "size": 8},
-        #     'xref': 'x',
-        #     'yref': 'y',
-        # } for s in s100
-        # ]
+        df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
 
-        # line_graph2 = dcc.Graph(
-        #     id='graph-1',
-        #     figure={
-        #         'data': [
-        #             {'x': df_100['days'], 'y': df_100[s],
-        #              'type': 'line', 'name': s,
-        #              "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
-        #         'layout': {
-        #             'title': f'Covid19 India Statewise Cases',
-        #             'height': 700,
-        #             'xaxis': x_axis,
-        #             'yaxis': y_axis,
-        #             'plot_bgcolor': colors['background2'],
-        #             'paper_bgcolor': colors['background'],
-        #             'font': {
-        #                 'color': colors['text'],
-        #                 'size': 18
-        #             },
-        #             'annotations': annots,
-        #         }
-        #     }
-        # )
+        for s in s100:
+            df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
+            df_100 = pd.concat([df_100, df_s], 1)
+        l = len(df_100[df_100['Maharashtra'] > 0])
+        df_100 = df_100[:l]
+        print(df_100)
+        annots = [{
+            'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
+            'y': df_100[s].values[~np.isnan(df_100[s].values)][-1],
+            'showarrow': False,
+            'text': f"{s}",
+            "font": { "size": 10},
+            'xref': 'x',
+            'yref': 'y',
+        } for s in s100
+        ]
+        annots.append({
+            'x': df_100['days'].values[-1] - 1,
+            'y': 100,
+            'showarrow': False,
+            'text': f"Number of days since 200th case",
+            "font": {"color": 'black', "size": 16},
+            'xref': 'x',
+            'yref': 'y',
+        })
+
+        line_graph2 = dcc.Graph(
+            id='graph-1',
+            figure={
+                'data': [
+                    {'x': df_100['days'], 'y': df_100[s],
+                     'type': 'line', 'name': s,
+                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
+                'layout': {
+                    'title': f'Confirmed Case Trajectories by States (>200)',
+                    'height': 700,
+                    'xaxis': x_axis_p,
+                    'yaxis': y_axis_p,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    },
+                    'annotations': annots,
+                }
+            }
+        )
         t = df.values[-1][1:]
         piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
         fig = go.Figure(go.Sunburst(
@@ -454,7 +419,7 @@ def render_graph(data, tab):
                 }
             )
 
-            return [analysis1, bar_graph2, bar_graph3]
+            return [analysis1, bar_graph2, bar_graph3, line_graph2]
         except:
             return [bar_graph2]
     elif tab == 'tab-3':
