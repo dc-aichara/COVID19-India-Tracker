@@ -155,6 +155,58 @@ def display_cases(_):
     return [a, b, c, d, e]
 
 
+df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
+
+for s in s100:
+    df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
+    df_100 = pd.concat([df_100, df_s], 1)
+l = len(df_100[df_100['Maharashtra'] > 0])
+df_100 = df_100[:l]
+# print(df_100)
+annots = [{
+    'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
+    'y': df_100[s].values[~np.isnan(df_100[s].values)][-1],
+    'showarrow': False,
+    'text': f"{s}",
+    "font": {"size": 10},
+    'xref': 'x',
+    'yref': 'y',
+} for s in s100
+]
+annots.append({
+    'x': df_100['days'].values[-1] - 1,
+    'y': 100,
+    'showarrow': False,
+    'text': f"Number of days since 200th case",
+    "font": {"color": 'black', "size": 16},
+    'xref': 'x',
+    'yref': 'y',
+})
+
+line_graph2 = dcc.Graph(
+    id='graph-p',
+    figure={
+        'data': [
+            {'x': df_100['days'], 'y': df_100[s],
+             'type': 'line', 'name': s,
+             "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
+        'layout': {
+            'title': f'Confirmed Case Trajectories by States (>200)',
+            'height': 700,
+            'xaxis': x_axis_p,
+            'yaxis': y_axis_p,
+            'plot_bgcolor': colors['background2'],
+            'paper_bgcolor': colors['background'],
+            'font': {
+                'color': colors['text'],
+                'size': 18
+            },
+            'annotations': annots,
+        }
+    }
+)
+
+
 @app.callback(Output(component_id='graph-output', component_property='children'),
               [Input('api-data', 'children'),
                Input('all-tabs-inline', 'value')])
@@ -223,56 +275,6 @@ def render_graph(data, tab):
         return [line_graph1, data_head, state_data, map1]
 
     elif tab == 'tab-2':
-        df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
-
-        for s in s100:
-            df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
-            df_100 = pd.concat([df_100, df_s], 1)
-        l = len(df_100[df_100['Maharashtra'] > 0])
-        df_100 = df_100[:l]
-        # print(df_100)
-        annots = [{
-            'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
-            'y': df_100[s].values[~np.isnan(df_100[s].values)][-1],
-            'showarrow': False,
-            'text': f"{s}",
-            "font": { "size": 10},
-            'xref': 'x',
-            'yref': 'y',
-        } for s in s100
-        ]
-        annots.append({
-            'x': df_100['days'].values[-1] - 1,
-            'y': 100,
-            'showarrow': False,
-            'text': f"Number of days since 200th case",
-            "font": {"color": 'black', "size": 16},
-            'xref': 'x',
-            'yref': 'y',
-        })
-
-        line_graph2 = dcc.Graph(
-            id='graph-p',
-            figure={
-                'data': [
-                    {'x': df_100['days'], 'y': df_100[s],
-                     'type': 'line', 'name': s,
-                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
-                'layout': {
-                    'title': f'Confirmed Case Trajectories by States (>200)',
-                    'height': 700,
-                    'xaxis': x_axis_p,
-                    'yaxis': y_axis_p,
-                    'plot_bgcolor': colors['background2'],
-                    'paper_bgcolor': colors['background'],
-                    'font': {
-                        'color': colors['text'],
-                        'size': 18
-                    },
-                    'annotations': annots,
-                }
-            }
-        )
         t = df.values[-1][1:]
         piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
         fig = go.Figure(go.Sunburst(
