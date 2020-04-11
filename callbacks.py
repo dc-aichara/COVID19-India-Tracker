@@ -232,48 +232,48 @@ def render_graph(data, tab):
         return [line_graph1, data_head, state_data, map1]
 
     elif tab == 'tab-2':
-        annots = [{
-            'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
-            'y': int(df_100[s].values[~np.isnan(df_100[s].values)][-1]),
-            'showarrow': False,
-            'text': f"{s}",
-            "font": {"size": 10},
-            'xref': 'x',
-            'yref': 'y',
-        } for s in s100
-        ]
-        annots.append({
-            'x': df_100['days'].values[-1] - 1,
-            'y': 100,
-            'showarrow': False,
-            'text': f"Number of days since 200th case",
-            "font": {"color": 'black', "size": 16},
-            'xref': 'x',
-            'yref': 'y',
-        })
-
-        line_graph2 = dcc.Graph(
-            id='graph-p',
-            figure={
-                'data': [
-                    {'x': df_100['days'], 'y': df_100[s],
-                     'type': 'line', 'name': s,
-                     "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
-                'layout': {
-                    'title': f'Confirmed Case Trajectories by States (>200)',
-                    'height': 700,
-                    'xaxis': x_axis_p,
-                    'yaxis': y_axis_p,
-                    'plot_bgcolor': colors['background2'],
-                    'paper_bgcolor': colors['background'],
-                    'font': {
-                        'color': colors['text'],
-                        'size': 18
-                    },
-                    'annotations': annots,
-                }
-            }
-        )
+        # annots = [{
+        #     'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
+        #     'y': int(df_100[s].values[~np.isnan(df_100[s].values)][-1]),
+        #     'showarrow': False,
+        #     'text': f"{s}",
+        #     "font": {"size": 10},
+        #     'xref': 'x',
+        #     'yref': 'y',
+        # } for s in s100
+        # ]
+        # annots.append({
+        #     'x': df_100['days'].values[-1] - 1,
+        #     'y': 100,
+        #     'showarrow': False,
+        #     'text': f"Number of days since 200th case",
+        #     "font": {"color": 'black', "size": 16},
+        #     'xref': 'x',
+        #     'yref': 'y',
+        # })
+        #
+        # line_graph2 = dcc.Graph(
+        #     id='graph-p',
+        #     figure={
+        #         'data': [
+        #             {'x': df_100['days'], 'y': df_100[s],
+        #              'type': 'line', 'name': s,
+        #              "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
+        #         'layout': {
+        #             'title': f'Confirmed Case Trajectories by States (>200)',
+        #             'height': 700,
+        #             'xaxis': x_axis_p,
+        #             'yaxis': y_axis_p,
+        #             'plot_bgcolor': colors['background2'],
+        #             'paper_bgcolor': colors['background'],
+        #             'font': {
+        #                 'color': colors['text'],
+        #                 'size': 18
+        #             },
+        #             'annotations': annots,
+        #         }
+        #     }
+        # )
         t = df.values[-1][1:]
         piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
         fig = go.Figure(go.Sunburst(
@@ -420,7 +420,7 @@ def render_graph(data, tab):
                 }
             )
 
-            return [analysis1, bar_graph2, bar_graph3, line_graph2]
+            return [analysis1, bar_graph2, bar_graph3]
         except:
             return [bar_graph2]
     elif tab == 'tab-3':
