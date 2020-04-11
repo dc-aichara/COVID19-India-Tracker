@@ -165,7 +165,7 @@ df_100 = df_100[:l]
 # print(df_100)
 annots = [{
     'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
-    'y': df_100[s].values[~np.isnan(df_100[s].values)][-1],
+    'y':int(df_100[s].values[~np.isnan(df_100[s].values)][-1]),
     'showarrow': False,
     'text': f"{s}",
     "font": {"size": 10},
