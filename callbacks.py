@@ -171,8 +171,8 @@ annots = [{
     "font": {"size": 10},
     'xref': 'x',
     'yref': 'y',
-} for s in s100
-]
+        } for s in s100
+    ]
 annots.append({
     'x': df_100['days'].values[-1] - 1,
     'y': 100,
