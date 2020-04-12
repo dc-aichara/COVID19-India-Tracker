@@ -32,7 +32,7 @@ data_display = """
 | **Name of State / UT** | **Total Confirmed cases** |**Cured/Discharged/Migrated** | **Death** |
 |:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 """
-# df = df.sort_values('Total Confirmed cases', ascending=False)
+# print(df)
 for v1, v2 in zip(df.values, df2.values):
     a = v1[0]
     b = v1[1] if v2[1] == 0 else f"{v1[1]} (**+{v2[1]}**)"

@@ -52,6 +52,7 @@ class COVID19India(object):
                 df = df[:-1]
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
         df = df.sort_values('Total Confirmed cases', ascending=False)
+        df = df.reset_index(drop=True)
         while save:
             content = self.__request(url)
 
@@ -86,14 +87,10 @@ class COVID19India(object):
             if 'moh' in file.parts[-1]:
                 f_path.append(file)
         f_path = sorted(f_path)
-        # print(f_path)
-        df = pd.read_csv(f_path[-1])
-        df1 = pd.read_csv(f_path[-2])
+        a = pd.read_csv(f_path[-1])
+        b = pd.read_csv(f_path[-2])
         lst = []
-        a, b = [df, df1] if len(df) > len(df1) else [df1, df]
         # print(a.shape, b.shape)
-        a = a.sort_values('Total Confirmed cases', ascending=False)
-        b = b.sort_values('Total Confirmed cases', ascending=False)
         for name in a['Name of State / UT'].values:
             if name in b['Name of State / UT'].values:
                 c = (a[a['Name of State / UT'] == name]).values[0][1:].astype(np.int64)
@@ -102,7 +99,8 @@ class COVID19India(object):
             else:
                 c = list((a[a['Name of State / UT'] == name]).values[0])
                 lst.append(c)
-        df2 = pd.DataFrame(data=lst, columns=df.columns)
+        df2 = pd.DataFrame(data=lst, columns=a.columns)
+        # print(df2)
         return df2
 
     def state_district_data(self):
