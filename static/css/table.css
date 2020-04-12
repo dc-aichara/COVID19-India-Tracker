@@ -87,17 +87,12 @@ background-color: #697964;
     width: 47%;}
 }
 
-@media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  [class*="cum-cases"] {
-    width: 100%;
-  }
-
- @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  [class*="daily-cases"] {
-    width: 100%;
-  }
+@media screen and (min-width : 0px) and (max-width : 767px){
+/*Style*/
+.cum-cases, .daily-cases{
+  width:100%;
+}
+}
 
 body {
     font-size: 14px;
