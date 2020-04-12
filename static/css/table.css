@@ -41,15 +41,6 @@ background-color: #f9f9f9;
 .bg-info{
 background-color: #697964;
 }
-.cum-cases, .daily-cases {
-    border-radius: 10px;
-    margin: 10px;
-    padding: 5px;
-    position: relative;
-    background-color: #f9f9f9;
-    box-shadow: 2px 2px 2px lightgrey;
-    line-height: .9;
-}
 .bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .r-rate, .d-rate{
     border-radius: 10px;
     margin: 10px;
@@ -66,7 +57,6 @@ background-color: #697964;
     box-shadow: 2px 2px 2px lightgrey;
     line-height: .9;
 }
-
 .container-display1 {
     text-align: left;
     display: inline-block;
@@ -82,6 +72,33 @@ background-color: #697964;
 #total, #active, #cure, #death, #states, #source, #drate, #rrate {
     flex: 2;
 }
+
+.cum-cases, .daily-cases, .bar-graph2, .bar-graph3 {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+    position: relative;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 2px lightgrey;
+    line-height: .9;
+}
+
+.cum-cases, .daily-cases{
+    width: 47%;}
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*="cum-cases"] {
+    width: 100%;
+  }
+
+ @media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*="daily-cases"] {
+    width: 100%;
+  }
+
 body {
     font-size: 14px;
     line-height: 1.12;

@@ -464,8 +464,11 @@ def render_graph(data, tab):
                     }
                 }
             )
-
-            return [analysis1, bar_graph2, bar_graph3]
+            A = html.Div(bar_graph2, className='bar-graph2', id="bar-graph2", style={"width": "100%"
+            })
+            B = html.Div(bar_graph3, className='bar-graph3', id="bar-graph3", style={"width": "100%"
+            })
+            return [analysis1, A, B]
         except:
             return [bar_graph2]
     elif tab == 'tab-3':
