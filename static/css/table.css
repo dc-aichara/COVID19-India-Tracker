@@ -49,6 +49,7 @@ background-color: #697964;
     box-shadow: 2px 2px 2px lightgrey;
     line-height: .6;
 }
+
 .bg-info {
     border-radius: 10px;
     margin: 10px;
@@ -85,9 +86,8 @@ background-color: #697964;
 
 .cum-cases, .daily-cases{
     width: 47%;}
-}
 
-@media screen and (min-width : 0px) and (max-width : 767px){
+@media screen and (min-width : 0px) and (max-width : 1000px){
 /*Style*/
 .cum-cases, .daily-cases{
   width:100%;
