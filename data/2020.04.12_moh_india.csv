@@ -3,24 +3,24 @@ Andhra Pradesh,381,11,6
 Andaman and Nicobar Islands,11,10,0
 Arunachal Pradesh,1,0,0
 Assam,29,0,1
-Bihar,63,0,1
+Bihar,64,19,1
 Chandigarh,19,7,0
-Chhattisgarh,18,9,0
+Chhattisgarh,25,10,0
 Delhi,1069,25,19
 Goa,7,5,0
 Gujarat,432,44,22
-Haryana,177,29,3
+Haryana,185,29,3
 Himachal Pradesh,32,6,1
-Jammu and Kashmir,207,6,4
+Jammu and Kashmir,224,6,4
 Jharkhand,17,0,1
-Karnataka,214,37,6
-Kerala,364,123,2
+Karnataka,226,37,6
+Kerala,374,142,2
 Ladakh,15,10,0
-Madhya Pradesh,532,0,36
+Madhya Pradesh,564,0,36
 Maharashtra,1761,208,127
 Manipur,2,1,0
 Mizoram,1,0,0
-Odisha,50,2,1
+Odisha,54,12,1
 Puducherry,7,1,0
 Punjab,151,5,11
 Rajasthan,700,21,3
@@ -30,4 +30,4 @@ Tripura,2,0,0
 Uttarakhand,35,5,0
 Uttar Pradesh,452,45,5
 West Bengal,134,19,5
-Total number of confirmed cases in India,8356,716,273
+Total number of confirmed cases in India,8447,765,273
