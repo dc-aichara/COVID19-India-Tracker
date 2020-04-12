@@ -41,6 +41,7 @@ class COVID19India(object):
         df = pd.read_html(url)[-1]
         del df['S. No.']
         df.columns = ['Name of State / UT', 'Total Confirmed cases', 'Cured/Discharged/Migrated', 'Death']
+        # print(df.head())
         cols = df.columns.values.tolist()
         for col in cols[1:]:
             try:
@@ -50,6 +51,7 @@ class COVID19India(object):
             except:
                 df = df[:-1]
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
+        df = df.sort_values('Total Confirmed cases', ascending=False)
         while save:
             content = self.__request(url)
 
@@ -90,6 +92,8 @@ class COVID19India(object):
         lst = []
         a, b = [df, df1] if len(df) > len(df1) else [df1, df]
         # print(a.shape, b.shape)
+        a = a.sort_values('Total Confirmed cases', ascending=False)
+        b = b.sort_values('Total Confirmed cases', ascending=False)
         for name in a['Name of State / UT'].values:
             if name in b['Name of State / UT'].values:
                 c = (a[a['Name of State / UT'] == name]).values[0][1:].astype(np.int64)

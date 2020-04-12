@@ -21,12 +21,11 @@ daily_state = get_state_daily()
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/2020.04.10_moh_india.csv')
+    df = pd.read_csv('data/2020.04.12_moh_india.csv')
 
 # Create map
 map = get_map(data_df=df)
 
-s100 = df[df["Total Confirmed cases"] > 200]['Name of State / UT'].values[:-1].tolist()
 df2 = covidin.change_cal()
 
 data_display = """
@@ -44,7 +43,7 @@ for v1, v2 in zip(df.values, df2.values):
     data_display += v
 
 data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
-    f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()})")], style={
+    f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()} Source: MoHFW | GoI)")], style={
     'textAlign': 'center',
     "background": "yellow",
     })
@@ -121,7 +120,7 @@ def get_data(_):
                ],
               [Input('dummy-id', '')])
 def display_cases(_):
-    value = df.values[-1][1:].tolist()
+    value = df.values[0][1:].tolist()
     active_case = value[0] - value[1] - value[2]
     recovered_case = value[1]
     deaths = value[-1]
@@ -156,7 +155,7 @@ def display_cases(_):
 
 
 df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
-
+s100 = df[df["Total Confirmed cases"] > 200]['Name of State / UT'].values[1:].tolist()
 for s in s100:
     df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
     df_100 = pd.concat([df_100, df_s], 1)
@@ -319,7 +318,7 @@ def render_graph(data, tab):
         #         }
         #     }
         # )
-        t = df.values[-1][1:]
+        t = df.values[0][1:]
         piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
         fig = go.Figure(go.Sunburst(
             labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths", ],

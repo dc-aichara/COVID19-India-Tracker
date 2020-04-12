@@ -10,11 +10,11 @@ def get_map(data_df):
     """
     states = pd.read_csv('data/states.csv')
 
-    df_geo = pd.merge(data_df, states[['Name of State / UT', 'latitude', 'longitude']], on='Name of State / UT',
+    df_geo = pd.merge(data_df[1:], states[['Name of State / UT', 'latitude', 'longitude']], on='Name of State / UT',
                       how='left')
 
     df_geo = df_geo.iloc[:-1, :]
-    # print(data_df)
+    # print(df_geo)
     df_geo['Total_confirmed'] = df_geo["Total Confirmed cases"]
 
     colordict = {0: '#FFA07A', 1: '#FA8072',
