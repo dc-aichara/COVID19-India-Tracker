@@ -203,22 +203,22 @@ def render_graph(data, tab):
             figure={
                 'data': [
                     {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
-                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross-open'}
+                     "mode": 'lines+markers', "marker": {"size": 4, 'symbol': 'dot', 'color': 'blue'}
                      },
                     {'x': data['date'], 'y': data["confirmed"]-data["recovered"]-data["deaths"], 'type': 'line',
                      'name': 'Active Cases',
-                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross', 'color': 'gray'}
+                     "mode": 'lines+markers', "marker": {"size": 4, 'symbol': 'dot', 'color': 'gray'}
                      },
                     {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
-                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'star-open', 'color': 'green'}
+                     "mode": 'lines+markers', "marker": {"size": 4, 'symbol': 'dot', 'color': 'green'}
                      },
                     {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
-                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'x-open', 'color': "red"}
+                     "mode": 'lines+markers', "marker": {"size": 4, 'symbol': 'dot', 'color': "red"}
                      },
                 ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
-                    'title': f'Outbreak Spread Trend [Unofficial]',
+                    'title': f'Covid19 India: Cumulative Spread Trend [Unofficial]',
                     # 'height': 700,
                     'xaxis': x_axis,
                     'yaxis': y_axis,
@@ -226,7 +226,7 @@ def render_graph(data, tab):
                     'paper_bgcolor': colors['background'],
                     'font': {
                         'color': colors['text'],
-                        'size': 18
+                        'size': 16
                     },
                     'annotations': annotations,
                 }
@@ -248,7 +248,7 @@ def render_graph(data, tab):
                 ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
-                    'title': f'Outbreak Daily Spread Trend [Unofficial]',
+                    'title': f'Covid19 India: Daily Spread Trend [Unofficial]',
                     # 'height': 700,
                     'barmode': 'stack',
                     'xaxis': x_axis,
@@ -257,7 +257,7 @@ def render_graph(data, tab):
                     'paper_bgcolor': colors['background'],
                     'font': {
                         'color': colors['text'],
-                        'size': 18
+                        'size': 16
                     },
                 }
             }
