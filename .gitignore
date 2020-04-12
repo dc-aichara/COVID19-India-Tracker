@@ -1,5 +1,5 @@
 *.pyc
 .DS_Store
-static/map.html
+static/*.html
 *.ipynb
 Notebooks

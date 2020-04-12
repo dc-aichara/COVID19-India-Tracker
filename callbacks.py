@@ -192,7 +192,7 @@ def render_graph(data, tab):
         'y': data['confirmed'].values[i],
         'showarrow': True,
         'text': f"Week{j + 1 }: {data['confirmed'].values[i]}",
-        "font": {"color": 'black'},
+        "font": {"color": 'red', 'size': 12},
         'xref': 'x',
         'yref': 'y',
     } for j, i in enumerate(dates_index)]
@@ -203,14 +203,18 @@ def render_graph(data, tab):
             figure={
                 'data': [
                     {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
-                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross-open'}},
+                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross-open'}
+                     },
                     {'x': data['date'], 'y': data["confirmed"]-data["recovered"]-data["deaths"], 'type': 'line',
                      'name': 'Active Cases',
-                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross', 'color': 'gray'}},
+                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'cross', 'color': 'gray'}
+                     },
                     {'x': data['date'], 'y': data["recovered"], 'type': 'line', 'name': 'Recovered Case',
-                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'star-open', 'color': 'green'}},
+                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'star-open', 'color': 'green'}
+                     },
                     {'x': data['date'], 'y': data["deaths"], 'type': 'line', 'name': 'Deaths',
-                     "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'x-open', 'color': "red"}},
+                     # "mode": 'lines+markers', "marker": {"size": 7, 'symbol': 'x-open', 'color': "red"}
+                     },
                 ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
@@ -238,7 +242,7 @@ def render_graph(data, tab):
                     {'x': data['date'], 'y': data["daily_recovered"], 'type': 'bar', 'name': 'Recovered Case',
                      "marker": {'color': "green"},
                      },
-                    {'x': data['date'], 'y': data["daily_confirmed"], 'type': 'bar', 'name': 'Confirmed Cases',
+                    {'x': data['date'], 'y': data["daily_confirmed"] - data["daily_recovered"] - data["daily_deaths"] , 'type': 'bar', 'name': 'Active Cases',
                      "marker": {'color': "blue"},
                      },
                 ],
@@ -259,7 +263,18 @@ def render_graph(data, tab):
             }
         )
 
-        return [line_graph1, bar_daily, data_head, state_data, map1]
+        tab_display = html.Div([html.Div(line_graph1, className='cum-cases', id='cum-cases', style={
+                                                                                # 'textAlign': 'center',
+                                                                                'display': 'inline-block',
+                                                                                # "verticalAlign": "top",
+                                                                                 }),
+                                html.Div(bar_daily, className='daily-cases', id="daily-cases", style={
+                                                                                # 'textAlign': 'center',
+                                                                                'display': 'inline-block',
+                                                                                # "verticalAlign": "top",
+                                                                                 })]
+                               , className='tab1-graph', id="tab1-graph", style={'textAlign': 'center'})
+        return [tab_display, data_head, state_data, map1]
 
     elif tab == 'tab-2':
         # annots = [{

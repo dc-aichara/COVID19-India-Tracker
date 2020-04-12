@@ -41,7 +41,15 @@ background-color: #f9f9f9;
 .bg-info{
 background-color: #697964;
 }
-
+.cum-cases, .daily-cases {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+    position: relative;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 2px lightgrey;
+    line-height: .9;
+}
 .bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .r-rate, .d-rate{
     border-radius: 10px;
     margin: 10px;
