@@ -215,7 +215,7 @@ def render_graph(data, tab):
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
                     'title': f'Outbreak Spread Trend [Unofficial]',
-                    'height': 700,
+                    # 'height': 700,
                     'xaxis': x_axis,
                     'yaxis': y_axis,
                     'plot_bgcolor': colors['background2'],
@@ -228,8 +228,38 @@ def render_graph(data, tab):
                 }
             }
         )
+        bar_daily = dcc.Graph(
+            id='graph-daily',
+            figure={
+                'data': [
+                    {'x': data['date'], 'y': data["daily_deaths"], 'type': 'bar', 'name': 'Deaths',
+                     "marker": {'color': "red"},
+                     },
+                    {'x': data['date'], 'y': data["daily_recovered"], 'type': 'bar', 'name': 'Recovered Case',
+                     "marker": {'color': "green"},
+                     },
+                    {'x': data['date'], 'y': data["daily_confirmed"], 'type': 'bar', 'name': 'Confirmed Cases',
+                     "marker": {'color': "blue"},
+                     },
+                ],
+                'layout': {
+                    'legend': {'x': 0.10, 'y': 0.9},
+                    'title': f'Outbreak Daily Spread Trend [Unofficial]',
+                    # 'height': 700,
+                    'barmode': 'stack',
+                    'xaxis': x_axis,
+                    'yaxis': y_axis,
+                    'plot_bgcolor': colors['background2'],
+                    'paper_bgcolor': colors['background'],
+                    'font': {
+                        'color': colors['text'],
+                        'size': 18
+                    },
+                }
+            }
+        )
 
-        return [line_graph1, data_head, state_data, map1]
+        return [line_graph1, bar_daily, data_head, state_data, map1]
 
     elif tab == 'tab-2':
         # annots = [{
@@ -374,7 +404,7 @@ def render_graph(data, tab):
                     'legend': {'x': 0.10, 'y': 0.9},
                     'title': f'Covid19 India Cases by week',
                     'barmode': 'stack',
-                    'height': 700,
+                    # 'height': 700,
                     'xaxis': x_axis_bar,
                     'yaxis': y_axis,
                     'plot_bgcolor': colors['background2'],
