@@ -18,6 +18,10 @@ color: blue;
 font-size: 18px;
 }
 
+h1 {
+margin:0px;
+}
+
 h4 {
 color: blue;
 }
@@ -59,22 +63,19 @@ background-color: #697964;
     line-height: .9;
 }
 .container-display1 {
-    text-align: left;
-    display: inline-block;
-    vertical-align: top;
     border-radius: 15px;
     margin: 10px;
     padding: 5px;
     position: relative;
     box-shadow: 3px 3px 3px #d4bebe;
     line-height: 1;
-    background: #73d829;
+    background: #cec6ef;
 }
 #total, #active, #cure, #death, #states, #source, #drate, #rrate {
     flex: 2;
 }
 
-.cum-cases, .daily-cases, .bar-graph2, .bar-graph3 {
+.cum-cases, .daily-cases, .bar-graph2, .bar-graph3, .test-graph, .row-pie, .data-row {
     border-radius: 10px;
     margin: 10px;
     padding: 5px;
@@ -84,16 +85,27 @@ background-color: #697964;
     line-height: .9;
 }
 
+.all-tab-line{
+    height: 50px;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+    position: relative;
+    background-color: #b59898;
+    vertical-align: middle;
+}
 .cum-cases, .daily-cases{
     width: 47%;}
 
 @media screen and (min-width : 0px) and (max-width : 1100px){
-/*Style*/
 .cum-cases, .daily-cases{
   width:95%;
 }
 }
 
+strong {
+    color: #040115fa;
+}
 body {
     font-size: 14px;
     line-height: 1.12;

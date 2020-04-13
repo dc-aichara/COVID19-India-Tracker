@@ -1,9 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-tabs_styles = {
-    'height': '51px'
-}
 tab_style = {
     'borderBottom': '1px solid #d6d6d6',
     'padding': '2px',
@@ -20,7 +17,8 @@ tab_selected_style = {
     "font-size": 20
 }
 
-dis = html.Div([html.Div(children=
+# dis = html.Div([], className="row", style={'background': '#b8bdd4', 'vertical-align': 'middle'})
+dis = html.Div(children=
                          [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
                                                                                          alt='position status',
                                                                                          style={'height': '40%',
@@ -83,8 +81,9 @@ dis = html.Div([html.Div(children=
                                        "width": "140px",
                                    }
                                    )
-                          ], className="row container-display", style={'textAlign': 'center'})
-                ], className="row", style={'background': '#b8bdd4', 'vertical-align': 'middle'})
+                          ], className="data-row", style={'textAlign': 'center',
+                                                     'background': '#b8bdd4', 'vertical-align': 'middle'})
+
 
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={
@@ -101,7 +100,7 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                                selected_style=tab_selected_style),
                        dcc.Tab(label='Help and Information', value='tab-4', style=tab_style,
                                selected_style=tab_selected_style),
-                   ], style=tabs_styles,
+                   ],
                             colors={
                                 "border": "yellow",
                                 "primary": "red",

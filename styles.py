@@ -64,3 +64,31 @@ x_axis_p = {
     'spikesnap': 'cursor',
     "zeroline": False,
 }
+
+y_axis_t = {
+    'title': 'Tests',
+    'showspikes': True,
+    'spikedash': 'dot',
+    'spikemode': 'across',
+    'spikesnap': 'cursor',
+    "zeroline": False,
+}
+x_axis_t = {
+    'title': 'Date',
+    'showspikes': True,
+    'spikedash': 'dot',
+    'spikemode': 'across',
+    'spikesnap': 'cursor',
+    "zeroline": False,
+}
+y_axis_t2 = {
+    'title': 'Positive Rate',
+    'titlefont': {'color': 'red'},
+    'tickfont': {'color': 'red'},
+    'overlaying': 'y',
+    'side': 'right',
+    'showspikes': True,
+    'spikedash': 'dot',
+    'spikemode': 'across',
+    'spikesnap': 'cursor',
+}
