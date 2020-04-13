@@ -191,7 +191,7 @@ test_graph = dcc.Graph(
                  ],
         'layout': {
             'legend': {'x': 0.10, 'y': 0.9},
-            'title': f'Daily Tests',
+            'title': f'Covid19 India: Daily Tests',
             # 'height': 700,
             'xaxis': x_axis_t,
             'yaxis': y_axis_t,
@@ -451,7 +451,8 @@ def render_graph(data, tab):
                     'font': {
                         'color': colors['text'],
                         'size': 16
-                    }
+                    },
+                    "margin": {"l": 0, 'b': 55, "t": 50}
                 }
             }
         )

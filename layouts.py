@@ -91,7 +91,7 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                                "background": "yellow"}),
                    dis,
                    html.Div(id='graph-input'),
-                   dcc.Tabs(id="all-tabs-inline", value='tab-1', children=[
+                   dcc.Tabs(id="all-tabs-inline", className="all-tabs-inline", value='tab-1', children=[
                        dcc.Tab(label='All Cases', value='tab-1', style=tab_style,
                                selected_style=tab_selected_style),
                        dcc.Tab(label='Cases Analysis', value='tab-2', style=tab_style,
