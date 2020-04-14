@@ -4,6 +4,7 @@ import dash_core_components as dcc
 import dash_dangerously_set_inner_html
 import dash_daq as daq
 import plotly.graph_objects as go
+import plotly.express as px
 from datetime import datetime
 from app import app
 import pandas as pd
@@ -11,13 +12,12 @@ from data.map import get_map
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
 from data.data_processing import get_daily_data, get_interval_data, get_state_daily
-from styles import colors, y_axis, x_axis, x_axis_bar, y_axis_h, x_axis_h, y_axis_p, x_axis_p, y_axis_t, x_axis_t,\
+from styles import colors, y_axis, x_axis, x_axis_bar, y_axis_h, x_axis_h, y_axis_p, x_axis_p, y_axis_t, x_axis_t, \
     y_axis_t2
 
 inshorts = InshortsNews()
 covidin = COVID19India()
 daily_state = get_state_daily()
-
 
 try:
     df = covidin.moh_data(save=True)
@@ -47,7 +47,7 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()} Source: MoHFW | GoI)")], style={
     'textAlign': 'center',
     "background": "yellow",
-    })
+})
 
 map1 = html.Div(children=[dcc.Markdown(  # markdown
     "##  [Covid India Map](/static/map.html)")], style={
@@ -105,7 +105,7 @@ fig = go.Figure(go.Sunburst(
     name='1'
 ))
 fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
-                  title='Covid19 India Cases Distribution',
+                  title='Covid19 India: Cases Distribution',
                   height=280,
                   width=410,
                   paper_bgcolor='#eae2e2',
@@ -175,7 +175,8 @@ analysis1 = html.Div([html.Div(children=
 # Daily tests
 tests = covidin.tests()
 tests = tests[tests['totalpositivecases'] != ""]
-tests['positive_rate'] = round((tests['totalpositivecases'].astype(int)/tests["totalsamplestested"].astype(int))*100, 2)
+tests['positive_rate'] = round(
+    (tests['totalpositivecases'].astype(int) / tests["totalsamplestested"].astype(int)) * 100, 2)
 tests['updatetimestamp'] = pd.to_datetime(tests['updatetimestamp'].apply(lambda x: x.split(": ")[0]), dayfirst=True)
 tests = tests[['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']]
 
@@ -202,10 +203,26 @@ test_graph = dcc.Graph(
                 'color': colors['text'],
                 'size': 13
             },
-            "margin": {"l": 200, 'b': 50, "t": 50}
+            "margin": {'b': 50, "t": 50}
         }
     }
 )
+# District level visualization
+dists = covidin.state_district_data()
+
+d_fig = px.sunburst(dists, path=['State_UT', 'District'],
+                    values='Confirmed', color='State_UT',
+                    hover_data=["Confirmed"]
+                    )
+d_fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
+                    title='Covid19 India: Districtwise Cases Distribution',
+                    height=700,
+                    # width=410,
+                    paper_bgcolor='#eae2e2',
+                    font={'size': 16}
+                    )
+
+dist_chart = dcc.Graph(id='dist-chart', figure=d_fig)
 
 
 @app.callback(Output('api-data', 'children'),
@@ -215,8 +232,11 @@ def get_data(_):
         df_api = covidin.timeseries_data()
         df_api['date'] = pd.to_datetime(df_api['date'] + '2020')
         df_api = df_api[df_api['dailyconfirmed'] != ""]
-        df_api = df_api[["date", "totalconfirmed", "totalrecovered", "totaldeceased", 'dailyconfirmed', 'dailyrecovered', 'dailydeceased']]
-        df_api.columns = ['date', 'confirmed', 'recovered', 'deaths', 'daily_confirmed', 'daily_recovered', 'daily_deaths']
+        df_api = df_api[
+            ["date", "totalconfirmed", "totalrecovered", "totaldeceased", 'dailyconfirmed', 'dailyrecovered',
+             'dailydeceased']]
+        df_api.columns = ['date', 'confirmed', 'recovered', 'deaths', 'daily_confirmed', 'daily_recovered',
+                          'daily_deaths']
         df_api.to_csv('data/api_india.csv', index=False)
     except:
         df_api = pd.read_csv("data/api_india.csv")
@@ -292,17 +312,17 @@ def render_graph(data, tab):
     state_data = html.Div(children=[dcc.Markdown(  # markdown
         data_display)],
         style={
-        'textAlign': 'center',
-        "background": "#bccad0",
-        "padding": "10px 0",
-        "white-space": "pre", "overflow-x": "scroll"
-    })
+            'textAlign': 'center',
+            "background": "#bccad0",
+            "padding": "10px 0",
+            "white-space": "pre", "overflow-x": "scroll"
+        })
     dates_index = [6, 13, 20, 27, 34, 41]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
         'showarrow': True,
-        'text': f"Week{j + 1 }: {data['confirmed'].values[i]}",
+        'text': f"Week{j + 1}: {data['confirmed'].values[i]}",
         "font": {"color": 'red', 'size': 12},
         'xref': 'x',
         'yref': 'y',
@@ -316,7 +336,7 @@ def render_graph(data, tab):
                     {'x': data['date'], 'y': data["confirmed"], 'type': 'line', 'name': 'Confirmed Cases',
                      "mode": 'lines+markers', "marker": {"size": 4, 'symbol': 'dot', 'color': 'blue'}
                      },
-                    {'x': data['date'], 'y': data["confirmed"]-data["recovered"]-data["deaths"], 'type': 'line',
+                    {'x': data['date'], 'y': data["confirmed"] - data["recovered"] - data["deaths"], 'type': 'line',
                      'name': 'Active Cases',
                      "mode": 'lines+markers', "marker": {"size": 4, 'symbol': 'dot', 'color': 'gray'}
                      },
@@ -353,7 +373,8 @@ def render_graph(data, tab):
                     {'x': data['date'], 'y': data["daily_recovered"], 'type': 'bar', 'name': 'Recovered Case',
                      "marker": {'color': "green"},
                      },
-                    {'x': data['date'], 'y': data["daily_confirmed"] - data["daily_recovered"] - data["daily_deaths"] , 'type': 'bar', 'name': 'Active Cases',
+                    {'x': data['date'], 'y': data["daily_confirmed"] - data["daily_recovered"] - data["daily_deaths"],
+                     'type': 'bar', 'name': 'Active Cases',
                      "marker": {'color': "blue"},
                      },
                 ],
@@ -375,11 +396,11 @@ def render_graph(data, tab):
         )
 
         tab_display = html.Div([html.Div(line_graph1, className='cum-cases', id='cum-cases', style={
-                                                                                'display': 'inline-block',
-                                                                                 }),
+            'display': 'inline-block',
+        }),
                                 html.Div(bar_daily, className='daily-cases', id="daily-cases", style={
-                                                                                'display': 'inline-block',
-                                                                                 })]
+                                    'display': 'inline-block',
+                                })]
                                , className='tab1-graph', id="tab1-graph", style={'textAlign': 'center'})
         return [tab_display, data_head, state_data, map1]
 
@@ -441,7 +462,7 @@ def render_graph(data, tab):
                          ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
-                    'title': f'Covid19 India Cases by week',
+                    'title': f'Covid19 India: Cases by week',
                     'barmode': 'stack',
                     # 'height': 700,
                     'xaxis': x_axis_bar,
@@ -474,7 +495,7 @@ def render_graph(data, tab):
                              ],
                     'layout': {
                         'legend': {'x': 0.80, 'y': 0.9},
-                        'title': f'Covid19 India Cases by State',
+                        'title': f'Covid19 India: Cases by State',
                         'barmode': 'stack',
                         'height': 700,
                         'xaxis': x_axis_h,
@@ -491,13 +512,13 @@ def render_graph(data, tab):
             )
             # ['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']
 
-            A = html.Div(bar_graph2, className='bar-graph2', id="bar-graph2", style={"width": "98%"
-            })
-            B = html.Div(bar_graph3, className='bar-graph3', id="bar-graph3", style={"width": "98%"
-            })
-            C = html.Div(test_graph, className='test-graph', id="test-graph", style={"width": "98%"
-            })
-            return [analysis1, A, B, C]
+            A = html.Div(bar_graph2, className='bar-graph2', id="bar-graph2", style={'display': 'inline-block'})
+            B = html.Div(bar_graph3, className='bar-graph3', id="bar-graph3", style={"width": "98%"})
+            C = html.Div(test_graph, className='test-graph', id="test-graph", style={'display': 'inline-block'})
+            D = html.Div(dist_chart, className='test-graph', id="test-graph", style={"width": "98%"})
+            tab2_display = html.Div([A, C, B, D]
+                                    , className='tab1-graph', id="tab1-graph", style={'textAlign': 'center'})
+            return [analysis1, tab2_display]
         except:
             return [bar_graph2]
     elif tab == 'tab-3':

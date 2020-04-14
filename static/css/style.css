@@ -47,7 +47,7 @@ background-color: #697964;
 }
 .bg-blue, .bg-green, .bg-red, .bg-yellow, .bg-orange, .r-rate, .d-rate{
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     position: relative;
     box-shadow: 2px 2px 2px lightgrey;
@@ -56,7 +56,7 @@ background-color: #697964;
 
 .bg-info {
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     position: relative;
     box-shadow: 2px 2px 2px lightgrey;
@@ -64,7 +64,7 @@ background-color: #697964;
 }
 .container-display1 {
     border-radius: 15px;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     position: relative;
     box-shadow: 3px 3px 3px #d4bebe;
@@ -77,7 +77,7 @@ background-color: #697964;
 
 .cum-cases, .daily-cases, .bar-graph2, .bar-graph3, .test-graph, .row-pie, .data-row {
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     position: relative;
     background-color: #f9f9f9;
@@ -88,18 +88,18 @@ background-color: #697964;
 .all-tabs-inline {
     height: 50px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     position: relative;
     background-color: #b59898;
     vertical-align: middle;
 }
-.cum-cases, .daily-cases{
-    width: 47%;}
+.cum-cases, .daily-cases, .bar-graph2, .test-graph {
+    width: 48.5%;}
 
 @media screen and (min-width : 0px) and (max-width : 1100px){
-.cum-cases, .daily-cases{
-  width:95%;
+.cum-cases, .daily-cases, .bar-graph2, .test-graph{
+  width:97%;
 }
 }
 
