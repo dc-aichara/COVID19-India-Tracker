@@ -53,6 +53,7 @@ class COVID19India(object):
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
         df = df.sort_values('Total Confirmed cases', ascending=False)
         df = df.reset_index(drop=True)
+        df.iloc[0, 0] = "Total"
         while save:
             content = self.__request(url)
 

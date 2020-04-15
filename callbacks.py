@@ -8,7 +8,7 @@ import plotly.express as px
 from datetime import datetime
 from app import app
 import pandas as pd
-from data.map import get_map
+from map.scatter_map import scatter_mapbox
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
 from data.data_processing import get_daily_data, get_interval_data, get_state_daily
@@ -25,7 +25,9 @@ except:
     df = pd.read_csv('data/2020.04.12_moh_india.csv')
 
 # Create map
-map = get_map(data_df=df)
+# map = get_map(data_df=df)
+india_map = scatter_mapbox(data=df)
+
 
 df2 = covidin.change_cal()
 
@@ -49,10 +51,10 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     "background": "yellow",
 })
 
-map1 = html.Div(children=[dcc.Markdown(  # markdown
-    "##  [Covid India Map](/static/map.html)")], style={
-    'textAlign': 'center',
-    "background": "black"})
+# map1 = html.Div(children=[dcc.Markdown(  # markdown
+#     "##  [Covid India Map](/static/map.html)")], style={
+#     'textAlign': 'center',
+#     "background": "black"})
 
 # New on corona virus
 try:
@@ -222,7 +224,7 @@ d_fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
                     font={'size': 16}
                     )
 d_fig.data[0].update(
-        hovertemplate="%{customdata[2]}, %{customdata[1]} <br>Confirmed: %{customdata[0]}"
+        hovertemplate="%{customdata[1]}, %{customdata[2]} <br>Confirmed: %{customdata[0]}"
     )
 dist_chart = dcc.Graph(id='dist-chart', figure=d_fig)
 
@@ -311,14 +313,14 @@ def render_graph(data, tab):
 
     df1 = get_daily_data(df_daily)
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
-    state_data = html.Div(children=[dcc.Markdown(  # markdown
-        data_display)],
-        style={
-            'textAlign': 'center',
-            "background": "#bccad0",
-            "padding": "10px 0",
-            "white-space": "pre", "overflow-x": "scroll"
-        })
+    state_data = html.Div(className='India-data',
+                          children=[
+                              html.Div(children=[dcc.Markdown(data_display)], className='data-table',
+                                       style={'display': 'inline-block'}),
+                              html.Div(children=[dcc.Graph(figure=india_map)], className='India-map',
+                                       style={'display': 'inline-block', 'textAlign': 'center'})
+                          ]
+                          )
     dates_index = [6, 13, 20, 27, 34, 41]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
@@ -404,7 +406,7 @@ def render_graph(data, tab):
                                     'display': 'inline-block',
                                 })]
                                , className='tab1-graph', id="tab1-graph", style={'textAlign': 'center'})
-        return [tab_display, data_head, state_data, map1]
+        return [tab_display, data_head, state_data]
 
     elif tab == 'tab-2':
         # annots = [{
@@ -514,12 +516,12 @@ def render_graph(data, tab):
             )
             # ['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']
 
-            A = html.Div(bar_graph2, className='bar-graph2', id="bar-graph2", style={'display': 'inline-block'})
-            B = html.Div(bar_graph3, className='bar-graph3', id="bar-graph3", style={"width": "98%"})
-            C = html.Div(test_graph, className='test-graph', id="test-graph", style={'display': 'inline-block'})
-            D = html.Div(dist_chart, className='test-graph', id="test-graph", style={"width": "98%"})
-            tab2_display = html.Div([A, C, B, D]
-                                    , className='tab1-graph', id="tab1-graph", style={'textAlign': 'center'})
+            A = html.Div(children=[bar_graph2], className='bar-graph2', id="bar-graph2", style={'display': 'inline-block'})
+            B = html.Div(children=[bar_graph3], className='bar-graph3', id="bar-graph3", style={"width": "98%"})
+            C = html.Div(children=[test_graph], className='test-graph', id="test-graph", style={'display': 'inline-block'})
+            D = html.Div(children=[dist_chart], className='dist-graph', id="dist-graph", style={"width": "98%"})
+            tab2_display = html.Div(children=[A, C, B, D]
+                                    , className='tab2-graph', id="tab2-graph", style={'textAlign': 'center'})
             return [analysis1, tab2_display]
         except:
             return [bar_graph2]

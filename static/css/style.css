@@ -2,8 +2,9 @@ table {
 margin-left: 1px;
 margin-right: 1px;
 border-collapse: collapse;
-width: 100%;
+width: 97%;
 font-size: 20px;
+color:orange
 }
 
 th {
@@ -13,7 +14,7 @@ th {
   color: #130635;
 }
 tr:hover {
-background-color:#f5f5f5;
+background-color:#7fc0c3;
 color: blue;
 font-size: 18px;
 }
@@ -75,7 +76,7 @@ background-color: #697964;
     flex: 2;
 }
 
-.cum-cases, .daily-cases, .bar-graph2, .bar-graph3, .test-graph, .row-pie, .data-row {
+.cum-cases, .daily-cases, .bar-graph2, .bar-graph3, .test-graph, .dist-graph, .row-pie, .data-row, .data-table, .India-map {
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
@@ -94,17 +95,26 @@ background-color: #697964;
     background-color: #b59898;
     vertical-align: middle;
 }
-.cum-cases, .daily-cases, .bar-graph2, .test-graph {
-    width: 48.5%;}
+.cum-cases, .daily-cases, .bar-graph2, .test-graph, .data-table, .India-map{
+    width: 48.5%;
+    }
+
+.data-table, .India-map {
+overflow-x: scroll;
+max-height: 700px;
+text-align: center;
+background: black;
+}
+
 
 @media screen and (min-width : 0px) and (max-width : 1100px){
-.cum-cases, .daily-cases, .bar-graph2, .test-graph{
+.cum-cases, .daily-cases, .bar-graph2, .test-graph, .data-table, .India-map{
   width:97%;
 }
 }
 
 strong {
-    color: #040115fa;
+    color: yellow;
 }
 body {
     font-size: 14px;

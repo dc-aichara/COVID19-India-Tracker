@@ -14,4 +14,4 @@ requests==2.23.0
 Markdown==3.1.1
 folium==0.10.1
 dash-dangerously-set-inner-html==0.0.2
-black
+python-decouple==3.3
