@@ -181,7 +181,7 @@ tests['updatetimestamp'] = pd.to_datetime(tests['updatetimestamp'].apply(lambda 
 tests = tests[['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']]
 
 test_graph = dcc.Graph(
-    id='test-graph',
+    id='test-plot',
     figure={
         'data': [{'y': tests['totalpositivecases'], 'x': tests['updatetimestamp'],
                   'type': 'line', 'name': 'Positive Cases'},
@@ -212,7 +212,7 @@ dists = covidin.state_district_data()
 
 d_fig = px.sunburst(dists, path=['State_UT', 'District'],
                     values='Confirmed', color='State_UT',
-                    hover_data=["Confirmed"]
+                    hover_data=["Confirmed", "District", 'State_UT']
                     )
 d_fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
                     title='Covid19 India: Districtwise Cases Distribution',
@@ -221,7 +221,9 @@ d_fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
                     paper_bgcolor='#eae2e2',
                     font={'size': 16}
                     )
-
+d_fig.data[0].update(
+        hovertemplate="%{customdata[2]}, %{customdata[1]} <br>Confirmed: %{customdata[0]}"
+    )
 dist_chart = dcc.Graph(id='dist-chart', figure=d_fig)
 
 
