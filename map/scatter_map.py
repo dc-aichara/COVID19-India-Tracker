@@ -44,7 +44,7 @@ def scatter_mapbox(data=None):
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         height=700,
         # width=700,
-        # This takes away the colorbar on the right hand side of the plot if it is set to False
+        # This takes away the color bar on the right hand side of the plot if it is set to False
         coloraxis_showscale=False,
         mapbox_style=mapbox_style,
         mapbox=dict(center=dict(lat=23.5937, lon=81.9629), zoom=4,),
