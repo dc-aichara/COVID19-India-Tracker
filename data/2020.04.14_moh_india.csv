@@ -1,26 +1,26 @@
 Name of State / UT,Total Confirmed cases,Cured/Discharged/Migrated,Death
-Total number of confirmed cases in India,10363,1036,339
-Maharashtra,2334,217,160
+Total number of confirmed cases in India,10815,1190,353
+Maharashtra,2337,229,160
 Delhi,1510,30,28
 Tamil Nadu,1173,58,11
-Rajasthan,873,21,3
-Madhya Pradesh,604,44,43
-Telengana,562,100,16
-Uttar Pradesh,558,49,5
-Gujarat,539,54,26
-Andhra Pradesh,432,11,7
+Rajasthan,879,133,3
+Madhya Pradesh,730,51,50
+Uttar Pradesh,657,49,5
+Telengana,624,100,17
+Gujarat,617,55,26
+Andhra Pradesh,473,14,9
 Kerala,379,198,3
 Jammu and Kashmir,270,16,4
-Karnataka,247,59,6
+Karnataka,258,65,9
+Haryana,199,34,3
 West Bengal,190,36,7
-Haryana,185,29,3
-Punjab,167,14,11
-Bihar,65,26,1
-Odisha,54,12,1
-Uttarakhand,35,5,0
+Punjab,176,14,12
+Bihar,66,26,1
+Odisha,55,18,1
+Uttarakhand,35,7,0
 Himachal Pradesh,32,13,1
-Chhattisgarh,31,10,0
 Assam,31,0,1
+Chhattisgarh,31,10,0
 Jharkhand,24,0,2
 Chandigarh,21,7,0
 Ladakh,15,10,0
@@ -29,6 +29,7 @@ Puducherry,7,1,0
 Goa,7,5,0
 Manipur,2,1,0
 Tripura,2,0,0
+Nagaland,1,0,0
 Mizoram,1,0,0
 Arunachal Pradesh,1,0,0
-Nagaland,1,0,0
+Meghalaya,1,0,0
