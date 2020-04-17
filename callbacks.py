@@ -177,6 +177,7 @@ analysis1 = html.Div([html.Div(children=
 # Daily tests
 tests = covidin.tests()
 tests = tests[tests['totalpositivecases'] != ""]
+tests['totalpositivecases'] = tests['totalpositivecases'].str.replace(',', '')
 tests['positive_rate'] = round(
     (tests['totalpositivecases'].astype(int) / tests["totalsamplestested"].astype(int)) * 100, 2)
 tests['updatetimestamp'] = pd.to_datetime(tests['updatetimestamp'].apply(lambda x: x.split(": ")[0]), dayfirst=True)
