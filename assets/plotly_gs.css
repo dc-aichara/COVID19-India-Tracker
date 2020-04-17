@@ -5,9 +5,9 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 ga('create', 'UA-163694740-1', 'auto');
 ga('send', 'pageview');*/
-window.dataLayer = window.dataLayer || [];
+/*window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 
-gtag('config', 'UA-163694740-1');
+gtag('config', 'UA-163694740-1');*/
 
