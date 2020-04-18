@@ -23,10 +23,6 @@ h1 {
 margin:0px;
 }
 
-h4 {
-color: blue;
-}
-
 .bg-yellow {
 background-color: #f5f0ec;
 }
@@ -107,7 +103,7 @@ background: black;
 }
 
 
-@media screen and (min-width : 0px) and (max-width : 1100px){
+@media screen and (min-width : 0px) and (max-width : 1350px){
 .cum-cases, .daily-cases, .bar-graph2, .test-graph, .data-table, .India-map{
   width:97%;
 }
@@ -128,4 +124,36 @@ a {
 color: #3c1edb;
 text-decoration: blink;
 cursor: pointer;
+}
+
+.news-0, .news-1, .news-2, .news-3, .news-4, .news-5, .news-5, .news-6, .news-7, .news-8, .news-9, .news-10,
+ .news-11, .news-12, .news-13, .news-14, .news-15,.news-16, .news-17, .news-18, .news-19, .news-20 {
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    position: relative;
+    background-color: #0a063e;
+    box-shadow: 2px 2px 2px lightgrey;
+    width:300px;
+    height:350px;
+    overflow-x: scroll;
+    vertical-align: text-top;
+    text-align: justify;
+}
+.footer{
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    position: relative;
+    background-color: #fff5f5;
+    box-shadow: 2px 2px 2px lightgrey;
+    line-height: 1.2;
+}
+.git-image{
+border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    position: relative;
+    background-color: #3c1111;
+    box-shadow: 2px 2px 2px lightgrey;
 }

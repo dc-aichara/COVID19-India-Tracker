@@ -19,72 +19,89 @@ tab_selected_style = {
 
 # dis = html.Div([], className="row", style={'background': '#b8bdd4', 'vertical-align': 'middle'})
 dis = html.Div(children=
-                         [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
-                                                                                         alt='position status',
-                                                                                         style={'height': '40%',
-                                                                                                'width': '40%'}),
-                                                                                html.H5(id="confirm-display"),
-                                                                                html.P('Confirm Cases')], style={
+               [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
+                                                                               alt='position status',
+                                                                               style={'height': '40%',
+                                                                                      'width': '40%'}),
+                                                                      html.H5(id="confirm-display"),
+                                                                      html.P('Confirm Cases')], style={
+                   'display': 'inline-block',
+                   "textAlign": "center",
+                   "width": "130px",
+               }),
+                html.Div(className='bg-blue', id="active",
+                         children=[html.Img(src='assets/images/icon-infected.png',
+                                            alt='active status'),
+                                   html.H5(id="active-display"), html.P('Active Cases')], style={
+                        'display': 'inline-block',
+                        "textAlign": "center",
+                        "width": "140px",
+                    }),
+                html.Div(className='bg-green', id="cure",
+                         children=[html.Img(src='assets/images/icon-inactive.png',
+                                            alt='cured status'),
+                                   html.H5(id="recovered-display"),
+                                   html.P('Recovered Cases')], style={
+                        'display': 'inline-block',
+                        "textAlign": "center",
+                        "width": "140px",
+                    }),
+                html.Div(className='bg-red', id="death",
+                         children=[html.Img(src='assets/images/icon-death.png',
+                                            alt='death status'), html.H5(id="death-display"),
+                                   html.P('Deaths')], style={
+                        'display': 'inline-block',
+                        "textAlign": "center",
+                        "width": "140px",
+                    }),
+                html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
+                                                                                alt='states UTs status',
+                                                                                style={'height': '32%',
+                                                                                       'width': '32%'}),
+                                                                       html.H5(id='counts-display'),
+                                                                       html.P('Affected States')],
+                         style={
                              'display': 'inline-block',
                              "textAlign": "center",
-                             "width": "130px",
+                             "width": "140px",
                          }),
-                          html.Div(className='bg-blue', id="active",
-                                   children=[html.Img(src='assets/images/icon-infected.png',
-                                                      alt='active status'),
-                                             html.H5(id="active-display"), html.P('Active Cases')], style={
-                                  'display': 'inline-block',
-                                  "textAlign": "center",
-                                  "width": "140px",
-                              }),
-                          html.Div(className='bg-green', id="cure",
-                                   children=[html.Img(src='assets/images/icon-inactive.png',
-                                                      alt='cured status'),
-                                             html.H5(id="recovered-display"),
-                                             html.P('Recovered Cases')], style={
-                                  'display': 'inline-block',
-                                  "textAlign": "center",
-                                  "width": "140px",
-                              }),
-                          html.Div(className='bg-red', id="death",
-                                   children=[html.Img(src='assets/images/icon-death.png',
-                                                      alt='death status'), html.H5(id="death-display"),
-                                             html.P('Deaths')], style={
-                                  'display': 'inline-block',
-                                  "textAlign": "center",
-                                  "width": "140px",
-                              }),
-                          html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
-                                                                                          alt='states UTs status',
-                                                                                          style={'height': '32%',
-                                                                                                 'width': '32%'}),
-                                                                                 html.H5(id='counts-display'),
-                                                                                 html.P('Affected States')],
-                                   style={
-                                       'display': 'inline-block',
-                                       "textAlign": "center",
-                                       "width": "140px",
-                                   }),
-                          html.Div(className='bg-info', id="source",
-                                   children=[html.A(html.Img(src='assets/images/icon-state.png',
-                                                             alt='states-data',
-                                                             style={'height': '100%',
-                                                                    'width': '95%'}
-                                                             ), href="#state-data"),
-                                             html.H5("Data Source"),
-                                             html.A("MoHFW", href='https://www.mohfw.gov.in/',
-                                                    style={'font-size': "23px"}),
-                                             ],
-                                   style={
-                                       'display': 'inline-block',
-                                       "textAlign": "center",
-                                       "width": "140px",
-                                   }
-                                   )
-                          ], className="data-row", style={'textAlign': 'center',
-                                                     'background': '#b8bdd4', 'vertical-align': 'middle'})
+                html.Div(className='bg-info', id="source",
+                         children=[html.A(html.Img(src='assets/images/icon-state.png',
+                                                   alt='states-data',
+                                                   style={'height': '100%',
+                                                          'width': '95%'}
+                                                   ), href="#state-data"),
+                                   html.H5("Data Source"),
+                                   html.A("MoHFW", href='https://www.mohfw.gov.in/',
+                                          style={'font-size': "23px"}),
+                                   ],
+                         style={
+                             'display': 'inline-block',
+                             "textAlign": "center",
+                             "width": "140px",
+                         }
+                         )
+                ], className="data-row", style={'textAlign': 'center',
+                                                'background': '#b8bdd4', 'vertical-align': 'middle'})
 
-
+footer = html.Div(className='footer', children=[html.H2("Source code available on",
+                                                        style={'display': 'inline-block',
+                                                               'margin': "0px",
+                                                               "color": 'navy',
+                                                               "line-height": "0.1",}
+                                                        ),
+                                                html.A(html.Img(src="assets/images/github.png",
+                                                                alt="github",
+                                                                className="git-image",
+                                                                style={'height': "10%",
+                                                                       "width": "7%",
+                                                                       'display': 'inline-block'
+                                                                       }),
+                                                       href='https://github.com/dc-aichara/COVID19-India-Tracker',
+                                                       className='git-code',
+                                                       style={'vertical-align': 'middle'})
+                                                ],
+                  style={'textAlign': "center"})
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={
                                'textAlign': 'center',
@@ -108,18 +125,18 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                             }),
                    html.Div(id='graph-output'),  # Tab output
                    html.Div(id='api-data', style={'display': 'none'}),
-                   html.Div(children=[dcc.Markdown(  # markdown
-                       "Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
-                       "https://www.mohfw.gov.in/) "
-                       " and [covid19india API](https://api.covid19india.org/data.json) ")], style={
-                       'textAlign': 'center',
-                       "background": "yellow"}),
-                   html.Div(children=[dcc.Markdown(  # markdown
-                       "© 2020 [DCAICHARA](https://github.com/dc-aichara/COVID19-India-Tracker)  All Rights "
-                       "Reserved.")], style={
-                       'textAlign': 'center',
-                       "background": "yellow"}),
                    html.Div(id='dummy-id'),
+                   html.Div(footer),
+                   html.Div(children=[
+                       dcc.Markdown(  # markdown
+                                         " #### Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
+                                         "https://www.mohfw.gov.in/) "
+                                         " and [covid19india API](https://api.covid19india.org/data.json) ")
+                   ],
+                       style={
+                                           'textAlign': 'center',
+                                           "background": "yellow"}
+                   ),
 
                    ], style={
     "background": "#000080"}

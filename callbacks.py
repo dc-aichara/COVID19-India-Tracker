@@ -51,30 +51,41 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     "background": "yellow",
 })
 
-# map1 = html.Div(children=[dcc.Markdown(  # markdown
-#     "##  [Covid India Map](/static/map.html)")], style={
-#     'textAlign': 'center',
-#     "background": "black"})
 
 # New on corona virus
 try:
     news_data = inshorts.get_news()
+    news_data = news_data.drop_duplicates()
+    news_data = news_data[:30]
 except:
     news_data = pd.DataFrame(data=["", ""], columns=['headings', 'news'])
 
-news = """
-"""
-for v in news_data.values[:15]:
+news = []
+i = 0
+for v in news_data.values:
     if 'corona' in v[1] or 'covid' in v[1]:
-        news += f"\n## {v[0]} \n#### ``` {v[1]} ```\n***"
-
-news1 = html.Div(children=[dcc.Markdown(  # markdown
-    news),
-    dcc.Markdown(  # markdown
-        '# **Source:**  [InShorts](https://www.inshorts.com/en/read/)',
+        N = html.Div(className=f"news-{i}", children=[html.H5(v[0], style={"textAlign": "left", "color": "#48825d"}),
+                                            html.P(v[1], id='newsline',
+                                                   style={"textAlign": "left", 'size': 14, "color": '#3992ec'})],
+                     style={'display': 'inline-block',
+                            "textAlign": "center",
+                            }
+                     )
+        news.append(N)
+        i += 1
+source = dcc.Markdown(  # markdown
+        '#### Source:  [InShorts](https://www.inshorts.com/en/read/)',
         style={'textAlign': 'right', "white-space": "pre", "overflow-x": "scroll"})
-], style={
+news.append(source)
+# news = """
+# """
+# for v in news_data.values[:15]:
+#     if 'corona' in v[1] or 'covid' in v[1]:
+#         news += f"\n## {v[0]} \n#### ``` {v[1]} ```\n***"
+
+news1 = html.Div(children=news, style={
     "background": "#CCFFFF",
+    "textAlign": "center",
     "padding": "10px 0",
 })
 
