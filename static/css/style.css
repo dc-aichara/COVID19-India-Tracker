@@ -134,8 +134,6 @@ cursor: pointer;
     position: relative;
     background-color: #0a063e;
     box-shadow: 2px 2px 2px lightgrey;
-    width:300px;
-    height:350px;
     overflow-x: scroll;
     vertical-align: text-top;
     text-align: justify;
