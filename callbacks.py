@@ -64,7 +64,10 @@ news = []
 i = 0
 for v in news_data.values:
     if 'corona' in v[1] or 'covid' in v[1]:
-        N = html.Div(className=f"news-{i}", children=[html.H5(v[0], style={"textAlign": "left", "color": "#48825d"}),
+        N = html.Div(className=f"news-{i}", children=[html.H4(v[0],
+                                                              style={"textAlign": "left",
+                                                                     "color": "#48825d",
+                                                                     "margin-top": 0}),
                                             html.P(v[1], id='newsline',
                                                    style={"textAlign": "left", 'size': 14, "color": '#3992ec'})],
                      style={'display': 'inline-block',
