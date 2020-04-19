@@ -23,6 +23,10 @@ h1 {
 margin:0px;
 }
 
+h5 {
+line-height: 1.2;
+}
+
 .bg-yellow {
 background-color: #f5f0ec;
 }
@@ -146,6 +150,7 @@ cursor: pointer;
     background-color: #fff5f5;
     box-shadow: 2px 2px 2px lightgrey;
     line-height: 1.2;
+    width: 98%;
 }
 .git-image{
 border-radius: 10px;

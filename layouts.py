@@ -84,24 +84,50 @@ dis = html.Div(children=
                 ], className="data-row", style={'textAlign': 'center',
                                                 'background': '#b8bdd4', 'vertical-align': 'middle'})
 
-footer = html.Div(className='footer', children=[html.H2("Source code available on",
-                                                        style={'display': 'inline-block',
-                                                               'margin': "0px",
-                                                               "color": 'navy',
-                                                               "line-height": "0.1",}
-                                                        ),
-                                                html.A(html.Img(src="assets/images/github.png",
-                                                                alt="github",
-                                                                className="git-image",
-                                                                style={'height': "10%",
-                                                                       "width": "7%",
-                                                                       'display': 'inline-block'
-                                                                       }),
-                                                       href='https://github.com/dc-aichara/COVID19-India-Tracker',
-                                                       className='git-code',
-                                                       style={'vertical-align': 'middle'})
-                                                ],
+footer = html.Div(className='footer',
+                  children=[html.Div([
+                      html.Div([html.H2("Created by ",
+                                        style={'display': 'inline-block',
+                                               'margin': "0px",
+                                               "color": 'navy',
+                                               "line-height": "0.1"
+                                               }
+                                        ),
+                                html.A(html.Img(src="assets/images/dca.png", alt="author",
+                                                style={
+                                                    'height': "10%",
+                                                    "width": "3.75%",
+                                                    'display': 'inline-block',
+                                                    "border-radius": "50%",
+                                                    "margin": "10px"
+                                                }
+                                                ),
+                                       href='https://www.linkedin.com/in/dcaichara/',
+                                       style={'vertical-align': 'middle'}
+                                       )
+                                ],
+                               ),
+                      html.H2("Source code available on",
+                              style={'display': 'inline-block',
+                                     'margin': "0px",
+                                     "color": 'navy',
+                                     "line-height": "0.1", }
+                              ),
+                      html.A(html.Img(src="assets/images/github.png",
+                                      alt="github",
+                                      className="git-image",
+                                      style={'height': "10%",
+                                             "width": "7%",
+                                             'display': 'inline-block'
+                                             }),
+                             href='https://github.com/dc-aichara/COVID19-India-Tracker',
+                             className='git-code',
+                             style={'vertical-align': 'middle'})],
+                      # style={'display': 'inline-block', }
+                  ),
+                  ],
                   style={'textAlign': "center"})
+
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={
                                'textAlign': 'center',
@@ -129,13 +155,13 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                    html.Div(footer),
                    html.Div(children=[
                        dcc.Markdown(  # markdown
-                                         " #### Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
-                                         "https://www.mohfw.gov.in/) "
-                                         " and [covid19india API](https://api.covid19india.org/data.json) ")
+                           " #### Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
+                           "https://www.mohfw.gov.in/) "
+                           " and [covid19india API](https://api.covid19india.org/data.json) ")
                    ],
                        style={
-                                           'textAlign': 'center',
-                                           "background": "yellow"}
+                           'textAlign': 'center',
+                           "background": "yellow"}
                    ),
 
                    ], style={
