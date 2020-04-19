@@ -205,7 +205,6 @@ test_graph = dcc.Graph(
         'layout': {
             'legend': {'x': 0.10, 'y': 0.9},
             'title': f'Covid19 India: Daily Tests',
-            # 'height': 700,
             'xaxis': x_axis_t,
             'yaxis': y_axis_t,
             'yaxis2': y_axis_t2,
