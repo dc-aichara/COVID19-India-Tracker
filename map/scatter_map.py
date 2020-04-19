@@ -1,8 +1,9 @@
 from decouple import config
 import plotly.express as px
 import pandas as pd
+
 mapbox_token = config("MAPBOX_SECRET")
-mapbox_style =config("MAPBOX_STYLE")
+mapbox_style = config("MAPBOX_STYLE")
 
 px.set_mapbox_access_token(mapbox_token)
 
@@ -23,7 +24,7 @@ def scatter_mapbox(data=None):
     # print(df_geo)
     color_scale = [
         "#fadc8f", "#f9d67a", "#f8d066", "#f8c952", "#f7c33d", "#f6bd29",
-        "#f5b614", "#F4B000", "#eaa900", "#e0a200", "#dc9e00","#FFA07A",
+        "#f5b614", "#F4B000", "#eaa900", "#e0a200", "#dc9e00", "#FFA07A",
     ]
 
     # Scaled the data exponentially to show smaller values.
@@ -47,11 +48,12 @@ def scatter_mapbox(data=None):
         # This takes away the color bar on the right hand side of the plot if it is set to False
         coloraxis_showscale=False,
         mapbox_style=mapbox_style,
-        mapbox=dict(center=dict(lat=23.5937, lon=81.9629), zoom=4,),
+        mapbox=dict(center=dict(lat=23.5937, lon=81.9629), zoom=4, ),
     )
 
     fig.data[0].update(
-        hovertemplate="%{customdata[3]} <br>Confirmed: %{customdata[0]}<br>Recovered: %{customdata[2]}<br>Deaths: %{customdata[1]}"
+        hovertemplate="%{customdata[3]} <br>Confirmed: %{customdata[0]}<br>Recovered: %{customdata[2]}<br>Deaths: %{"
+                      "customdata[1]} "
     )
     del df_geo, states
     return fig
