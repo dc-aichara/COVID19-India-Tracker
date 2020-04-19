@@ -22,7 +22,7 @@ daily_state = get_state_daily()
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/2020.04.12_moh_india.csv')
+    df = pd.read_csv('data/2020.04.19_moh_india.csv')
 
 # Create map
 # map = get_map(data_df=df)
@@ -49,6 +49,12 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     'textAlign': 'center',
     "background": "yellow",
 })
+
+# Recover and Death rate on previous day
+c = df.values[0][1:] - df2.values[0][1:]
+c1 = c[1:]/c[0]  # On total
+c2 = c[1:]/c[1:].sum()  # On total outcomes (Recovered + Deaths)
+# print(c1,c2)
 
 # New on corona virus
 try:
@@ -101,6 +107,12 @@ info = html.Div(children=[dcc.Markdown(  # markdown
 
 # Cases distribution
 t = df.values[0][1:]
+t1 = t[1:]/t[0]  # On total
+t2 = t[1:]/t[1:].sum()  # On total outcomes (Recovered + Deaths)
+ct1 = t1[0] - c1[0]
+ct2 = t1[1] - c1[1]
+ct3 = t2[0] - c2[0]
+ct4 = t2[1] - c2[1]
 piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
 fig = go.Figure(go.Sunburst(
     labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths", ],
@@ -127,6 +139,11 @@ analysis1 = html.Div([html.Div(children=
                                [html.Div(className="r-rate", id='rrate',
                                          children=[html.H5("Recover Rate", style={'color': 'green'}),
                                                    html.H5(f"{piev[2] / piev[0]:.2%}"),
+                                                   html.Span(f"{ct1:.2%}" + "{}".format("▲" if ct1 > 0 else "▼"),
+                                                             style={
+                                                                 "color":'green' if ct1 > 0 else "red"
+                                                             }
+                                                             )
                                                    ],
                                          style={
                                              "textAlign": "center",
@@ -136,6 +153,11 @@ analysis1 = html.Div([html.Div(children=
                                 html.Div(className="d-rate", id='drate',
                                          children=[html.H5("Death Rate", style={'color': 'red'}),
                                                    html.H5(f"{piev[3] / piev[0]:.2%}"),
+                                                   html.Span(f"{ct2:.2%}" + "{}".format("▲" if ct2 > 0 else "▼"),
+                                                             style={
+                                                                 "color": 'green' if ct2 < 0 else "red"
+                                                             }
+                                                             )
                                                    ],
                                          style={
                                              "textAlign": "center",
@@ -155,6 +177,11 @@ analysis1 = html.Div([html.Div(children=
                                [html.Div(className="r-rate", id='rrate',
                                          children=[html.H5("Recover Rate", style={'color': 'green'}),
                                                    html.H5(f"{piev[2] / (piev[2] + piev[3]):.2%}"),
+                                                   html.Span(f"{ct3:.2%}" + "{}".format("▲" if ct3 > 0 else "▼"),
+                                                             style={
+                                                                 "color": 'green' if ct3 > 0 else "red"
+                                                             }
+                                                             )
                                                    ],
                                          style={
                                              "textAlign": "center",
@@ -164,6 +191,11 @@ analysis1 = html.Div([html.Div(children=
                                 html.Div(className="d-rate", id='drate',
                                          children=[html.H5("Death Rate", style={'color': 'red'}),
                                                    html.H5(f"{piev[3] / (piev[2] + piev[3]):.2%}"),
+                                                   html.Span(f"{ct4:.2%}" + "{}".format("▲" if ct4 > 0 else "▼"),
+                                                             style={
+                                                                 "color": 'green' if ct4 < 0 else "red"
+                                                             }
+                                                             )
                                                    ],
                                          style={
                                              "textAlign": "center",
