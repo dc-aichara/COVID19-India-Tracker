@@ -28,7 +28,6 @@ except:
 # map = get_map(data_df=df)
 india_map = scatter_mapbox(data=df)
 
-
 df2 = covidin.change_cal()
 
 data_display = """
@@ -51,7 +50,6 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     "background": "yellow",
 })
 
-
 # New on corona virus
 try:
     news_data = inshorts.get_news()
@@ -64,12 +62,14 @@ news = []
 i = 0
 for v in news_data.values:
     if 'corona' in v[1] or 'covid' in v[1]:
-        N = html.Div(className=f"news-{i}", children=[html.H4(v[0],
+        N = html.Div(className=f"news-{i}", children=[html.H2(v[0],
                                                               style={"textAlign": "left",
-                                                                     "color": "#48825d",
-                                                                     "margin-top": 0}),
-                                            html.P(v[1], id='newsline',
-                                                   style={"textAlign": "left", 'size': 14, "color": '#3992ec'})],
+                                                                     "color": "rgb(158, 239, 32)",
+                                                                     "margin-top": 0,
+                                                                     "margin-bottom": 0}),
+                                                      html.H6(v[1], id='newsline',
+                                                              style={"textAlign": "left", 'size': 14,
+                                                                     "color": '#3992ec'})],
                      style={'display': 'inline-block',
                             "textAlign": "center",
                             }
@@ -77,14 +77,9 @@ for v in news_data.values:
         news.append(N)
         i += 1
 source = dcc.Markdown(  # markdown
-        '#### Source:  [InShorts](https://www.inshorts.com/en/read/)',
-        style={'textAlign': 'right', "white-space": "pre", "overflow-x": "scroll"})
+    '#### Source:  [InShorts](https://www.inshorts.com/en/read/)',
+    style={'textAlign': 'right', "white-space": "pre", "overflow-x": "scroll"})
 news.append(source)
-# news = """
-# """
-# for v in news_data.values[:15]:
-#     if 'corona' in v[1] or 'covid' in v[1]:
-#         news += f"\n## {v[0]} \n#### ``` {v[1]} ```\n***"
 
 news1 = html.Div(children=news, style={
     "background": "#CCFFFF",
@@ -239,8 +234,8 @@ d_fig.update_layout(margin=dict(t=40, l=0, r=0, b=0),
                     font={'size': 16}
                     )
 d_fig.data[0].update(
-        hovertemplate="%{customdata[1]}, %{customdata[2]} <br>Confirmed: %{customdata[0]}"
-    )
+    hovertemplate="%{customdata[1]}, %{customdata[2]} <br>Confirmed: %{customdata[0]}"
+)
 dist_chart = dcc.Graph(id='dist-chart', figure=d_fig)
 
 
@@ -336,7 +331,7 @@ def render_graph(data, tab):
                                        style={'display': 'inline-block', 'textAlign': 'center'})
                           ]
                           )
-    dates_index = [6, 13, 20, 27, 34, 41]
+    dates_index = [6, 13, 20, 27, 34, 41, 48]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
@@ -531,9 +526,11 @@ def render_graph(data, tab):
             )
             # ['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']
 
-            A = html.Div(children=[bar_graph2], className='bar-graph2', id="bar-graph2", style={'display': 'inline-block'})
+            A = html.Div(children=[bar_graph2], className='bar-graph2', id="bar-graph2",
+                         style={'display': 'inline-block'})
             B = html.Div(children=[bar_graph3], className='bar-graph3', id="bar-graph3", style={"width": "98%"})
-            C = html.Div(children=[test_graph], className='test-graph', id="test-graph", style={'display': 'inline-block'})
+            C = html.Div(children=[test_graph], className='test-graph', id="test-graph",
+                         style={'display': 'inline-block'})
             D = html.Div(children=[dist_chart], className='dist-graph', id="dist-graph", style={"width": "98%"})
             tab2_display = html.Div(children=[A, C, B, D]
                                     , className='tab2-graph', id="tab2-graph", style={'textAlign': 'center'})
