@@ -15,3 +15,5 @@ Markdown==3.1.1
 folium==0.10.1
 dash-dangerously-set-inner-html==0.0.2
 python-decouple==3.3
+pymongo==3.10.1
+dnspython==1.16.0

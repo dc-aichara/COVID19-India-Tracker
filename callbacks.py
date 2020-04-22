@@ -22,7 +22,7 @@ daily_state = get_state_daily()
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/2020.04.19_moh_india.csv')
+    df = pd.read_csv('data/2020.04.22_moh_india.csv')
 
 # Create map
 # map = get_map(data_df=df)
