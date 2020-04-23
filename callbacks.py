@@ -5,7 +5,6 @@ import dash_dangerously_set_inner_html
 import dash_daq as daq
 import plotly.graph_objects as go
 import plotly.express as px
-from datetime import datetime
 from app import app
 import pandas as pd
 from map.scatter_map import scatter_mapbox

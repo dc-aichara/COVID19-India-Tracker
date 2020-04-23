@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
+from data.mango_upload import upload_data, get_data
 
-now = datetime.today().strftime("%d-%m-%Y")
 moh_link = "https://www.mohfw.gov.in/"
 url_state = "https://api.covid19india.org/state_district_wise.json"
 data_india = "https://www.covid19india.org/india.json"
@@ -61,6 +61,7 @@ class COVID19India(object):
             text = soup.find_all('div', attrs={'class': 'status-update'})[0].text.strip()
             date = pd.to_datetime(text.split(':')[1].split(',')[0]).strftime('%Y.%m.%d')
             df.to_csv(f"data/{date}_moh_india.csv", index=False)
+            upload_data(df, date)
             break
         return df
 
@@ -81,17 +82,27 @@ class COVID19India(object):
         Calculation changes in cases from previous day (MoHFW data)
         :return: (DataFrame)
         """
-        p1 = Path('data/')
-        files = list(p1.glob('*.csv'))
-        f_path = []
-        for file in files:
-            if 'moh' in file.parts[-1]:
-                f_path.append(file)
-        f_path = sorted(f_path)
-        a = pd.read_csv(f_path[-1])
-        b = pd.read_csv(f_path[-2])
-        lst = []
+        # p1 = Path('data/')
+        # files = list(p1.glob('*.csv'))
+        # f_path = []
+        # for file in files:
+        #     if 'moh' in file.parts[-1]:
+        #         f_path.append(file)
+        # f_path = sorted(f_path)
+        # a = pd.read_csv(f_path[-1])
+        date = (datetime.today() - timedelta(days=1)).strftime("%Y.%m.%d")  # Previous day's date
+        date0 = (datetime.today()).strftime("%Y.%m.%d")  # Today's date
+        print(date0, date)
+        a = get_data(date0)
+        if a is not None:
+            b = get_data(id_=date)
+        else:
+            date0 = (datetime.today()-timedelta(days=1)).strftime("%Y.%m.%d")
+            date = (datetime.today()-timedelta(days=2)).strftime("%Y.%m.%d")
+            a = get_data(date0)
+            b = get_data(date)
         # print(a.shape, b.shape)
+        lst = []
         for name in a['Name of State / UT'].values:
             if name in b['Name of State / UT'].values:
                 c = (a[a['Name of State / UT'] == name]).values[0][1:].astype(np.int64)
