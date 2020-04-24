@@ -5,7 +5,6 @@ import requests
 import re
 import json
 from datetime import datetime, timedelta
-from pathlib import Path
 from data.mango_upload import upload_data, get_data
 
 moh_link = "https://www.mohfw.gov.in/"
@@ -82,17 +81,10 @@ class COVID19India(object):
         Calculation changes in cases from previous day (MoHFW data)
         :return: (DataFrame)
         """
-        # p1 = Path('data/')
-        # files = list(p1.glob('*.csv'))
-        # f_path = []
-        # for file in files:
-        #     if 'moh' in file.parts[-1]:
-        #         f_path.append(file)
-        # f_path = sorted(f_path)
-        # a = pd.read_csv(f_path[-1])
+
         date = (datetime.today() - timedelta(days=1)).strftime("%Y.%m.%d")  # Previous day's date
         date0 = (datetime.today()).strftime("%Y.%m.%d")  # Today's date
-        print(date0, date)
+        # print(date0, date)
         a = get_data(date0)
         if a is not None:
             b = get_data(id_=date)
@@ -125,14 +117,20 @@ class COVID19India(object):
         state_data = json.loads(content)
         key1 = state_data.keys()
         Values = []
+        # "South Andaman": {
+        #     "notes": "",
+        #     "active": 10,
+        #     "confirmed": 20,
+        #     "deceased": 0,
+        #     "recovered": 10
         for k in key1:
             key2 = state_data[k]['districtData'].keys()
             for k2 in key2:
                 c = list(state_data[k]['districtData'][k2].values())
                 try:
-                    v = [k, k2, c[1], c[0], c[2], c[4]]
+                    v = [k, k2, c[2], c[1], c[3], c[4]]
                 except:
-                    v = [k, k2, c[0]]
+                    v = [k, k2, c[2]]
                 Values.append(v)
         try:
             state_data = pd.DataFrame(Values,

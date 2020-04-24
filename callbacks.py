@@ -251,7 +251,6 @@ test_graph = dcc.Graph(
 )
 # District level visualization
 dists = covidin.state_district_data()
-
 d_fig = px.sunburst(dists, path=['State_UT', 'District'],
                     values='Confirmed', color='State_UT',
                     hover_data=["Confirmed", "District", 'State_UT']
