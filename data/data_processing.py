@@ -19,6 +19,7 @@ def get_daily_data(df):
     df1['daily_confirmed'] = get_daily_cases(df1.confirmed)
     df1['daily_recovered'] = get_daily_cases(df1.recovered)
     df1['daily_deaths'] = get_daily_cases(df1.deaths)
+    df1["7day_mean"] = df1.daily_confirmed.rolling(7).mean().fillna(0).astype(int)
     return df1
 
 

@@ -330,13 +330,13 @@ def display_cases(_):
     return [a, b, c, d, e]
 
 
-df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
-s100 = df[df["Total Confirmed cases"] > 200]['Name of State / UT'].values[1:].tolist()
-for s in s100:
-    df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
-    df_100 = pd.concat([df_100, df_s], 1)
-l = len(df_100[df_100['Maharashtra'] > 0])
-df_100 = df_100[:l]
+# df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
+# s100 = df[df["Total Confirmed cases"] > 200]['Name of State / UT'].values[1:].tolist()
+# for s in s100:
+#     df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
+#     df_100 = pd.concat([df_100, df_s], 1)
+# l = len(df_100[df_100['Maharashtra'] > 0])
+# df_100 = df_100[:l]
 
 
 @app.callback(Output(component_id='graph-output', component_property='children'),
@@ -348,9 +348,8 @@ def render_graph(data, tab):
     except:
         df_daily = pd.read_csv('data/api_india.csv')
     df_daily['date'] = pd.to_datetime(df_daily['date'])
-    data = df_daily[df_daily.date > "2020-02-29"]
-
     df1 = get_daily_data(df_daily)
+    data = df1[df1.date > "2020-02-29"]
     df_itvl = get_interval_data(days=7, cases=df1, cols=None)
     state_data = html.Div(className='India-data',
                           children=[
@@ -420,6 +419,9 @@ def render_graph(data, tab):
                      'type': 'bar', 'name': 'Active Cases',
                      "marker": {'color': "blue"},
                      },
+                    {"x": data['date'], "y": data['7day_mean'], "type": 'line', 'name': "7-Day Average",
+                     "marker": {'color': "#171535"},
+                    }
                 ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},

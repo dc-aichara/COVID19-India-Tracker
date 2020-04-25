@@ -32,28 +32,34 @@ dis = html.Div(children=
                 html.Div(className='bg-blue', id="active",
                          children=[html.Img(src='assets/images/icon-infected.png',
                                             alt='active status'),
-                                   html.H5(id="active-display"), html.P('Active Cases')], style={
-                        'display': 'inline-block',
-                        "textAlign": "center",
-                        "width": "140px",
-                    }),
+                                   html.H5(id="active-display"), html.P('Active Cases')],
+                         style={
+                            'display': 'inline-block',
+                            "textAlign": "center",
+                            "width": "140px",
+                    }
+                         ),
                 html.Div(className='bg-green', id="cure",
                          children=[html.Img(src='assets/images/icon-inactive.png',
                                             alt='cured status'),
                                    html.H5(id="recovered-display"),
-                                   html.P('Recovered Cases')], style={
-                        'display': 'inline-block',
-                        "textAlign": "center",
-                        "width": "140px",
-                    }),
+                                   html.P('Recovered Cases')],
+                         style={
+                            'display': 'inline-block',
+                            "textAlign": "center",
+                            "width": "140px",
+                    }
+                         ),
                 html.Div(className='bg-red', id="death",
                          children=[html.Img(src='assets/images/icon-death.png',
                                             alt='death status'), html.H5(id="death-display"),
-                                   html.P('Deaths')], style={
-                        'display': 'inline-block',
-                        "textAlign": "center",
-                        "width": "140px",
-                    }),
+                                   html.P('Deaths')],
+                         style={
+                            'display': 'inline-block',
+                            "textAlign": "center",
+                            "width": "140px",
+                    }
+                         ),
                 html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
                                                                                 alt='states UTs status',
                                                                                 style={'height': '32%',
@@ -64,7 +70,8 @@ dis = html.Div(children=
                              'display': 'inline-block',
                              "textAlign": "center",
                              "width": "140px",
-                         }),
+                         }
+                         ),
                 html.Div(className='bg-info', id="source",
                          children=[html.A(html.Img(src='assets/images/icon-state.png',
                                                    alt='states-data',
@@ -123,7 +130,6 @@ footer = html.Div(className='footer',
                              href='https://github.com/dc-aichara/COVID19-India-Tracker',
                              className='git-code',
                              style={'vertical-align': 'middle'})],
-                      # style={'display': 'inline-block', }
                   ),
                   ],
                   style={'textAlign': "center"})
@@ -155,7 +161,7 @@ layout = html.Div([html.H1("COVID19 India Tracker",
                    html.Div(footer),
                    html.Div(children=[
                        dcc.Markdown(  # markdown
-                           " #### Primary Data Resources: [Ministry of Health and Family Welfare | GoI]("
+                           " #### Primary Data Sources: [Ministry of Health and Family Welfare | GoI]("
                            "https://www.mohfw.gov.in/) "
                            " and [covid19india API](https://api.covid19india.org/data.json) ")
                    ],

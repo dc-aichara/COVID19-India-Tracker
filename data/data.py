@@ -5,20 +5,20 @@ import requests
 import re
 import json
 from datetime import datetime, timedelta
-from data.mango_upload import upload_data, get_data
+from data.mongo_db import upload_data, get_data
 
 moh_link = "https://www.mohfw.gov.in/"
 url_state = "https://api.covid19india.org/state_district_wise.json"
-data_india = "https://www.covid19india.org/india.json"
 data_data = "https://api.covid19india.org/data.json"
 
 
 class COVID19India(object):
-
+    """
+    Covid19 India data module
+    """
     def __init__(self):
         self.moh_url = moh_link  # MOHFW website
         self.url_state = url_state  # districtwise data
-        self.india_url = data_india  # India map
         self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
 
     def __request(self, url):
@@ -76,15 +76,14 @@ class COVID19India(object):
         text = text.split(" : ")[-1]
         return text
 
-    def change_cal(self):
+    @staticmethod
+    def change_cal():
         """
         Calculation changes in cases from previous day (MoHFW data)
         :return: (DataFrame)
         """
-
         date = (datetime.today() - timedelta(days=1)).strftime("%Y.%m.%d")  # Previous day's date
         date0 = (datetime.today()).strftime("%Y.%m.%d")  # Today's date
-        # print(date0, date)
         a = get_data(date0)
         if a is not None:
             b = get_data(id_=date)
@@ -93,7 +92,6 @@ class COVID19India(object):
             date = (datetime.today()-timedelta(days=2)).strftime("%Y.%m.%d")
             a = get_data(date0)
             b = get_data(date)
-        # print(a.shape, b.shape)
         lst = []
         for name in a['Name of State / UT'].values:
             if name in b['Name of State / UT'].values:
@@ -104,7 +102,6 @@ class COVID19India(object):
                 c = list((a[a['Name of State / UT'] == name]).values[0])
                 lst.append(c)
         df2 = pd.DataFrame(data=lst, columns=a.columns)
-        # print(df2)
         return df2
 
     def state_district_data(self):
@@ -117,20 +114,14 @@ class COVID19India(object):
         state_data = json.loads(content)
         key1 = state_data.keys()
         Values = []
-        # "South Andaman": {
-        #     "notes": "",
-        #     "active": 10,
-        #     "confirmed": 20,
-        #     "deceased": 0,
-        #     "recovered": 10
         for k in key1:
             key2 = state_data[k]['districtData'].keys()
             for k2 in key2:
-                c = list(state_data[k]['districtData'][k2].values())
+                c = state_data[k]['districtData'][k2]
                 try:
-                    v = [k, k2, c[2], c[1], c[3], c[4]]
+                    v = [k, k2, c.get('confirmed'), c.get('active'), c.get("deceased"), c.get('recovered')]
                 except:
-                    v = [k, k2, c[2]]
+                    v = [k, k2, c.get('confirmed')]
                 Values.append(v)
         try:
             state_data = pd.DataFrame(Values,
