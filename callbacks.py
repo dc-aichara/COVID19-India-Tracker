@@ -21,7 +21,7 @@ daily_state = get_state_daily()
 try:
     df = covidin.moh_data(save=True)
 except:
-    df = pd.read_csv('data/2020.04.22_moh_india.csv')
+    df = pd.read_csv('data/archieve_data/2020.04.22_moh_india.csv')
 
 # Create map
 # map = get_map(data_df=df)
@@ -359,7 +359,7 @@ def render_graph(data, tab):
                                        style={'display': 'inline-block', 'textAlign': 'center'})
                           ]
                           )
-    dates_index = [6, 13, 20, 27, 34, 41, 48]
+    dates_index = [6, 13, 20, 27, 34, 41, 48, 55]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
@@ -392,7 +392,6 @@ def render_graph(data, tab):
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},
                     'title': f'Covid19 India: Cumulative Spread Trend [Unofficial]',
-                    # 'height': 700,
                     'xaxis': x_axis,
                     'yaxis': y_axis,
                     'plot_bgcolor': colors['background2'],
