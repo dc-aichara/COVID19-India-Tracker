@@ -16,6 +16,7 @@ class COVID19India(object):
     """
     Covid19 India data module
     """
+
     def __init__(self):
         self.moh_url = moh_link  # MOHFW website
         self.url_state = url_state  # districtwise data
@@ -40,7 +41,6 @@ class COVID19India(object):
         df = pd.read_html(url)[-1]
         del df['S. No.']
         df.columns = ['Name of State / UT', 'Total Confirmed cases', 'Cured/Discharged/Migrated', 'Death']
-        # print(df.head())
         cols = df.columns.values.tolist()
         for col in cols[1:]:
             try:
@@ -53,6 +53,7 @@ class COVID19India(object):
         df = df.sort_values('Total Confirmed cases', ascending=False)
         df = df.reset_index(drop=True)
         df.iloc[0, 0] = "Total"
+        df['Name of State / UT'] = [re.findall("[a-zA-Z ]+", x)[0] for x in df['Name of State / UT']]
         while save:
             content = self.__request(url)
 
@@ -88,8 +89,8 @@ class COVID19India(object):
         if a is not None:
             b = get_data(id_=date)
         else:
-            date0 = (datetime.today()-timedelta(days=1)).strftime("%Y.%m.%d")
-            date = (datetime.today()-timedelta(days=2)).strftime("%Y.%m.%d")
+            date0 = (datetime.today() - timedelta(days=1)).strftime("%Y.%m.%d")
+            date = (datetime.today() - timedelta(days=2)).strftime("%Y.%m.%d")
             a = get_data(date0)
             b = get_data(date)
         lst = []
@@ -133,34 +134,30 @@ class COVID19India(object):
 
     def StateWise_data(self):
         """
-        Statewise data (total and new data)
-        :return: (Dataframes) Statewise data (total and new data)
+        Statewise data (total cases and new cases data)
+        :return: (DataFrames) Statewise data (total cases and new cases data)
         """
         content = self.__request(self.data_url)
         data = json.loads(content)
-        data_state = []
-        for v in data['statewise']:
-            v = [v['state'],
-                 v['confirmed'],
-                 v['active'],
-                 v['recovered'],
-                 v['deaths'],
-                 v['lastupdatedtime']]
-            data_state.append(v)
+        # print(data['statewise'])
+        data_state = [[v['state'],
+                       v['confirmed'],
+                       v['active'],
+                       v['recovered'],
+                       v['deaths'],
+                       v['lastupdatedtime']]
+                      for v in data['statewise']]
 
-        data_state1 = []
-        for v in data['statewise']:
-            v = [v['state'],
-                 v['delta']['confirmed'],
-                 v['delta']['active'],
-                 v['delta']['recovered'],
-                 v['delta']['deaths'],
-                 v['lastupdatedtime']]
-            data_state1.append(v)
+        data_state1 = [[v['state'],
+                        v['deltaconfirmed'],
+                        v['deltarecovered'],
+                        v['deltadeaths'],
+                        v['lastupdatedtime']]
+                       for v in data['statewise']]
 
         states = pd.DataFrame(data=data_state, columns=['state_ut', 'confirmed', 'active',
                                                         'recovered', 'deaths', 'last_updated'])
-        states_new = pd.DataFrame(data=data_state1, columns=['state_ut', 'confirmed', 'active',
+        states_new = pd.DataFrame(data=data_state1, columns=['state_ut', 'confirmed',
                                                              'recovered', 'deaths', 'last_updated'])
         return states, states_new
 
@@ -171,23 +168,19 @@ class COVID19India(object):
         """
         content = self.__request(self.data_url)
         data = json.loads(content)
-        tm = []
-        for v in data['cases_time_series']:
-            v = list(v.values())
-            tm.append(v)
-
+        tm = [list(v.values()) for v in data['cases_time_series']]
         tm = pd.DataFrame(tm, columns=data['cases_time_series'][0].keys())
 
         return tm
 
     def current_update(self):
         """
-        Lastest covid19 cases counts
-        :return: (json) Lastest covid19 cases
+        Latest covid19 cases data
+        :return: (json) Latest covid19 cases data
         """
         content = self.__request(self.data_url)
         data = json.loads(content)
-        data = data["key_values"]
+        # data = data["key_values"]
         return data
 
     def tests(self):
@@ -197,8 +190,8 @@ class COVID19India(object):
         """
         content = self.__request(self.data_url)
         data = json.loads(content)
-        values = []
+        values = [list(v.values())[-5:] for v in data['tested']]
         for v in data['tested']:
             values.append(list(v.values())[-5:])
-        data = pd.DataFrame(values, columns=list(v.keys())[-5:])
+        data = pd.DataFrame(values, columns=list(data['tested'][0].keys())[-5:])
         return data

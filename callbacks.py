@@ -368,7 +368,8 @@ def render_graph(data, tab):
         "font": {"color": 'red', 'size': 12},
         'xref': 'x',
         'yref': 'y',
-    } for j, i in enumerate(dates_index)]
+        }
+        for j, i in enumerate(dates_index)]
 
     if tab == 'tab-1':
         line_graph1 = dcc.Graph(
