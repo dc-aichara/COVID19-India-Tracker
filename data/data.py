@@ -18,7 +18,7 @@ class COVID19India(object):
     """
 
     def __init__(self):
-        self.moh_url = moh_link  # MOHFW website
+        self.moh_url = moh_link  # MOHFW website link
         self.url_state = url_state  # districtwise data
         self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
 
@@ -130,6 +130,7 @@ class COVID19India(object):
         except:
             state_data = pd.DataFrame(Values,
                                       columns=['State_UT', 'District', 'Confirmed'])
+        state_data = state_data[state_data['Confirmed'] >= 0]
         return state_data
 
     def StateWise_data(self):
