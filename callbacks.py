@@ -216,29 +216,30 @@ analysis1 = html.Div([html.Div(children=
 
 # Daily tests
 tests = covidin.tests()
-tests = tests[tests['totalpositivecases'] != ""]
-tests['totalpositivecases'] = tests['totalpositivecases'].str.replace(',', '')
-tests['positive_rate'] = round(
-    (tests['totalpositivecases'].astype(int) / tests["totalsamplestested"].astype(int)) * 100, 2)
-tests['updatetimestamp'] = pd.to_datetime(tests['updatetimestamp'].apply(lambda x: x.split(": ")[0]), dayfirst=True)
-tests = tests[['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']]
-
+# tests = tests[tests['totalpositivecases'] != ""]
+# tests['totalpositivecases'] = tests['totalpositivecases'].str.replace(',', '')
+# tests['positive_rate'] = round(
+#     (tests['totalpositivecases'].astype(int) / tests["totalsamplestested"].astype(int)) * 100, 2)
+tests['updatetimestamp'] = pd.to_datetime(tests['updatetimestamp'].apply(lambda x: x.split(" ")[0]), dayfirst=True)
+# tests = tests[['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']]
+tests = tests.drop_duplicates("updatetimestamp")
 test_graph = dcc.Graph(
     id='test-plot',
     figure={
-        'data': [{'y': tests['totalpositivecases'], 'x': tests['updatetimestamp'],
-                  'type': 'line', 'name': 'Positive Cases'},
-                 {'y': tests['totalsamplestested'], 'x': tests['updatetimestamp'],
-                  'type': 'line', 'name': 'Total Tests'},
-                 {'y': tests['positive_rate'], 'x': tests['updatetimestamp'],
-                  'type': 'line', 'name': 'Positive Rate', 'yaxis': 'y2'},
+        'data': [
+            # {'y': tests['totalpositivecases'], 'x': tests['updatetimestamp'],
+            #       'type': 'line', 'name': 'Positive Cases'},
+                 {'x': tests['updatetimestamp'], 'y': tests['totalsamplestested'],
+                  'type': 'bar', 'name': 'Total Tests', "marker":{'color': '#100E2F'}},
+                 # {'y': tests['positive_rate'], 'x': tests['updatetimestamp'],
+                 #  'type': 'line', 'name': 'Positive Rate', 'yaxis': 'y2'},
                  ],
         'layout': {
             'legend': {'x': 0.10, 'y': 0.9},
             'title': f'Covid19 India: Daily Tests',
             'xaxis': x_axis_t,
             'yaxis': y_axis_t,
-            'yaxis2': y_axis_t2,
+            # 'yaxis2': y_axis_t2,
             'plot_bgcolor': colors['background2'],
             'paper_bgcolor': colors['background'],
             'font': {
@@ -359,7 +360,7 @@ def render_graph(data, tab):
                                        style={'display': 'inline-block', 'textAlign': 'center'})
                           ]
                           )
-    dates_index = [6, 13, 20, 27, 34, 41, 48, 55]
+    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
