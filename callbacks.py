@@ -451,49 +451,16 @@ def render_graph(data, tab):
         return [tab_display, data_head, state_data]
 
     elif tab == 'tab-2':
-        # annots = [{
-        #     'x': len(df_100[s].values[~np.isnan(df_100[s].values)]) - 0.75,
-        #     'y': int(df_100[s].values[~np.isnan(df_100[s].values)][-1]),
-        #     'showarrow': False,
-        #     'text': f"{s}",
-        #     "font": {"size": 10},
-        #     'xref': 'x',
-        #     'yref': 'y',
-        # } for s in s100
-        # ]
-        # annots.append({
-        #     'x': df_100['days'].values[-1] - 1,
-        #     'y': 100,
-        #     'showarrow': False,
-        #     'text': f"Number of days since 200th case",
-        #     "font": {"color": 'black', "size": 16},
-        #     'xref': 'x',
-        #     'yref': 'y',
-        # })
-        #
-        # line_graph2 = dcc.Graph(
-        #     id='graph-p',
-        #     figure={
-        #         'data': [
-        #             {'x': df_100['days'], 'y': df_100[s],
-        #              'type': 'line', 'name': s,
-        #              "mode": 'lines+markers', "marker": {"size": 5, 'symbol': 'circle'}} for s in s100],
-        #         'layout': {
-        #             'title': f'Confirmed Case Trajectories by States (>200)',
-        #             'height': 700,
-        #             'xaxis': x_axis_p,
-        #             'yaxis': y_axis_p,
-        #             'plot_bgcolor': colors['background2'],
-        #             'paper_bgcolor': colors['background'],
-        #             'font': {
-        #                 'color': colors['text'],
-        #                 'size': 18
-        #             },
-        #             'annotations': annots,
-        #         }
-        #     }
-        # )
-
+        week_annots = [{
+            'x': i,
+            'y': j + 1000,
+            'showarrow': False,
+            'text': f"{j}",
+            "font": {"size": 14},
+            'xref': 'x',
+            'yref': 'y',
+        } for i, j in df_itvl[['interval', 'daily_confirmed_cum_sum']].values
+        ]
         bar_graph2 = dcc.Graph(
             id='bar-graph2',
             figure={
@@ -519,7 +486,8 @@ def render_graph(data, tab):
                         'color': colors['text'],
                         'size': 16
                     },
-                    "margin": {"l": 0, 'b': 55, "t": 50}
+                    "margin": {"l": 0, 'b': 55, "t": 50},
+                    'annotations': week_annots
                 }
             }
         )

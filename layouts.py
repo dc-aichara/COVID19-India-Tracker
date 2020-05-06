@@ -60,18 +60,18 @@ dis = html.Div(children=
                             "width": "140px",
                     }
                          ),
-                html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
-                                                                                alt='states UTs status',
-                                                                                style={'height': '32%',
-                                                                                       'width': '32%'}),
-                                                                       html.H5(id='counts-display'),
-                                                                       html.P('Affected States')],
-                         style={
-                             'display': 'inline-block',
-                             "textAlign": "center",
-                             "width": "140px",
-                         }
-                         ),
+                # html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
+                #                                                                 alt='states UTs status',
+                #                                                                 style={'height': '32%',
+                #                                                                        'width': '32%'}),
+                #                                                        html.H5(id='counts-display'),
+                #                                                        html.P('Affected States')],
+                #          style={
+                #              'display': 'inline-block',
+                #              "textAlign": "center",
+                #              "width": "140px",
+                #          }
+                #          ),
                 html.Div(className='bg-info', id="source",
                          children=[html.A(html.Img(src='assets/images/icon-state.png',
                                                    alt='states-data',
