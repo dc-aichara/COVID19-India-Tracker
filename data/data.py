@@ -60,7 +60,7 @@ class COVID19India(object):
             soup = BeautifulSoup(content, 'html.parser')
             text = soup.find_all('div', attrs={'class': 'status-update'})[0].text.strip()
             date = pd.to_datetime(text.split(':')[1].split(',')[0]).strftime('%Y.%m.%d')
-            df.to_csv(f"data/{date}_moh_india.csv", index=False)
+            # df.to_csv(f"data/{date}_moh_india.csv", index=False)
             upload_data(df, date)
             break
         return df
