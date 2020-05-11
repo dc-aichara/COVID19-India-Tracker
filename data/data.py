@@ -44,8 +44,8 @@ class COVID19India(object):
         cols = df.columns.values.tolist()
         for col in cols[1:]:
             try:
-                if df['Name of State / UT'].values[-1] != "Total number of confirmed cases in India":
-                    df = df[:-1]
+                idx = list(df[cols[0]]).index('Total number of confirmed cases in India')
+                df = df[: idx + 1]
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
             except:
                 df = df[:-1]
