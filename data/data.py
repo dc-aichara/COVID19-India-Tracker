@@ -38,10 +38,12 @@ class COVID19India(object):
         :return: (DataFrame) Statewise data
         """
         url = self.moh_url
-        df = pd.read_html(url)[-1]
+        df = pd.read_html(url)[-1].dropna()
         del df['S. No.']
+        # df.dropna()
         df.columns = ['Name of State / UT', 'Total Confirmed cases', 'Cured/Discharged/Migrated', 'Death']
         cols = df.columns.values.tolist()
+        # print(df)
         for col in cols[1:]:
             try:
                 idx = list(df[cols[0]]).index('Total number of confirmed cases in India')
