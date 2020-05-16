@@ -17,7 +17,7 @@ tab_selected_style = {
     "font-size": 20
 }
 
-# dis = html.Div([], className="row", style={'background': '#b8bdd4', 'vertical-align': 'middle'})
+
 dis = html.Div(children=
                [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
                                                                                alt='position status',

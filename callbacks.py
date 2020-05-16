@@ -1,7 +1,6 @@
 from dash.dependencies import Input, Output
 import dash_html_components as html
 import dash_core_components as dcc
-import dash_dangerously_set_inner_html
 import dash_daq as daq
 import plotly.graph_objects as go
 import plotly.express as px
@@ -10,13 +9,12 @@ import pandas as pd
 from map.scatter_map import scatter_mapbox
 from data.data import COVID19India
 from data.inshorts_news import InshortsNews
-from data.data_processing import get_daily_data, get_interval_data, get_state_daily
+from data.data_processing import get_daily_data, get_interval_data
 from styles import colors, y_axis, x_axis, x_axis_bar, y_axis_h, x_axis_h, y_axis_p, x_axis_p, y_axis_t, x_axis_t, \
     y_axis_t2
 
 inshorts = InshortsNews()
 covidin = COVID19India()
-daily_state = get_state_daily()
 
 try:
     df = covidin.moh_data(save=True)
@@ -24,7 +22,6 @@ except:
     df = pd.read_csv('data/archieve_data/2020.04.22_moh_india.csv')
 
 # Create map
-# map = get_map(data_df=df)
 india_map = scatter_mapbox(data=df)
 
 df2 = covidin.change_cal()
@@ -53,9 +50,8 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
 c = df.values[0][1:] - df2.values[0][1:]
 c1 = c[1:]/c[0]  # On total
 c2 = c[1:]/c[1:].sum()  # On total outcomes (Recovered + Deaths)
-# print(c1,c2)
 
-# New on corona virus
+# News on corona virus
 try:
     news_data = inshorts.get_news()
     news_data = news_data.drop_duplicates()
@@ -329,15 +325,6 @@ def display_cases(_):
     e = daq_display(total, '#6F727A')
 
     return [a, b, c, d, e]
-
-
-# df_100 = pd.DataFrame(data={'days': [i for i in range(0, 100)]})
-# s100 = df[df["Total Confirmed cases"] > 200]['Name of State / UT'].values[1:].tolist()
-# for s in s100:
-#     df_s = pd.DataFrame([v for v in daily_state[s]['Total Confirmed cases'] if v >= 200], columns=[s])
-#     df_100 = pd.concat([df_100, df_s], 1)
-# l = len(df_100[df_100['Maharashtra'] > 0])
-# df_100 = df_100[:l]
 
 
 @app.callback(Output(component_id='graph-output', component_property='children'),
