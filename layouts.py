@@ -17,48 +17,59 @@ tab_selected_style = {
     "font-size": 20
 }
 
-
 dis = html.Div(children=
-               [html.Div(className='bg-yellow', id="total", children=[html.Img(src='assets/images/covid.png',
-                                                                               alt='position status',
-                                                                               style={'height': '40%',
-                                                                                      'width': '40%'}),
-                                                                      html.H5(id="confirm-display"),
-                                                                      html.P('Confirm Cases')], style={
-                   'display': 'inline-block',
-                   "textAlign": "center",
-                   "width": "130px",
-               }),
-                html.Div(className='bg-blue', id="active",
-                         children=[html.Img(src='assets/images/icon-infected.png',
-                                            alt='active status'),
-                                   html.H5(id="active-display"), html.P('Active Cases')],
+               [html.Div(className='bg-yellow', id="total",
+                         children=[
+                             html.Img(src='assets/images/covid.png',
+                                      alt='confirm status',
+                                      style={'height': '40%',
+                                             'width': '40%'}),
+                             html.H5(id="confirm-display"),
+                             html.P('Confirm Cases')
+                         ],
                          style={
-                            'display': 'inline-block',
-                            "textAlign": "center",
-                            "width": "140px",
-                    }
+                             'display': 'inline-block',
+                             "textAlign": "center",
+                             "width": "130px",
+                         }),
+                html.Div(className='bg-blue', id="active",
+                         children=[
+                             html.Img(src='assets/images/icon-infected.png',
+                                      alt='active status'),
+                             html.H5(id="active-display"),
+                             html.P('Active Cases')
+                         ],
+                         style={
+                             'display': 'inline-block',
+                             "textAlign": "center",
+                             "width": "140px",
+                         }
                          ),
                 html.Div(className='bg-green', id="cure",
-                         children=[html.Img(src='assets/images/icon-inactive.png',
-                                            alt='cured status'),
-                                   html.H5(id="recovered-display"),
-                                   html.P('Recovered Cases')],
+                         children=[
+                             html.Img(src='assets/images/icon-inactive.png',
+                                      alt='cured status'),
+                             html.H5(id="recovered-display"),
+                             html.P('Recovered Cases')
+                         ],
                          style={
-                            'display': 'inline-block',
-                            "textAlign": "center",
-                            "width": "140px",
-                    }
+                             'display': 'inline-block',
+                             "textAlign": "center",
+                             "width": "140px",
+                         }
                          ),
                 html.Div(className='bg-red', id="death",
-                         children=[html.Img(src='assets/images/icon-death.png',
-                                            alt='death status'), html.H5(id="death-display"),
-                                   html.P('Deaths')],
+                         children=[
+                             html.Img(src='assets/images/icon-death.png',
+                                      alt='death status'),
+                             html.H5(id="death-display"),
+                             html.P('Deaths')
+                         ],
                          style={
-                            'display': 'inline-block',
-                            "textAlign": "center",
-                            "width": "140px",
-                    }
+                             'display': 'inline-block',
+                             "textAlign": "center",
+                             "width": "140px",
+                         }
                          ),
                 # html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
                 #                                                                 alt='states UTs status',
@@ -73,15 +84,16 @@ dis = html.Div(children=
                 #          }
                 #          ),
                 html.Div(className='bg-info', id="source",
-                         children=[html.A(html.Img(src='assets/images/icon-state.png',
-                                                   alt='states-data',
-                                                   style={'height': '100%',
-                                                          'width': '95%'}
-                                                   ), href="#state-data"),
-                                   html.H5("Data Source"),
-                                   html.A("MoHFW", href='https://www.mohfw.gov.in/',
-                                          style={'font-size': "23px"}),
-                                   ],
+                         children=[
+                             html.A(html.Img(src='assets/images/icon-state.png',
+                                             alt='states-data',
+                                             style={'height': '100%',
+                                                    'width': '95%'}
+                                             ), href="#state-data"),
+                             html.H5("Data Source"),
+                             html.A("MoHFW", href='https://www.mohfw.gov.in/',
+                                    style={'font-size': "23px"}),
+                         ],
                          style={
                              'display': 'inline-block',
                              "textAlign": "center",

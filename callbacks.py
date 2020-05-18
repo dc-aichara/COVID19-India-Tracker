@@ -11,7 +11,7 @@ from data.data import COVID19India
 from data.inshorts_news import InshortsNews
 from data.data_processing import get_daily_data, get_interval_data
 from styles import colors, y_axis, x_axis, x_axis_bar, y_axis_h, x_axis_h, y_axis_p, x_axis_p, y_axis_t, x_axis_t, \
-    y_axis_t2
+    y_axis_t2, area_style
 
 inshorts = InshortsNews()
 covidin = COVID19India()
@@ -48,8 +48,8 @@ data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
 
 # Recover and Death rate on previous day
 c = df.values[0][1:] - df2.values[0][1:]
-c1 = c[1:]/c[0]  # On total
-c2 = c[1:]/c[1:].sum()  # On total outcomes (Recovered + Deaths)
+c1 = c[1:] / c[0]  # On total
+c2 = c[1:] / c[1:].sum()  # On total outcomes (Recovered + Deaths)
 
 # News on corona virus
 try:
@@ -102,8 +102,8 @@ info = html.Div(children=[dcc.Markdown(  # markdown
 
 # Cases distribution
 t = df.values[0][1:]
-t1 = t[1:]/t[0]  # On total
-t2 = t[1:]/t[1:].sum()  # On total outcomes (Recovered + Deaths)
+t1 = t[1:] / t[0]  # On total
+t2 = t[1:] / t[1:].sum()  # On total outcomes (Recovered + Deaths)
 ct1 = t1[0] - c1[0]
 ct2 = t1[1] - c1[1]
 ct3 = t2[0] - c2[0]
@@ -136,7 +136,7 @@ analysis1 = html.Div([html.Div(children=
                                                    html.H5(f"{piev[2] / piev[0]:.2%}"),
                                                    html.Span(f"{ct1:.2%}" + "{}".format("▲" if ct1 > 0 else "▼"),
                                                              style={
-                                                                 "color":'green' if ct1 > 0 else "red"
+                                                                 "color": 'green' if ct1 > 0 else "red"
                                                              }
                                                              )
                                                    ],
@@ -225,11 +225,11 @@ test_graph = dcc.Graph(
         'data': [
             # {'y': tests['totalpositivecases'], 'x': tests['updatetimestamp'],
             #       'type': 'line', 'name': 'Positive Cases'},
-                 {'x': tests['updatetimestamp'], 'y': tests['totalsamplestested'],
-                  'type': 'bar', 'name': 'Total Tests', "marker":{'color': '#100E2F'}},
-                 # {'y': tests['positive_rate'], 'x': tests['updatetimestamp'],
-                 #  'type': 'line', 'name': 'Positive Rate', 'yaxis': 'y2'},
-                 ],
+            {'x': tests['updatetimestamp'], 'y': tests['totalsamplestested'],
+             'type': 'bar', 'name': 'Total Tests', "marker": {'color': '#100E2F'}},
+            # {'y': tests['positive_rate'], 'x': tests['updatetimestamp'],
+            #  'type': 'line', 'name': 'Positive Rate', 'yaxis': 'y2'},
+        ],
         'layout': {
             'legend': {'x': 0.10, 'y': 0.9},
             'title': f'Covid19 India: Daily Tests',
@@ -347,7 +347,7 @@ def render_graph(data, tab):
                                        style={'display': 'inline-block', 'textAlign': 'center'})
                           ]
                           )
-    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69]
+    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69, 76]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
@@ -356,7 +356,7 @@ def render_graph(data, tab):
         "font": {"color": 'red', 'size': 12},
         'xref': 'x',
         'yref': 'y',
-        }
+    }
         for j, i in enumerate(dates_index)]
 
     if tab == 'tab-1':
@@ -409,7 +409,7 @@ def render_graph(data, tab):
                      },
                     {"x": data['date'], "y": data['7day_mean'], "type": 'line', 'name': "7-Day Average",
                      "marker": {'color': "#171535"},
-                    }
+                     }
                 ],
                 'layout': {
                     'legend': {'x': 0.10, 'y': 0.9},

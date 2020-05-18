@@ -92,3 +92,9 @@ y_axis_t2 = {
     'spikemode': 'across',
     'spikesnap': 'cursor',
 }
+
+area_style = {
+    'showgrid': False,
+    'zeroline': False,
+    'visible': False,
+}
