@@ -44,7 +44,7 @@ class COVID19India(object):
         cols = df.columns.values.tolist()
         for col in cols[1:]:
             try:
-                idx = list(df[cols[0]]).index('Total number of confirmed cases in India')
+                idx = list(df[cols[0]]).index('West Bengal') + 1
                 df = df[: idx + 1]
                 df[col] = df[col].apply(lambda x: int(re.findall('[0-9]+', str(x))[0]))
             except:
