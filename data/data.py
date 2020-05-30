@@ -40,7 +40,10 @@ class COVID19India(object):
         url = self.moh_url
         df = pd.read_html(url)[-1]
         del df["S. No."]
+        del df["Active Cases*"]
         df = df.dropna()
+        df.columns = [re.findall('[a-zA-Z /]+', k)[0] for k in df.columns]
+        df = df[['Name of State / UT', 'Total Confirmed cases', 'Cured/Discharged/Migrated', 'Deaths']]
         df.columns = ['Name of State / UT', 'Total Confirmed cases', 'Cured/Discharged/Migrated', 'Death']
         cols = df.columns.values.tolist()
         for col in cols[1:]:

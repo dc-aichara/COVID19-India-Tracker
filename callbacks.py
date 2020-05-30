@@ -511,7 +511,6 @@ def render_graph(data, tab):
                     }
                 }
             )
-            # ['totalpositivecases', 'totalsamplestested', 'updatetimestamp', 'positive_rate']
 
             A = html.Div(children=[bar_graph2], className='bar-graph2', id="bar-graph2",
                          style={'display': 'inline-block'})
