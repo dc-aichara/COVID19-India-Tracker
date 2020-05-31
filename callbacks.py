@@ -347,7 +347,7 @@ def render_graph(data, tab):
                                        style={'display': 'inline-block', 'textAlign': 'center'})
                           ]
                           )
-    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83]
+    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
