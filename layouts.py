@@ -149,7 +149,10 @@ footer = html.Div(className='footer',
 layout = html.Div([html.H1("COVID19 India Tracker",
                            style={
                                'textAlign': 'center',
-                               "background": "yellow"}),
+                               "color": 'white',
+                               # "background": "yellow"
+                           }
+                           ),
                    dis,
                    html.Div(id='graph-input'),
                    dcc.Tabs(id="all-tabs-inline", className="all-tabs-inline", value='tab-1', children=[

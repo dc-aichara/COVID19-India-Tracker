@@ -43,7 +43,8 @@ for v1, v2 in zip(df.values, df2.values):
 data_head = html.Div(id="state-data", children=[dcc.Markdown(  # markdown
     f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()} Source: MoHFW | GoI)")], style={
     'textAlign': 'center',
-    "background": "yellow",
+    "color": "white",
+    # "background": "yellow",
 })
 
 # Recover and Death rate on previous day
@@ -347,7 +348,7 @@ def render_graph(data, tab):
                                        style={'display': 'inline-block', 'textAlign': 'center'})
                           ]
                           )
-    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90, 97]
+    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90, 97, 104]
     annotations = [{
         'x': pd.to_datetime(data['date'].values[i]),
         'y': data['confirmed'].values[i],
