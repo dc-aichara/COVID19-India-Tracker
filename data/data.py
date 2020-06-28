@@ -62,10 +62,14 @@ class COVID19India(object):
             try:
                 idx = list(df[cols[0]]).index("West Bengal") + 1
                 df = df[: idx + 1]
-                df[col] = df[col].apply(lambda x: int(re.findall("[0-9]+", str(x))[0]))
+                df[col] = df[col].apply(
+                    lambda x: int(re.findall("[0-9]+", str(x))[0])
+                )
             except:
                 df = df[:-1]
-                df[col] = df[col].apply(lambda x: int(re.findall("[0-9]+", str(x))[0]))
+                df[col] = df[col].apply(
+                    lambda x: int(re.findall("[0-9]+", str(x))[0])
+                )
         df = df.sort_values("Total Confirmed cases", ascending=False)
         df = df.reset_index(drop=True)
         df.iloc[0, 0] = "Total"
@@ -79,7 +83,9 @@ class COVID19India(object):
             text = soup.find_all("div", attrs={"class": "status-update"})[
                 0
             ].text.strip()
-            date = pd.to_datetime(text.split(":")[1].split(",")[0]).strftime("%Y.%m.%d")
+            date = pd.to_datetime(text.split(":")[1].split(",")[0]).strftime(
+                "%Y.%m.%d"
+            )
             # df.to_csv(f"data/{date}_moh_india.csv", index=False)
             upload_data(df, date)
             break
@@ -93,7 +99,9 @@ class COVID19India(object):
         content = self.__request(self.moh_url)
 
         soup = BeautifulSoup(content, "html.parser")
-        text = soup.find_all("div", attrs={"class": "status-update"})[0].text.strip()
+        text = soup.find_all("div", attrs={"class": "status-update"})[
+            0
+        ].text.strip()
         text = text.split(" : ")[-1]
         return text
 
@@ -118,8 +126,16 @@ class COVID19India(object):
         lst = []
         for name in a["Name of State / UT"].values:
             if name in b["Name of State / UT"].values:
-                c = (a[a["Name of State / UT"] == name]).values[0][1:].astype(np.int64)
-                d = (b[b["Name of State / UT"] == name]).values[0][1:].astype(np.int64)
+                c = (
+                    (a[a["Name of State / UT"] == name])
+                    .values[0][1:]
+                    .astype(np.int64)
+                )
+                d = (
+                    (b[b["Name of State / UT"] == name])
+                    .values[0][1:]
+                    .astype(np.int64)
+                )
                 lst.append([name] + list(abs(c - d)))
             else:
                 c = list((a[a["Name of State / UT"] == name]).values[0])
@@ -216,7 +232,13 @@ class COVID19India(object):
         )
         states_new = pd.DataFrame(
             data=data_state1,
-            columns=["state_ut", "confirmed", "recovered", "deaths", "last_updated"],
+            columns=[
+                "state_ut",
+                "confirmed",
+                "recovered",
+                "deaths",
+                "last_updated",
+            ],
         )
         return states, states_new
 

@@ -72,8 +72,8 @@ def scatter_mapbox(data=None):
 
     fig.data[0].update(
         hovertemplate="%{customdata[3]} <br>Confirmed: %{customdata["
-                      "0]}<br>Recovered: %{customdata[2]}<br>Deaths: %{"
-                      "customdata[1]} "
+        "0]}<br>Recovered: %{customdata[2]}<br>Deaths: %{"
+        "customdata[1]} "
     )
     del df_geo, states
     return fig

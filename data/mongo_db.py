@@ -8,7 +8,9 @@ date1 = (datetime.today()).strftime("%Y.%m.%d")
 
 mgdb_user = config("MGDB_user")
 mgcb_pass = config("MGDB_pass")
-server = f"mongodb+srv://{mgdb_user}:{mgcb_pass}@testcluster-cntgf.mongodb.net/admin"
+server = (
+    f"mongodb+srv://{mgdb_user}:{mgcb_pass}@testcluster-cntgf.mongodb.net/admin"
+)
 # server = f"mongodb+srv://{mgdb_user}:{mgcb_pass}@testcluster-cntgf.mongodb.net/test?retryWrites=true&w=majority"
 client = pymongo.MongoClient(server)
 

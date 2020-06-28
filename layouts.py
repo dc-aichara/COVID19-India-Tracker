@@ -31,50 +31,60 @@ dis = html.Div(
                 html.H5(id="confirm-display"),
                 html.P("Confirm Cases"),
             ],
-            style={"display": "inline-block", "textAlign": "center", "width": "130px",},
+            style={
+                "display": "inline-block",
+                "textAlign": "center",
+                "width": "130px",
+            },
         ),
         html.Div(
             className="bg-blue",
             id="active",
             children=[
-                html.Img(src="assets/images/icon-infected.png", alt="active status"),
+                html.Img(
+                    src="assets/images/icon-infected.png", alt="active status"
+                ),
                 html.H5(id="active-display"),
                 html.P("Active Cases"),
             ],
-            style={"display": "inline-block", "textAlign": "center", "width": "140px",},
+            style={
+                "display": "inline-block",
+                "textAlign": "center",
+                "width": "140px",
+            },
         ),
         html.Div(
             className="bg-green",
             id="cure",
             children=[
-                html.Img(src="assets/images/icon-inactive.png", alt="cured status"),
+                html.Img(
+                    src="assets/images/icon-inactive.png", alt="cured status"
+                ),
                 html.H5(id="recovered-display"),
                 html.P("Recovered Cases"),
             ],
-            style={"display": "inline-block", "textAlign": "center", "width": "140px",},
+            style={
+                "display": "inline-block",
+                "textAlign": "center",
+                "width": "140px",
+            },
         ),
         html.Div(
             className="bg-red",
             id="death",
             children=[
-                html.Img(src="assets/images/icon-death.png", alt="death status"),
+                html.Img(
+                    src="assets/images/icon-death.png", alt="death status"
+                ),
                 html.H5(id="death-display"),
                 html.P("Deaths"),
             ],
-            style={"display": "inline-block", "textAlign": "center", "width": "140px",},
+            style={
+                "display": "inline-block",
+                "textAlign": "center",
+                "width": "140px",
+            },
         ),
-        # html.Div(className='bg-orange', id="states", children=[html.Img(src='assets/images/india.png',
-        #                                                                 alt='states UTs status',
-        #                                                                 style={'height': '32%',
-        #                                                                        'width': '32%'}),
-        #                                                        html.H5(id='counts-display'),
-        #                                                        html.P('Affected States')],
-        #          style={
-        #              'display': 'inline-block',
-        #              "textAlign": "center",
-        #              "width": "140px",
-        #          }
-        #          ),
         html.Div(
             className="bg-info",
             id="source",
@@ -94,11 +104,19 @@ dis = html.Div(
                     style={"font-size": "23px"},
                 ),
             ],
-            style={"display": "inline-block", "textAlign": "center", "width": "140px",},
+            style={
+                "display": "inline-block",
+                "textAlign": "center",
+                "width": "140px",
+            },
         ),
     ],
     className="data-row",
-    style={"textAlign": "center", "background": "#b8bdd4", "vertical-align": "middle"},
+    style={
+        "textAlign": "center",
+        "background": "#b8bdd4",
+        "vertical-align": "middle",
+    },
 )
 
 footer = html.Div(
@@ -206,7 +224,11 @@ layout = html.Div(
                     selected_style=tab_selected_style,
                 ),
             ],
-            colors={"border": "yellow", "primary": "red", "background": "orange"},
+            colors={
+                "border": "yellow",
+                "primary": "red",
+                "background": "orange",
+            },
         ),
         html.Div(id="graph-output"),  # Tab output
         html.Div(id="api-data", style={"display": "none"}),

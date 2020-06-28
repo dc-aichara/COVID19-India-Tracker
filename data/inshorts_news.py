@@ -15,7 +15,9 @@ class InshortsNews:
         }
 
         self.session = requests.Session()
-        retries = Retry(total=5, backoff_factor=0.5, status_forcelist=[502, 503, 504])
+        retries = Retry(
+            total=5, backoff_factor=0.5, status_forcelist=[502, 503, 504]
+        )
         self.session.mount("http://", HTTPAdapter(max_retries=retries))
 
     def __request(self):
@@ -39,7 +41,9 @@ class InshortsNews:
 
         newss = [
             text.text.strip().split("\n\n")[0]
-            for text in soup.find_all("div", attrs={"class": "news-card-content"})
+            for text in soup.find_all(
+                "div", attrs={"class": "news-card-content"}
+            )
         ]
 
         short_by = [
@@ -48,10 +52,15 @@ class InshortsNews:
         ]
 
         times = [
-            text.text.strip().split("\n\n")[1].split("/ \n      ")[1].split(" ")[0:]
+            text.text.strip()
+            .split("\n\n")[1]
+            .split("/ \n      ")[1]
+            .split(" ")[0:]
             for text in soup.find_all("div", attrs={"class": "news-card-title"})
         ]
-        times = pd.to_datetime([" ".join(text[3:6] + text[:2]) for text in times])
+        times = pd.to_datetime(
+            [" ".join(text[3:6] + text[:2]) for text in times]
+        )
 
         data = pd.DataFrame(data=[headings, newss, short_by, times]).T
         data.columns = ["headings", "news", "short_by", "time"]

@@ -113,7 +113,11 @@ news.append(source)
 
 news1 = html.Div(
     children=news,
-    style={"background": "#CCFFFF", "textAlign": "center", "padding": "10px 0",},
+    style={
+        "background": "#CCFFFF",
+        "textAlign": "center",
+        "padding": "10px 0",
+    },
 )
 
 # Information on corona virus
@@ -414,8 +418,25 @@ def render_graph(data, tab):
             ),
         ],
     )
-    dates_index = [6, 13, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90, 97, 104,
-                   111]
+    dates_index = [
+        6,
+        13,
+        20,
+        27,
+        34,
+        41,
+        48,
+        55,
+        62,
+        69,
+        76,
+        83,
+        90,
+        97,
+        104,
+        111,
+        118,
+    ]
     annotations = [
         {
             "x": pd.to_datetime(data["date"].values[i]),
@@ -444,7 +465,9 @@ def render_graph(data, tab):
                     },
                     {
                         "x": data["date"],
-                        "y": data["confirmed"] - data["recovered"] - data["deaths"],
+                        "y": data["confirmed"]
+                        - data["recovered"]
+                        - data["deaths"],
                         "type": "line",
                         "name": "Active Cases",
                         "mode": "lines+markers",
@@ -456,7 +479,11 @@ def render_graph(data, tab):
                         "type": "line",
                         "name": "Recovered Case",
                         "mode": "lines+markers",
-                        "marker": {"size": 4, "symbol": "dot", "color": "green"},
+                        "marker": {
+                            "size": 4,
+                            "symbol": "dot",
+                            "color": "green",
+                        },
                     },
                     {
                         "x": data["date"],
