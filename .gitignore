@@ -2,6 +2,6 @@
 .DS_Store
 static/*.html
 *.ipynb
-Notebooks
+Notebooks/
 *.ini
 __pycache__/

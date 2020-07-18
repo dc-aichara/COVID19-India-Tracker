@@ -11,7 +11,18 @@
 $ git clone https://github.com/dc-aichara/COVID19-India-Tracker.git # clone repository
 $ cd COVID19-India-Tracker # Change directory
 $ pip install -r requirements.txt # Install dependencies
-$ python index.py  # Run app
+```
+
+## Get mapbox  api key from mapbox api and create a `settings.ini` file.
+```bash
+[settings]
+MAPBOX_SECRET=YOUR_MAPBOX_KEY
+MAPBOX_STYLE=mapbox://styles/mapbox/dark-v9
+```
+## Edit data.py too use save and load data from local directory instead of `Mongodb`.
+## Run App
+```bash
+$ python index.py 
 # visit http://127.0.0.1:8050/
 ```
 # How to create Dashboard with Plotly's Dash

@@ -28,10 +28,7 @@ from styles import (
 inshorts = InshortsNews()
 covidin = COVID19India()
 
-try:
-    df = covidin.moh_data(save=True)
-except:
-    df = pd.read_csv("data/archieve_data/2020.04.22_moh_india.csv")
+df = covidin.moh_data(save=True)
 
 # Create map
 india_map = scatter_mapbox(data=df)
