@@ -294,7 +294,7 @@ d_fig = px.sunburst(
 )
 d_fig.update_layout(
     margin=dict(t=40, l=0, r=0, b=0),
-    title="Covid19 India: Districtwise Cases Distribution",
+    title="Covid19 India: Districtwise Cases Distribution {Click on the state name to see districtwise cases!}",
     height=700,
     # width=410,
     paper_bgcolor="#eae2e2",
@@ -435,6 +435,7 @@ def render_graph(data, tab):
         118,
         125,
         132,
+        139,
     ]
     annotations = [
         {
@@ -495,7 +496,7 @@ def render_graph(data, tab):
                 ],
                 "layout": {
                     "legend": {"x": 0.10, "y": 0.9},
-                    "title": f"Covid19 India: Cumulative Spread Trend [Unofficial]",
+                    "title": f"Covid19 India: Cumulative Spread Trend ",
                     "xaxis": x_axis,
                     "yaxis": y_axis,
                     "plot_bgcolor": colors["background2"],
@@ -542,7 +543,7 @@ def render_graph(data, tab):
                 ],
                 "layout": {
                     "legend": {"x": 0.10, "y": 0.9},
-                    "title": f"Covid19 India: Daily Spread Trend [Unofficial]",
+                    "title": f"Covid19 India: Daily Spread Trend ",
                     # 'height': 700,
                     "barmode": "stack",
                     "xaxis": x_axis,
