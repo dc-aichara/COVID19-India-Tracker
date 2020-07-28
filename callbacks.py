@@ -6,10 +6,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 from app import app
 import pandas as pd
-from map.scatter_map import scatter_mapbox
-from data.data import COVID19India
-from data.inshorts_news import InshortsNews
-from data.data_processing import get_daily_data, get_interval_data
+from map import scatter_mapbox
+from data import COVID19India, InshortsNews, get_daily_data, get_interval_data
 from styles import (
     colors,
     y_axis,

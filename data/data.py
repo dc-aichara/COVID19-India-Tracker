@@ -10,6 +10,7 @@ from data.mongo_db import upload_data, get_data
 moh_link = "https://www.mohfw.gov.in/"
 url_state = "https://api.covid19india.org/state_district_wise.json"
 data_data = "https://api.covid19india.org/data.json"
+moh_data_url = "https://www.mohfw.gov.in/data/datanew.json"
 
 
 class COVID19India(object):
@@ -19,10 +20,12 @@ class COVID19India(object):
 
     def __init__(self):
         self.moh_url = moh_link  # MOHFW website link
+        self.moh_data_url = moh_data_url  # MOHFW data link
         self.url_state = url_state  # districtwise data
         self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
 
-    def __request(self, url):
+    @staticmethod
+    def __request(url):
         """
         Requests get method to extract data
         :param url: Link to data api or website
@@ -37,39 +40,27 @@ class COVID19India(object):
         :param save: (bool)
         :return: (DataFrame) Statewise data
         """
-        url = self.moh_url
-        df = pd.read_html(url)[-1]
-        del df["S. No."]
-        del df["Active Cases*"]
-        df = df.dropna()
-        df.columns = [re.findall("[a-zA-Z /]+", k)[0] for k in df.columns]
-        df = df[
+        data = requests.get(self.moh_data_url).json()
+
+        data = [
             [
+                dic["state_name"],
+                int(dic["new_positive"]),
+                int(dic["new_cured"]),
+                int(dic["new_death"]),
+            ]
+            for dic in data
+        ]
+
+        df = pd.DataFrame(
+            data=data,
+            columns=[
                 "Name of State / UT",
                 "Total Confirmed cases",
                 "Cured/Discharged/Migrated",
-                "Deaths",
-            ]
-        ]
-        df.columns = [
-            "Name of State / UT",
-            "Total Confirmed cases",
-            "Cured/Discharged/Migrated",
-            "Death",
-        ]
-        cols = df.columns.values.tolist()
-        for col in cols[1:]:
-            try:
-                idx = list(df[cols[0]]).index("West Bengal") + 1
-                df = df[: idx + 1]
-                df[col] = df[col].apply(
-                    lambda x: int(re.findall("[0-9]+", str(x))[0])
-                )
-            except:
-                df = df[:-1]
-                df[col] = df[col].apply(
-                    lambda x: int(re.findall("[0-9]+", str(x))[0])
-                )
+                "Death",
+            ],
+        )
         df = df.sort_values("Total Confirmed cases", ascending=False)
         df = df.reset_index(drop=True)
         df.iloc[0, 0] = "Total"
@@ -77,7 +68,7 @@ class COVID19India(object):
             re.findall("[a-zA-Z ]+", x)[0] for x in df["Name of State / UT"]
         ]
         while save:
-            content = self.__request(url)
+            content = self.__request(url=self.moh_url)
 
             soup = BeautifulSoup(content, "html.parser")
             text = soup.find_all("div", attrs={"class": "status-update"})[
@@ -123,6 +114,7 @@ class COVID19India(object):
             date = (datetime.today() - timedelta(days=2)).strftime("%Y.%m.%d")
             a = get_data(date0)
             b = get_data(date)
+        print(date0, date)
         lst = []
         for name in a["Name of State / UT"].values:
             if name in b["Name of State / UT"].values:
