@@ -10,7 +10,10 @@
 ```bash
 $ git clone https://github.com/dc-aichara/COVID19-India-Tracker.git # clone repository
 $ cd COVID19-India-Tracker # Change directory
-$ pip install -r requirements.txt # Install dependencies
+$ conda env create -f environment.yml  # create conda environment from `environment.yml`. Recommended. 
+$ conda activate aichara
+OR
+$ pip install -r requirements.txt # Install dependencies in a python environment. 
 ```
 
 ## Get mapbox  api key from mapbox api and create a `settings.ini` file.
@@ -19,7 +22,7 @@ $ pip install -r requirements.txt # Install dependencies
 MAPBOX_SECRET=YOUR_MAPBOX_KEY
 MAPBOX_STYLE=mapbox://styles/mapbox/dark-v9
 ```
-## Edit data.py too use save and load data from local directory instead of `Mongodb`.
+## Edit `data.py` too use save and load data from local directory instead of `Mongodb`.
 ## Run App
 ```bash
 $ python index.py 

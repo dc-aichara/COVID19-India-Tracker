@@ -436,6 +436,7 @@ def render_graph(data, tab):
         139,
         146,
         153,
+        160,
     ]
     annotations = [
         {
