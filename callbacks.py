@@ -40,9 +40,9 @@ data_display = """
 # print(df)
 for v1, v2 in zip(df.values, df2.values):
     a = v1[0]
-    b = v1[1] if v2[1] == 0 else f"{v1[1]} (**+{v2[1]}**)"
-    c = v1[2] if v2[2] == 0 else f"{v1[2]} (**+{v2[2]}**)"
-    d = v1[3] if v2[3] == 0 else f"{v1[3]} (**+{v2[3]}**)"
+    b = v1[1] if v2[1] == 0 else f"{v1[1]} (**↑{v2[1]}**)"
+    c = v1[2] if v2[2] == 0 else f"{v1[2]} (**↑{v2[2]}**)"
+    d = v1[3] if v2[3] == 0 else f"{v1[3]} (**↑{v2[3]}**)"
     # e = v1[4] if v2[4] == 0 else f"{v1[4]} (**+{v2[4]}**)"
     v = f"""|{a}|{b}|{c}|{d}|\n"""
     data_display += v
@@ -438,6 +438,7 @@ def render_graph(data, tab):
         153,
         160,
         167,
+        174,
     ]
     annotations = [
         {
