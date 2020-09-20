@@ -413,7 +413,8 @@ def render_graph(data, tab):
             ),
         ],
     )
-    dates_index = [
+    month_index = [30, 60, 91, 121, 152, 182]
+    week_index = [
         6,
         13,
         20,
@@ -438,19 +439,19 @@ def render_graph(data, tab):
         153,
         160,
         167,
-        # 174,
+        174,
     ]
     annotations = [
         {
             "x": pd.to_datetime(data["date"].values[i]),
             "y": data["confirmed"].values[i],
             "showarrow": True,
-            "text": f"Week{j + 1}: {data['confirmed'].values[i]}",
+            "text": f"Month{j + 1}: {data['confirmed'].values[i]}",
             "font": {"color": "red", "size": 12},
             "xref": "x",
             "yref": "y",
         }
-        for j, i in enumerate(dates_index)
+        for j, i in enumerate(month_index)
     ]
 
     if tab == "tab-1":
