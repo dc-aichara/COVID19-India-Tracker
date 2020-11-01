@@ -20,7 +20,7 @@ app.index_string = """<!DOCTYPE html>
 <html>
     <head>
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QRH180VJK"></script>
+        <script async src="https://www.googletagmanager.com/ns.html?id=GTM-PNBGJC8"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
