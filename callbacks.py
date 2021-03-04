@@ -308,7 +308,7 @@ dist_chart = dcc.Graph(id="dist-chart", figure=d_fig)
 def get_data(_):
     try:
         df_api = covidin.timeseries_data()
-        df_api["date"] = pd.to_datetime(df_api["date"] + "2020")
+        df_api["date"] = pd.to_datetime(df_api["dateymd"])
         df_api = df_api[df_api["dailyconfirmed"] != ""]
         df_api = df_api[
             [
@@ -413,7 +413,7 @@ def render_graph(data, tab):
             ),
         ],
     )
-    month_index = [30, 60, 91, 121, 152, 182, 213]
+    month_index = [30, 60, 91, 121, 152, 182, 213, 244, 274, 305, 336, 364]
     # week_index = [
     #     6,
     #     13,
@@ -447,7 +447,7 @@ def render_graph(data, tab):
             "y": data["confirmed"].values[i],
             "showarrow": True,
             "text": f"Month{j + 1}: {data['confirmed'].values[i]}",
-            "font": {"color": "red", "size": 12},
+            "font": {"color": "red", "size": 10},
             "xref": "x",
             "yref": "y",
         }
