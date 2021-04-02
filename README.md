@@ -22,7 +22,7 @@ $ pip install -r requirements.txt # Install dependencies in a python environment
 MAPBOX_SECRET=YOUR_MAPBOX_KEY
 MAPBOX_STYLE=mapbox://styles/mapbox/dark-v9
 ```
-## Edit `data.py` too use save and load data from local directory instead of `Mongodb`.
+## Edit `data.py` to use save and load data from local directory instead of `Mongodb`.
 ## Run App
 ```bash
 $ python index.py 
@@ -32,9 +32,10 @@ $ python index.py
 Read my articles on medium:
 - [Building Dashboard Part-1](https://medium.com/analytics-vidhya/building-a-dashboard-app-using-plotlys-dash-a-complete-guide-from-beginner-to-pro-61e890bdc423)
 - [Building Dashboard Part-2](https://medium.com/analytics-vidhya/building-a-dashboard-app-using-plotlys-dash-a-complete-guide-from-beginner-to-pro-e7657a4eb707)
+- [Building Dashboard Part-3](https://medium.com/game-of-data/building-a-dashboard-app-using-plotlys-dash-favicon-google-analytics-custom-css-75f7a1e95a88)
 
 # Contribute
 - Clone this repo
 - Create a new branch
 - Make changes
-- Submit PR
+- Submit a PR
