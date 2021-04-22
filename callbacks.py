@@ -51,7 +51,8 @@ data_head = html.Div(
     id="state-data",
     children=[
         dcc.Markdown(  # markdown
-            f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()} Source: MoHFW | GoI)"
+            f"# COVID19 STATEWISE STATUS \n(As on :  {covidin.last_update()} "
+            f"Source: MoHFW | GoI)"
         )
     ],
     style={
@@ -71,7 +72,8 @@ try:
     news_data = inshorts.get_news()
     news_data = news_data.drop_duplicates()
     news_data = news_data[:30]
-except:
+except Exception as ex:
+    print(ex)
     news_data = pd.DataFrame(data=["", ""], columns=["headings", "news"])
 
 news = []
@@ -253,10 +255,11 @@ analysis1 = html.Div(
 
 # Daily tests
 tests = covidin.tests()
-tests["updatetimestamp"] = pd.to_datetime(
-    tests["updatetimestamp"].apply(lambda x: x.split(" ")[0]), dayfirst=True
+
+tests = tests.drop_duplicates()
+tests["updatetimestamp"] = pd.date_range(
+    start="2020-03-13", periods=len(tests), tz="Asia/Kolkata"
 )
-tests = tests.drop_duplicates("updatetimestamp")
 test_graph = dcc.Graph(
     id="test-plot",
     figure={
@@ -292,14 +295,16 @@ d_fig = px.sunburst(
 )
 d_fig.update_layout(
     margin=dict(t=40, l=0, r=0, b=0),
-    title="Covid19 India: Districtwise Cases Distribution {Click on the state name to see districtwise cases!}",
+    title="Covid19 India: Districtwise Cases Distribution {Click on the state "
+    "name to see districtwise cases!}",
     height=700,
     # width=410,
     paper_bgcolor="#eae2e2",
     font={"size": 16},
 )
 d_fig.data[0].update(
-    hovertemplate="%{customdata[1]}, %{customdata[2]} <br>Confirmed: %{customdata[0]}"
+    hovertemplate="%{customdata[1]}, %{customdata[2]} <br>Confirmed: "
+    "%{customdata[0]}"
 )
 dist_chart = dcc.Graph(id="dist-chart", figure=d_fig)
 
@@ -331,7 +336,8 @@ def get_data(_):
             "daily_deaths",
         ]
         df_api.to_csv("data/api_india.csv", index=False)
-    except:
+    except Exception as ex:
+        print(ex)
         df_api = pd.read_csv("data/api_india.csv")
 
     df_api["date"] = pd.to_datetime(df_api["date"])
@@ -392,7 +398,8 @@ def display_cases(_):
 def render_graph(data, tab):
     try:
         df_daily = pd.read_json(data, orient="split")
-    except:
+    except Exception as ex:
+        print(ex)
         df_daily = pd.read_csv("data/api_india.csv")
     df_daily["date"] = pd.to_datetime(df_daily["date"])
     df1 = get_daily_data(df_daily)
@@ -413,34 +420,7 @@ def render_graph(data, tab):
             ),
         ],
     )
-    month_index = [30, 60, 91, 121, 152, 182, 213, 244, 274, 305, 336, 364]
-    # week_index = [
-    #     6,
-    #     13,
-    #     20,
-    #     27,
-    #     34,
-    #     41,
-    #     48,
-    #     55,
-    #     62,
-    #     69,
-    #     76,
-    #     83,
-    #     90,
-    #     97,
-    #     104,
-    #     111,
-    #     118,
-    #     125,
-    #     132,
-    #     139,
-    #     146,
-    #     153,
-    #     160,
-    #     167,
-    #     174,
-    # ]
+    month_index = [30, 60, 91, 121, 152, 182, 213, 244, 274, 305, 336, 364, 395]
     annotations = [
         {
             "x": pd.to_datetime(data["date"].values[i]),
@@ -718,7 +698,8 @@ def render_graph(data, tab):
                 style={"textAlign": "center"},
             )
             return [analysis1, tab2_display]
-        except:
+        except Exception as ex:
+            print(ex)
             return [bar_graph2]
     elif tab == "tab-3":
         return news1
