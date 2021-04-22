@@ -36,7 +36,7 @@ def get_interval_data(days=7, cases=pd.DataFrame(), cols=None):
     if cols is None:
         cols = ["daily_confirmed", "daily_recovered", "daily_deaths"]
     data = {}
-    value = "week" if days == 7 else f"{days}days"
+    value = "W" if days == 7 else f"{days}days"
     for i in range(len(cases)):
         if i % days == 0:
             a = int(i / days) + 1

@@ -611,7 +611,7 @@ def render_graph(data, tab):
                     "paper_bgcolor": colors["background"],
                     "font": {"color": colors["text"], "size": 16},
                     "margin": {"l": 0, "b": 55, "t": 50},
-                    "annotations": week_annots,
+                    # "annotations": week_annots,
                 },
             },
         )
