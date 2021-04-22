@@ -48,4 +48,4 @@ Read my articles on medium:
 - Clone this repo
 - Create a new branch
 - Make changes
-- Submit PR
+- Submit a PR
