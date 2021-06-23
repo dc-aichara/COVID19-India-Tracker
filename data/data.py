@@ -43,7 +43,11 @@ class COVID19India(object):
         data = requests.get(self.moh_data_url).json()
         for i, dic in enumerate(data):
             if int(dic["new_positive"]) < int(dic["new_active"]):
-                data[i]["new_positive"] = int(dic["new_active"]) + int(dic["new_cured"]) + int(dic["new_death"])
+                data[i]["new_positive"] = (
+                    int(dic["new_active"])
+                    + int(dic["new_cured"])
+                    + int(dic["new_death"])
+                )
         data = [
             [
                 dic["state_name"],

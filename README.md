@@ -23,7 +23,7 @@ $ pip install -r requirements.txt # Install dependencies in a python environment
 MAPBOX_SECRET=YOUR_MAPBOX_KEY
 MAPBOX_STYLE=mapbox://styles/mapbox/dark-v9
 ```
-## Edit `data.py` too use save and load data from local directory instead of `Mongodb` Or setup MongoDB account and credentials to `settings.ini`.
+## Edit `data.py` to use save and load data from local directory instead of `Mongodb` Or setup MongoDB account and credentials to `settings.ini`.
 
 ```text
 [settings]

@@ -257,24 +257,22 @@ analysis1 = html.Div(
 tests = covidin.tests()
 
 tests = tests.drop_duplicates()
-tests["updatetimestamp"] = pd.date_range(
-    start="2020-03-13", periods=len(tests), tz="Asia/Kolkata"
-)
+tests = tests[tests["totalvaccineconsumptionincludingwastage"] != ""]
 test_graph = dcc.Graph(
     id="test-plot",
     figure={
         "data": [
             {
                 "x": tests["updatetimestamp"],
-                "y": tests["totalsamplestested"],
+                "y": tests["totalvaccineconsumptionincludingwastage"],
                 "type": "bar",
-                "name": "Total Tests",
+                "name": "Total Vaccine Consumption",
                 "marker": {"color": "#100E2F"},
             },
         ],
         "layout": {
             "legend": {"x": 0.10, "y": 0.9},
-            "title": f"Covid19 India: Daily Tests",
+            "title": f"Covid19 India: Vaccine Consumption",
             "xaxis": x_axis_t,
             "yaxis": y_axis_t,
             "plot_bgcolor": colors["background2"],

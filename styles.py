@@ -62,7 +62,7 @@ x_axis_p = {
 }
 
 y_axis_t = {
-    "title": "Tests",
+    "title": "Total Vaccine Consumption",
     "showspikes": True,
     "spikedash": "dot",
     "spikemode": "across",
