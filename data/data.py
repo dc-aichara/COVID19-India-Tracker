@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import re
 import json
 from datetime import datetime, timedelta
@@ -23,6 +25,12 @@ class COVID19India(object):
         self.moh_data_url = moh_data_url  # MOHFW data link
         self.url_state = url_state  # districtwise data
         self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
+        self.request_timeout = 120
+        self.session = requests.Session()
+        retries = Retry(
+            total=5, backoff_factor=0.5, status_forcelist=[502, 503, 504]
+        )
+        self.session.mount("http://", HTTPAdapter(max_retries=retries))
 
     @staticmethod
     def __request(url):
@@ -40,7 +48,10 @@ class COVID19India(object):
         :param save: (bool)
         :return: (DataFrame) Statewise data
         """
-        data = requests.get(self.moh_data_url).json()
+        response = self.session.get(
+            self.moh_data_url, timeout=self.request_timeout
+        )
+        data = response.json()
         for i, dic in enumerate(data):
             if int(dic["new_positive"]) < int(dic["new_active"]):
                 data[i]["new_positive"] = (
