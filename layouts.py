@@ -1,5 +1,4 @@
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import html, dcc
 
 tab_style = {
     "borderBottom": "1px solid #d6d6d6",

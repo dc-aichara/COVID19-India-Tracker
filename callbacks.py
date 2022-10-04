@@ -1,10 +1,9 @@
 from dash.dependencies import Input, Output
-import dash_html_components as html
-import dash_core_components as dcc
-import dash_daq as daq
+from dash import html, dcc
 import plotly.graph_objects as go
 import plotly.express as px
 from app import app
+from utils import daq_display
 import pandas as pd
 from map import scatter_mapbox
 from data import COVID19India, InshortsNews, get_daily_data, get_interval_data
@@ -307,7 +306,7 @@ d_fig.data[0].update(
 dist_chart = dcc.Graph(id="dist-chart", figure=d_fig)
 
 
-@app.callback(Output("api-data", "children"), [Input("dummy-id", "")])
+@app.callback(Output("api-data", "children"), [Input("dummy-id", "children")])
 def get_data(_):
     try:
         df_api = covidin.timeseries_data()
@@ -347,46 +346,22 @@ def get_data(_):
         Output("active-display", "children"),
         Output("recovered-display", "children"),
         Output("death-display", "children"),
-        Output("counts-display", "children"),
         Output("confirm-display", "children"),
     ],
-    [Input("dummy-id", "")],
+    [Input("dummy-id", "children")],
 )
 def display_cases(_):
     value = df.values[0][1:].tolist()
     active_case = value[0] - value[1] - value[2]
     recovered_case = value[1]
     deaths = value[-1]
-    counts = len(df) - 1
     total = value[0]
-
-    def daq_display(value, clr):
-        display = daq.LEDDisplay(
-            label={
-                "label": "  ",
-                "style": {
-                    "font-size": "14px",
-                    "color": "green",
-                    "font-family": "sans-serif",
-                    "background": "white",
-                    "padding": "2px",
-                },
-            },
-            labelPosition="left",
-            value=str(value),
-            backgroundColor=clr,
-            size=19,
-            style={"display": "inline-block",},
-        )
-        return display
-
     a = daq_display(active_case, "black")
     b = daq_display(recovered_case, "green")
     c = daq_display(deaths, "red")
-    d = daq_display(counts, "gray")
     e = daq_display(total, "#6F727A")
 
-    return [a, b, c, d, e]
+    return [a, b, c, e]
 
 
 @app.callback(

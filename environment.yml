@@ -1,26 +1,18 @@
 name: aichara
 channels:
 - defaults
-- conda-forge
 dependencies:
-- python=3.7
+- python=3.9
 - pip
-- jupyterlab
 - pip:
-    - dash==1.9.1
-    - dash-core-components==1.8.1
-    - dash-daq==0.4.0
-    - dash-html-components==1.0.2
-    - dash-renderer==1.2.4
-    - dash-table==4.6.1
-    - gunicorn==20.0.4
-    - numpy==1.18.1
-    - pandas==1.0.1
-    - plotly==4.5.4
+    - dash==2.6.2
+    - dash-daq==0.5.0
+    - gunicorn==20.1.0
+    - numpy==1.23.3
+    - pandas==1.5.0
     - lxml==4.5.0
     - bs4==0.0.1
-    - requests==2.23.0
-    - folium==0.10.1
-    - python-decouple==3.3
-    - pymongo==3.10.1
-    - dnspython==1.16.0
+    - requests==2.28.1
+    - python-decouple==3.6
+    - pymongo==4.2.0
+    - dnspython==2.2.1

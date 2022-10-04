@@ -4,4 +4,5 @@ static/*.html
 *.ipynb
 Notebooks/
 *.ini
+.env
 __pycache__/
