@@ -24,13 +24,11 @@ def upload_data(data=None, _id=None):
     :param data: (DataFrame) Pandas DataFrame
     :param _id: (str) unique id for data eg., date
     """
-    dic = {"id": _id}
-    for col in data.columns:
-        dic[col] = list(data[col].values.astype(str))
     if collection.find_one({"id": _id}) is None:
-        collection.insert(dic)
-    else:
-        collection.replace_one({"id": _id}, dic)
+        dic = {"id": _id}
+        for col in data.columns:
+            dic[col] = list(data[col].values.astype(str))
+        collection.insert_one(dic)
 
 
 def get_data(id_=None):
