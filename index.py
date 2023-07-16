@@ -1,6 +1,5 @@
-from app import app
-from app import server
 import callbacks
+from app import app, server
 from layouts import layout
 
 app.layout = layout

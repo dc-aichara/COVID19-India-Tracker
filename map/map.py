@@ -1,5 +1,5 @@
-import pandas as pd
 import folium
+import pandas as pd
 
 
 def get_map(data_df):

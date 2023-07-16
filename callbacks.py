@@ -1,26 +1,27 @@
-from dash.dependencies import Input, Output
-from dash import html, dcc
-import plotly.graph_objects as go
-import plotly.express as px
-from app import app
-from utils import daq_display
 import pandas as pd
-from map import scatter_mapbox
+import plotly.express as px
+import plotly.graph_objects as go
+from dash import dcc, html
+from dash.dependencies import Input, Output
+
+from app import app
 from data import COVID19India, InshortsNews, get_daily_data, get_interval_data
+from map import scatter_mapbox
 from styles import (
+    area_style,
     colors,
-    y_axis,
     x_axis,
     x_axis_bar,
-    y_axis_h,
     x_axis_h,
-    y_axis_p,
     x_axis_p,
-    y_axis_t,
     x_axis_t,
+    y_axis,
+    y_axis_h,
+    y_axis_p,
+    y_axis_t,
     y_axis_t2,
-    area_style,
 )
+from utils import daq_display
 
 inshorts = InshortsNews()
 covidin = COVID19India()
@@ -97,7 +98,10 @@ for v in news_data.values:
                     style={"textAlign": "left", "size": 14, "color": "#3992ec"},
                 ),
             ],
-            style={"display": "inline-block", "textAlign": "center",},
+            style={
+                "display": "inline-block",
+                "textAlign": "center",
+            },
         )
         news.append(N)
         i += 1
@@ -139,7 +143,13 @@ ct4 = t2[1] - c2[1]
 piev = [t[0], t[0] - t[1] - t[2], t[1], t[2]]
 fig = go.Figure(
     go.Sunburst(
-        labels=["Covid19", "Confirmed", "Active", "Recovered", "Deaths",],
+        labels=[
+            "Covid19",
+            "Confirmed",
+            "Active",
+            "Recovered",
+            "Deaths",
+        ],
         parents=["", "Covid19", "Confirmed", "Covid19", "Covid19"],
         values=[0] + piev,
         marker=dict(
@@ -176,7 +186,10 @@ analysis1 = html.Div(
                             style={"color": "green" if ct1 > 0 else "red"},
                         ),
                     ],
-                    style={"textAlign": "center", "width": "140px",},
+                    style={
+                        "textAlign": "center",
+                        "width": "140px",
+                    },
                 ),
                 html.Div(
                     className="d-rate",
@@ -189,7 +202,10 @@ analysis1 = html.Div(
                             style={"color": "green" if ct2 < 0 else "red"},
                         ),
                     ],
-                    style={"textAlign": "center", "width": "140px",},
+                    style={
+                        "textAlign": "center",
+                        "width": "140px",
+                    },
                 ),
                 html.Span("on total confirm cases"),
             ],
@@ -221,7 +237,10 @@ analysis1 = html.Div(
                             style={"color": "green" if ct3 > 0 else "red"},
                         ),
                     ],
-                    style={"textAlign": "center", "width": "140px",},
+                    style={
+                        "textAlign": "center",
+                        "width": "140px",
+                    },
                 ),
                 html.Div(
                     className="d-rate",
@@ -234,7 +253,10 @@ analysis1 = html.Div(
                             style={"color": "green" if ct4 < 0 else "red"},
                         ),
                     ],
-                    style={"textAlign": "center", "width": "140px",},
+                    style={
+                        "textAlign": "center",
+                        "width": "140px",
+                    },
                 ),
                 html.Span("on total outcomes"),
                 html.Br(),
@@ -518,13 +540,17 @@ def render_graph(data, tab):
                     line_graph1,
                     className="cum-cases",
                     id="cum-cases",
-                    style={"display": "inline-block",},
+                    style={
+                        "display": "inline-block",
+                    },
                 ),
                 html.Div(
                     bar_daily,
                     className="daily-cases",
                     id="daily-cases",
-                    style={"display": "inline-block",},
+                    style={
+                        "display": "inline-block",
+                    },
                 ),
             ],
             className="tab1-graph",

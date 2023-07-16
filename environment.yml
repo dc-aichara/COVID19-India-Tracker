@@ -5,7 +5,7 @@ dependencies:
 - python=3.9
 - pip
 - pip:
-    - dash==2.6.2
+    - dash==2.11.1
     - dash-daq==0.5.0
     - gunicorn==20.1.0
     - numpy==1.23.3

@@ -48,7 +48,9 @@ y_axis_p = {
     "spikedash": "dot",
     "spikemode": "across",
     "spikesnap": "cursor",
-    "range": [200,],
+    "range": [
+        200,
+    ],
     "zeroline": False,
 }
 

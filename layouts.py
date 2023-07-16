@@ -1,4 +1,4 @@
-from dash import html, dcc
+from dash import dcc, html
 
 tab_style = {
     "borderBottom": "1px solid #d6d6d6",
