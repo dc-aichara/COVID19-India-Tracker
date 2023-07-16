@@ -1,13 +1,15 @@
-import pandas as pd
+import json
+import re
+from datetime import datetime, timedelta
+
 import numpy as np
-from bs4 import BeautifulSoup
+import pandas as pd
 import requests
+from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-import re
-import json
-from datetime import datetime, timedelta
-from data.mongo_db import upload_data, get_data
+
+from data.mongo_db import get_data, upload_data
 
 moh_link = "https://www.mohfw.gov.in/"
 url_state = "https://api.covid19india.org/state_district_wise.json"
@@ -23,7 +25,7 @@ class COVID19India(object):
     def __init__(self):
         self.moh_url = moh_link  # MOHFW website link
         self.moh_data_url = moh_data_url  # MOHFW data link
-        self.url_state = url_state  # districtwise data
+        self.url_state = url_state  # Districtwise data
         self.data_url = data_data  # All India data ==> Statewise data, test data, timeseries data etc
         self.request_timeout = 120
         self.session = requests.Session()
@@ -39,7 +41,7 @@ class COVID19India(object):
         :param url: Link to data api or website
         :return: api/link content
         """
-        content = requests.get(url).content.decode("utf-8")
+        content = requests.get(url, verify=False).content.decode("utf-8")
         return content
 
     def moh_data(self, save=False):
@@ -84,19 +86,11 @@ class COVID19India(object):
         df["Name of State / UT"] = [
             re.findall("[a-zA-Z ]+", x)[0] for x in df["Name of State / UT"]
         ]
-        while save:
-            content = self.__request(url=self.moh_url)
-
-            soup = BeautifulSoup(content, "html.parser")
-            text = soup.find_all("div", attrs={"class": "status-update"})[
-                0
-            ].text.strip()
-            date = pd.to_datetime(text.split(":")[1].split(",")[0]).strftime(
-                "%Y.%m.%d"
-            )
-            # df.to_csv(f"data/{date}_moh_india.csv", index=False)
+        if save is True:
+            date = pd.to_datetime(
+                self.last_update().split(":")[0].split(",")[0]
+            ).strftime("%Y.%m.%d")
             upload_data(df, date)
-            break
         return df
 
     def last_update(self):
@@ -113,16 +107,19 @@ class COVID19India(object):
         text = text.split(" : ")[-1]
         return text
 
-    @staticmethod
-    def change_cal():
+    def change_cal(self):
         """
         Calculation changes in cases from previous day (MoHFW data)
         :return: (DataFrame)
         """
-        date = (datetime.today() - timedelta(days=1)).strftime(
+        date0 = pd.to_datetime(
+            self.last_update().split(":")[0].split(",")[0]
+        ).strftime(
             "%Y.%m.%d"
-        )  # Previous day's date
-        date0 = (datetime.today()).strftime("%Y.%m.%d")  # Today's date
+        )  # Last Update
+        date = (pd.to_datetime(date0) - timedelta(days=1)).strftime(
+            "%Y.%m.%d"
+        )  # Day before last update
         a = get_data(date0)
         if a is not None:
             b = get_data(id_=date)
@@ -204,7 +201,6 @@ class COVID19India(object):
         """
         content = self.__request(self.data_url)
         data = json.loads(content)
-        # print(data['statewise'])
         data_state = [
             [
                 v["state"],
@@ -270,7 +266,6 @@ class COVID19India(object):
         """
         content = self.__request(self.data_url)
         data = json.loads(content)
-        # data = data["key_values"]
         return data
 
     def tests(self):

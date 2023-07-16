@@ -1,6 +1,6 @@
-from decouple import config
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
+from decouple import config
 
 mapbox_token = config("MAPBOX_SECRET")
 mapbox_style = config("MAPBOX_STYLE")
@@ -67,7 +67,10 @@ def scatter_mapbox(data=None):
         # the plot if it is set to False
         coloraxis_showscale=False,
         mapbox_style=mapbox_style,
-        mapbox=dict(center=dict(lat=23.5937, lon=81.9629), zoom=4,),
+        mapbox=dict(
+            center=dict(lat=23.5937, lon=81.9629),
+            zoom=4,
+        ),
     )
 
     fig.data[0].update(

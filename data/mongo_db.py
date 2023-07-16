@@ -1,7 +1,8 @@
-from decouple import config
+from datetime import datetime, timedelta
+
 import pandas as pd
 import pymongo
-from datetime import datetime, timedelta
+from decouple import config
 
 date = (datetime.today() - timedelta(days=1)).strftime("%Y.%m.%d")
 date1 = (datetime.today()).strftime("%Y.%m.%d")
